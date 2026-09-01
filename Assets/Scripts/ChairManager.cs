@@ -4,13 +4,19 @@ using UnityEngine.LowLevelPhysics2D;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    public String[] chairs;
+    public bool testBool;
+    public GameObject[] chairs;
+    [SerializeField] GameObject[] ghosts;
     int customerTotal = 0;
     String[] names = {"Sawyer", "Zek", "Cooper", "John", "Joe"};
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        chairs = new String[4];
+        chairs = GameObject.FindGameObjectsWithTag("Chair");
+        foreach (GameObject ghost in ghosts)
+        {
+            ghost.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -23,11 +29,20 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         for (int i = 0; i < chairs.Length; i++)
         {
-            if (chairs[i] == null)
+            if (chairs[i] != null)
             {
-                chairs[i] = names[customerTotal];
+                chairs[i].GetComponent<ChairScript>().name = names[customerTotal % chairs.Length];
+                if (testBool) 
+                {
+                    ghosts[i].SetActive(true);
+                }
+                else
+                {
+                    ghosts[i].SetActive(false);
+                }
+                Debug.Log(chairs[i]);
+                customerTotal++;
             }
         }
-        Debug.Log(chairs);
     }
 }
