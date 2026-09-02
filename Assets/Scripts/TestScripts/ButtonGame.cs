@@ -1,0 +1,23 @@
+using UnityEngine;
+
+public class ButtonGame : MonoBehaviour
+{
+    public bool gameRunning = false;
+    public GameObject gameUI;
+    public GameObject timer;
+    public void StartGame()
+    {
+        //timer
+        gameRunning = true;
+    }
+
+    public void ButtonPress()
+    {
+        if (gameRunning)
+        {
+            gameRunning = false;
+            gameUI.SetActive(false);
+            timer.SetActive(false);
+        }
+    }
+}
