@@ -358,7 +358,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585971de077a94557ac076c3406959e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChairScript
-  ghosts: []
+  chairManager: {fileID: 0}
+  ghostName: 
+  ghostActive: 0
+  task: 
+  customerTimer: 0
+  cooldownTimer: 0
+  ghostObject: {fileID: 0}
 --- !u!1 &257040382
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +492,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585971de077a94557ac076c3406959e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChairScript
-  ghosts: []
+  chairManager: {fileID: 0}
+  ghostName: 
+  ghostActive: 0
+  task: 
+  customerTimer: 0
+  cooldownTimer: 0
+  ghostObject: {fileID: 0}
 --- !u!1 &299450674
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,7 +738,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585971de077a94557ac076c3406959e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  ghosts: []
+  chairManager: {fileID: 0}
+  ghostName: 
+  ghostActive: 0
+  task: 
+  customerTimer: 0
+  cooldownTimer: 0
+  ghostObject: {fileID: 0}
 --- !u!1 &512448438
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,6 +1005,7 @@ MonoBehaviour:
   - {fileID: 963695528}
   - {fileID: 299450674}
   - {fileID: 1008105846}
+  customerTotal: 0
 --- !u!4 &892970183
 Transform:
   m_ObjectHideFlags: 0
@@ -1577,7 +1596,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585971de077a94557ac076c3406959e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChairScript
-  ghosts: []
+  chairManager: {fileID: 0}
+  ghostName: 
+  ghostActive: 0
+  task: 
+  customerTimer: 0
+  cooldownTimer: 0
+  ghostObject: {fileID: 0}
 --- !u!1 &1920456940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,7 +1929,7 @@ Transform:
   m_GameObject: {fileID: 2004240632}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.78, z: -8.37}
+  m_LocalPosition: {x: -4.09, y: 2.24, z: 1.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
