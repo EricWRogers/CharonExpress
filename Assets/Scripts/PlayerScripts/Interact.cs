@@ -25,6 +25,7 @@ public class Interact : MonoBehaviour
         if (Keyboard.current.eKey.wasPressedThisFrame && currentInteractable != null)
         {
             currentInteractable.Interact();
+            interactionUI.SetActive(false);
         }
     }
 
