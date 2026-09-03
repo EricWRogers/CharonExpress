@@ -27,7 +27,7 @@ MonoBehaviour:
   m_Name: Dialog Segment
   m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
   graph: {fileID: 11400000}
-  position: {x: -360, y: -168}
+  position: {x: -328, y: -136}
   ports:
     keys:
     - input
