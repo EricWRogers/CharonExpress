@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 //The goal of this script is to serve as the "container" for the chair and store the data that pertains to that chair and that chair only
 //For example, managing the timer on how long the ghost will be present, what task it will have, etc.
@@ -18,7 +19,7 @@ public class ChairScript : MonoBehaviour
     public GameObject ghostObject;
     void Start()
     {
-        cooldownTimer = UnityEngine.Random.Range(100, 500);
+        cooldownTimer = UnityEngine.Random.Range(10, 500);
         customerTimer = 0;
         ghostObject = transform.GetChild(1).gameObject;
         chairManager = GameObject.Find("ChairManager");
@@ -52,4 +53,16 @@ public class ChairScript : MonoBehaviour
             cooldownTimer = UnityEngine.Random.Range(1000,500);
         } 
     }
+
+/*   bool CheckTasks()
+    {
+        if (task != null)
+        {
+            if (task == "Interact")
+            {
+                return true;
+            }
+        }
+    }
+    */
 }
