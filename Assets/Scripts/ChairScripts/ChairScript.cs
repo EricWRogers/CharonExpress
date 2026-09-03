@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 public class ChairScript : MonoBehaviour
 {
     public GameObject chairManager;
+    public GameObject player;
     ChairManager chairManagerScript;
     public String ghostName = "";
     public bool ghostActive = false;
@@ -17,12 +18,15 @@ public class ChairScript : MonoBehaviour
     public int customerTimer;
     public int cooldownTimer;
     public GameObject ghostObject;
+    public GameObject InteractUI;
     void Start()
     {
+        player = GameObject.Find("Player");
         cooldownTimer = UnityEngine.Random.Range(10, 500);
         customerTimer = 0;
         ghostObject = transform.GetChild(1).gameObject;
         chairManager = GameObject.Find("ChairManager");
+        InteractUI = GameObject.Find("InteractUI");
         chairManagerScript = chairManager.GetComponent<ChairManager>();
     }
 
@@ -41,6 +45,7 @@ public class ChairScript : MonoBehaviour
         {
             ghostActive = true;
             ghostObject.SetActive(true);
+            ghostObject.transform.GetChild(0).gameObject.SetActive(true);
             Debug.Log("I GAVE IT LIFE");
             chairManagerScript.AssignGhost(gameObject);
             customerTimer = UnityEngine.Random.Range(500, 2000);
@@ -48,6 +53,8 @@ public class ChairScript : MonoBehaviour
         else if (customerTimer == 0 && ghostActive == true) 
         {
             ghostActive = false;
+            if (ghostObject.transform.GetChild(0).gameObject.activeInHierarchy) ghostObject.transform.GetChild(0).gameObject.SetActive(false);
+            if (InteractUI.activeInHierarchy && Vector3.Distance(transform.position, player.transform.position) < 2) InteractUI.SetActive(false);
             ghostObject.SetActive(false);
             Debug.Log("I KILLED IT");
             cooldownTimer = UnityEngine.Random.Range(1000,500);
