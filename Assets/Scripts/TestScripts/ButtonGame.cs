@@ -8,7 +8,6 @@ public class ButtonGame : MonoBehaviour
     public float TimerTime = 10f;
     public void StartGame()
     {
-        timer.SetActive(true);
         gameRunning = true;
     }
 

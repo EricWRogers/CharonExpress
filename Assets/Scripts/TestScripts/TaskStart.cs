@@ -45,6 +45,8 @@ public class TaskStart : MonoBehaviour, IInteractable
     {
         if (!interacted)
         {
+            TimerUI.SetActive(true);
+
             ChairScript chairScript = GetComponentInParent<ChairScript>();
             switch (chairScript.task)
             {
@@ -64,6 +66,13 @@ public class TaskStart : MonoBehaviour, IInteractable
                     ButtonGame3UI.SetActive(true);
                     ButtonGame3UI.GetComponent<ButtonGame3>().StartGame();
                     timerScript.sliderTimer = ButtonGame3UI.GetComponent<ButtonGame3>().TimerTime;
+                    break;
+                
+                case "":
+                    Debug.Log("No task assigned to this chair.");
+                    break;
+                case "Interact":
+                    Debug.Log("you removed the task .");
                     break;
             }
             timerScript.StartGameTimer();
