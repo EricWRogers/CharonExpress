@@ -45,24 +45,31 @@ public class TaskStart : MonoBehaviour, IInteractable
     {
         if (!interacted)
         {
-            TimerUI.SetActive(true);
-
             ChairScript chairScript = GetComponentInParent<ChairScript>();
             switch (chairScript.task)
             {
-                case "Hit button 1":
+                case "1":
+                    TimerUI.SetActive(true);
+                    timerScript.StartGameTimer();
+
                     ButtonGame1UI.SetActive(true);
                     ButtonGame1UI.GetComponent<ButtonGame>().StartGame();
                     timerScript.sliderTimer = ButtonGame1UI.GetComponent<ButtonGame>().TimerTime;
                     break;
 
-                case "Hit button 2":
+                case "2":
+                    TimerUI.SetActive(true);
+                    timerScript.StartGameTimer();
+
                     ButtonGame2UI.SetActive(true);
                     ButtonGame2UI.GetComponent<ButtonGame2>().StartGame();
                     timerScript.sliderTimer = ButtonGame2UI.GetComponent<ButtonGame2>().TimerTime;
                     break;
 
-                case "Hit button 3":
+                case "3":
+                    TimerUI.SetActive(true);
+                    timerScript.StartGameTimer();
+                    
                     ButtonGame3UI.SetActive(true);
                     ButtonGame3UI.GetComponent<ButtonGame3>().StartGame();
                     timerScript.sliderTimer = ButtonGame3UI.GetComponent<ButtonGame3>().TimerTime;
@@ -75,7 +82,6 @@ public class TaskStart : MonoBehaviour, IInteractable
                     Debug.Log("you removed the task .");
                     break;
             }
-            timerScript.StartGameTimer();
 
             interacted = true;
         }

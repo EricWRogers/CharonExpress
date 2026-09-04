@@ -653,6 +653,7 @@ MonoBehaviour:
     m_Bits: 8
   rb: {fileID: 120738313}
   sr: {fileID: 120738310}
+  freeze: 0
 --- !u!212 &120738310
 SpriteRenderer:
   serializedVersion: 2
@@ -2867,12 +2868,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   chairManager: {fileID: 0}
+  player: {fileID: 0}
   ghostName: 
   ghostActive: 0
   task: 
   customerTimer: 0
   cooldownTimer: 0
   ghostObject: {fileID: 0}
+  InteractUI: {fileID: 0}
 --- !u!65 &1334924837
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2966,7 +2969,6 @@ Transform:
   m_Children:
   - {fileID: 1448584131}
   - {fileID: 2014276178}
-  - {fileID: 1496194392}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1336667007
@@ -3577,12 +3579,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496194391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1334924840}
+  m_Father: {fileID: 2014276178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1496194393
 MonoBehaviour:
@@ -3855,6 +3857,7 @@ MonoBehaviour:
   gameRunning: 0
   gameUI: {fileID: 1841423527}
   timer: {fileID: 95840085}
+  player: {fileID: 120738306}
   TimerTime: 10
 --- !u!114 &1841423534
 MonoBehaviour:
@@ -3902,7 +3905,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1496194392}
   m_Father: {fileID: 1334924840}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2014276179
