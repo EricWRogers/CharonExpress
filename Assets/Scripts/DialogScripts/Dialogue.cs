@@ -98,38 +98,39 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(TypeLine());
     }
 
-     public void NextNode()
+    public void NextNode()
     {
-        if(activeSegment is DialogAnswerSegments){
-        
-            if((activeSegment as DialogAnswerSegments).Answers.Count > 0)
+        if (activeSegment is DialogAnswerSegments)
+        {
+
+            if ((activeSegment as DialogAnswerSegments).Answers.Count > 0)
             {
-                 int answerIndex = 0;
-                  foreach (Transform child in  TextBoxManager.Instance.buttonParent)
-                    {
-                        Destroy(child.gameObject);
-                    }
-                 
-                 foreach(string answer in (activeSegment as DialogAnswerSegments).Answers)
+                int answerIndex = 0;
+                foreach (Transform child in TextBoxManager.Instance.buttonParent)
                 {
-                   
-                    GameObject btn = Instantiate( TextBoxManager.Instance.buttonPrefab,  TextBoxManager.Instance.buttonParent);
+                    Destroy(child.gameObject);
+                }
+
+                foreach (string answer in (activeSegment as DialogAnswerSegments).Answers)
+                {
+
+                    GameObject btn = Instantiate(TextBoxManager.Instance.buttonPrefab, TextBoxManager.Instance.buttonParent);
                     btn.GetComponentInChildren<TMP_Text>().text = answer;
 
                     int index = answerIndex;
 
-                     btn.GetComponentInChildren<Button>().onClick.AddListener((() => { AnswerClicked(index); }));
+                    btn.GetComponentInChildren<Button>().onClick.AddListener((() => { AnswerClicked(index); }));
 
                     answerIndex++;
                 }
             }
-           
+
             else
             {
                 if (activeSegment.GetPort("output").IsConnected)
                 {
                     UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
-                     TextBoxManager.Instance.textComponent.text = string.Empty;
+                    TextBoxManager.Instance.textComponent.text = string.Empty;
                     StartCoroutine(TypeLine());
                 }
                 else
@@ -137,6 +138,20 @@ public class Dialogue : MonoBehaviour
                     Debug.Log("no output detected");
                     EndDialogue();
                 }
+            }
+
+        }
+        else
+        {
+             if (activeSegment.GetPort("output").IsConnected)
+            {
+                UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
+                  TextBoxManager.Instance.textComponent.text = string.Empty;
+                 StartCoroutine(TypeLine());
+            }
+            else
+            {
+                EndDialogue();
             }
            
         }

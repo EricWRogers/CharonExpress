@@ -1446,7 +1446,7 @@ MonoBehaviour:
   skipText: {fileID: 157833430}
   portrait: {fileID: 2020985486}
   nameText: {fileID: 44460598}
-  buttonPrefab: {fileID: 1191076296}
+  buttonPrefab: {fileID: 8846818937023194472, guid: b40858fb104d7c244b31dc40233a0163, type: 3}
   buttonParent: {fileID: 2009175446}
   textBox: {fileID: 0}
   skip: {fileID: 157833427}
