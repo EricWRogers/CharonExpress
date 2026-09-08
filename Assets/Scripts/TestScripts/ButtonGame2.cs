@@ -7,8 +7,13 @@ public class ButtonGame2 : MonoBehaviour
     public GameObject timer;
     public GameObject player;
     public float TimerTime = 10f;
+    public GameTimer timerscript;
+
     public void StartGame()
     {
+        timerscript.sliderTimer = TimerTime;
+        timerscript.StartGameTimer();
+
         gameRunning = true;
         player.GetComponent<player>().freeze = true;
     }
