@@ -15,7 +15,7 @@ public class ChairManager : MonoBehaviour
 
     //Sample list of names that is assigned to the chair/ghost
     String[] names = {"Sawyer", "Zek", "Cooper", "John", "Joe"};
-    String[] tasks = {"Button", "Interact", "Zone"};
+    [SerializeField] String[] tasks = {"1", "2", "3"};
 
 
     void Start()
