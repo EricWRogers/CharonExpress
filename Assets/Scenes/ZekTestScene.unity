@@ -805,7 +805,6 @@ GameObject:
   - component: {fileID: 223827670}
   - component: {fileID: 223827669}
   - component: {fileID: 223827668}
-  - component: {fileID: 223827667}
   - component: {fileID: 223827666}
   m_Layer: 5
   m_Name: ButtonGame2UI
@@ -829,22 +828,8 @@ MonoBehaviour:
   gameRunning: 0
   gameUI: {fileID: 223827665}
   timer: {fileID: 95840085}
+  player: {fileID: 120738306}
   TimerTime: 100
---- !u!114 &223827667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223827665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc48ba9d394c2c4d8e2c86e5a6a08ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  timerBar: {fileID: 1305868207}
-  sliderTimer: 10
-  stopTimer: 0
 --- !u!114 &223827668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3750,7 +3735,6 @@ GameObject:
   - component: {fileID: 1841423531}
   - component: {fileID: 1841423530}
   - component: {fileID: 1841423529}
-  - component: {fileID: 1841423534}
   - component: {fileID: 1841423533}
   m_Layer: 5
   m_Name: ButtonGame1UI
@@ -3858,22 +3842,7 @@ MonoBehaviour:
   gameUI: {fileID: 1841423527}
   timer: {fileID: 95840085}
   player: {fileID: 120738306}
-  TimerTime: 10
---- !u!114 &1841423534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841423527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc48ba9d394c2c4d8e2c86e5a6a08ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  timerBar: {fileID: 1305868207}
-  sliderTimer: 10
-  stopTimer: 0
+  TimerTime: 1
 --- !u!1 &2014276177
 GameObject:
   m_ObjectHideFlags: 0
@@ -3999,7 +3968,6 @@ GameObject:
   - component: {fileID: 2067459584}
   - component: {fileID: 2067459583}
   - component: {fileID: 2067459582}
-  - component: {fileID: 2067459581}
   - component: {fileID: 2067459580}
   m_Layer: 5
   m_Name: ButtonGame3UI
@@ -4023,22 +3991,8 @@ MonoBehaviour:
   gameRunning: 0
   gameUI: {fileID: 2067459579}
   timer: {fileID: 95840085}
+  player: {fileID: 120738306}
   TimerTime: 1
---- !u!114 &2067459581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067459579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc48ba9d394c2c4d8e2c86e5a6a08ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  timerBar: {fileID: 1305868207}
-  sliderTimer: 10
-  stopTimer: 0
 --- !u!114 &2067459582
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -78,11 +78,7 @@ public class TaskStart : MonoBehaviour, IInteractable
                 case "":
                     Debug.Log("No task assigned to this chair.");
                     break;
-                case "Interact":
-                    Debug.Log("you removed the task .");
-                    break;
             }
-
             interacted = true;
         }
     }
