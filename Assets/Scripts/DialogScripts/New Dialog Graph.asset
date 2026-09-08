@@ -1,5 +1,84 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8214645032451696127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e0238fa6510864da309586e22c7590, type: 3}
+  m_Name: Dialog Answer Segments
+  m_EditorClassIdentifier: Assembly-CSharp::DialogAnswerSegments
+  graph: {fileID: 11400000}
+  position: {x: 400.66675, y: 122.33331}
+  ports:
+    keys:
+    - Answers
+    - input
+    - output
+    - Answers 0
+    - Answers 1
+    values:
+    - _fieldName: Answers
+      _node: {fileID: -8214645032451696127}
+      _typeQualifiedName: System.Collections.Generic.List`1[[System.String, mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: -8214645032451696127}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 2518925463796094934}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: -8214645032451696127}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Answers 0
+      _node: {fileID: -8214645032451696127}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Answers 1
+      _node: {fileID: -8214645032451696127}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  portrait: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  speakerName: s
+  DialogText:
+  - ss
+  textSpeed: 0
+  Answers:
+  - ss
+  - ss
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,6 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogGraph
   nodes:
   - {fileID: 2469312536132089803}
+  - {fileID: 2518925463796094934}
+  - {fileID: -8214645032451696127}
 --- !u!114 &2469312536132089803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,7 +127,10 @@ MonoBehaviour:
       _node: {fileID: 2469312536132089803}
       _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 2518925463796094934}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -55,4 +139,54 @@ MonoBehaviour:
   speakerName: Help Me!!!!
   DialogText:
   - I am so confused
+  - maybe im less confused
+  textSpeed: 1
+--- !u!114 &2518925463796094934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a43c83f183bbc4d90f0b13c01fa475, type: 3}
+  m_Name: Dialog Segment
+  m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
+  graph: {fileID: 11400000}
+  position: {x: -51.333313, y: 15}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 2518925463796094934}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 2469312536132089803}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 2518925463796094934}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -8214645032451696127}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  portrait: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  speakerName: something
+  DialogText:
+  - pls work
+  - pls
   textSpeed: 1
