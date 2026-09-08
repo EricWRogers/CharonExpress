@@ -9,6 +9,10 @@ public class QuestGiver : MonoBehaviour, IInteractable
 
     // Unique ID for this NPC.
     public string npcID;
+    void Start()
+    {
+        ChairScript chairScript = GetComponentInParent<ChairScript>();
+    }
 
     public void Interact()
     {
@@ -26,7 +30,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
         }
 
         // give a new quest based on this NPC's chair task.
-        Quest quest = GetQuestFromChairTask();
+        Quest quest = GetQuestFromChair();
 
         if (quest == null)
         {
@@ -47,7 +51,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
         );
     }
 
-    private Quest GetQuestFromChairTask()
+    private Quest GetQuestFromChair()
     {
         foreach (Quest quest in quests)
         {

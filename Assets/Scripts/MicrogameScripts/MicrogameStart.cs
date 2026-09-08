@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class QuestTaskStart : MonoBehaviour, IInteractable
+public class MicroGameStart : MonoBehaviour, IInteractable
 {
     [Header("Quest ID")]
     [Tooltip("Must match the MiniGame objective ID in the Quest asset.")]

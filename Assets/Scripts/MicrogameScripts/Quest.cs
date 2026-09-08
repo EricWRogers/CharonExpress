@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 
@@ -10,6 +11,7 @@ public class Quest : ScriptableObject
     public string questID;
     public string questName;
     public string description;
+    [Tooltip("Must be the same as the task set in the chair manager/chair script.")]
     public string taskID;
     public List<QuestObjective> objectives;
     public enum objectiveType {FirstTalk, Microgame, ReturnToNPC}
