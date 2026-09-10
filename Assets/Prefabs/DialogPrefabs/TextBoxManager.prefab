@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4558094946630911351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8790519651254432001}
+  - component: {fileID: 5167841597847270129}
+  m_Layer: 0
+  m_Name: TextBoxManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8790519651254432001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4558094946630911351}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 994.65564, y: -0.00001, z: 6263.168}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5167841597847270129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4558094946630911351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d56de62588af654a8b76e77e0c27c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBoxManager
+  textComponent: {fileID: 0}
+  skipText: {fileID: 0}
+  portrait: {fileID: 0}
+  nameText: {fileID: 0}
+  buttonPrefab: {fileID: 8846818937023194472, guid: b40858fb104d7c244b31dc40233a0163, type: 3}
+  buttonParent: {fileID: 0}
+  textBox: {fileID: 0}
+  skip: {fileID: 0}
+  nameTextObj: {fileID: 0}
+  DiologueBox: {fileID: 0}
+  Objportrait: {fileID: 0}
+  ObjText: {fileID: 0}
+  NoTalk: 0
