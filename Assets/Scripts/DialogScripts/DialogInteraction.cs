@@ -141,6 +141,7 @@ public class DialogInteraction : MonoBehaviour
             TextBoxManager.Instance.Objportrait.SetActive(true);
             TextBoxManager.Instance.skip.SetActive(true);
             TextBoxManager.Instance.nameTextObj.SetActive(true);
+            TextBoxManager.Instance.DialogPanel.SetActive(true);
             
             text.startDialogue();
         }

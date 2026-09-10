@@ -36,7 +36,7 @@ public class TextBoxManager : MonoBehaviour
 
      public GameObject ObjText;
 
-     
+    public GameObject DialogPanel;
 
      public bool NoTalk = false;
 
@@ -57,13 +57,14 @@ public class TextBoxManager : MonoBehaviour
         }
 
     }
-  
+
     void Start()
     {
-        
-       Instance.DiologueBox.SetActive(false);
-       Instance.skip.SetActive(false);
-       Instance.nameTextObj.SetActive(false);
+
+        Instance.DiologueBox.SetActive(false);
+        Instance.skip.SetActive(false);
+        Instance.nameTextObj.SetActive(false);
+        Instance.DialogPanel.SetActive(false);
        
     }
 

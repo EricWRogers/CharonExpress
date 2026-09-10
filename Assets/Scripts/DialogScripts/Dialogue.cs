@@ -182,6 +182,7 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.nameTextObj.SetActive(false);
         TextBoxManager.Instance.Objportrait.SetActive(false);
         TextBoxManager.Instance.textComponent.text = string.Empty;
+        TextBoxManager.Instance.DialogPanel.SetActive(false);
         EndDialogueEvent.Invoke();
     }
 

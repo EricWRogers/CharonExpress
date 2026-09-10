@@ -3,6 +3,7 @@ using UnityEngine;
 public class QuestGiver : MonoBehaviour, IInteractable
 {
     public ChairScript chair;
+    public DialogInteraction text;
 
     // Put the quests this NPC can give here.
     public Quest[] quests;
@@ -29,6 +30,8 @@ public class QuestGiver : MonoBehaviour, IInteractable
             return;
         }
 
+        // call the dialogue stuff
+        text.StartDiologue();
         // give a new quest based on this NPC's chair task.
         Quest quest = GetQuestFromChair();
 
