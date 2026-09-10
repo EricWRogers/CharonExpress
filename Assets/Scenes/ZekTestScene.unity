@@ -927,8 +927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38926ca443661ed44b9a091920199761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
-  taskID: ButtonGame1
-  minigameID: Button1
+  taskID: Button1
+  minigameID: ButtonGame1
   ButtonGame1UI: {fileID: 0}
   ButtonGame2UI: {fileID: 0}
   ButtonGame3UI: {fileID: 0}
