@@ -31,7 +31,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
         }
 
         // call the dialogue stuff
-        text.StartDiologue();
+        //text.StartDiologue();
         // give a new quest based on this NPC's chair task.
         Quest quest = GetQuestFromChair();
 

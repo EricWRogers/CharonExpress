@@ -15,10 +15,13 @@ public class ChairScript : MonoBehaviour
     public String ghostName = "";
     public bool ghostActive = false;
     public String task = "";
-    public int customerTimer;
-    public int cooldownTimer;
+    public float customerTimer;
+    public float maxCustomerTimer;
+    float ratio;
+    public float cooldownTimer;
     public GameObject ghostObject;
     public GameObject InteractUI;
+    public GameObject meter;
     void Start()
     {
         player = GameObject.Find("Player");
@@ -36,6 +39,8 @@ public class ChairScript : MonoBehaviour
         if (customerTimer > 0)
         {
             customerTimer--;
+            ratio = customerTimer / maxCustomerTimer;
+            meter.transform.localScale = new Vector3(ratio, 1.0f, 1.0f);
         } 
         else if (cooldownTimer > 0)
         {
@@ -48,16 +53,20 @@ public class ChairScript : MonoBehaviour
             ghostObject.transform.GetChild(0).gameObject.SetActive(true);
             Debug.Log("I GAVE IT LIFE");
             chairManagerScript.AssignGhost(gameObject);
-            customerTimer = UnityEngine.Random.Range(500, 2000);
+            customerTimer = UnityEngine.Random.Range(300, 500);
+            maxCustomerTimer = customerTimer;
         }
         else if (customerTimer == 0 && ghostActive == true) 
         {
             ghostActive = false;
-            if (ghostObject.transform.GetChild(0).gameObject.activeInHierarchy) ghostObject.transform.GetChild(0).gameObject.SetActive(false);
-            if (InteractUI.activeInHierarchy && Vector3.Distance(transform.position, player.transform.position) < 2) InteractUI.SetActive(false);
+            if (ghostObject.transform.GetChild(0).gameObject.activeInHierarchy) 
+                ghostObject.transform.GetChild(0).gameObject.SetActive(false);
+
+            //if (InteractUI.activeInHierarchy && Vector3.Distance(transform.position, player.transform.position) < 2) 
+            //    InteractUI.SetActive(false);
             ghostObject.SetActive(false);
             Debug.Log("I KILLED IT");
-            cooldownTimer = UnityEngine.Random.Range(1000,500);
+            cooldownTimer = UnityEngine.Random.Range(100,500);
         } 
     }
 
