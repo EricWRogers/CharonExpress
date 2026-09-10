@@ -4,6 +4,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
 {
     public ChairScript chair;
     public DialogInteraction text;
+    public Dialogue texts;
 
     // Put the quests this NPC can give here.
     public Quest[] quests;

@@ -22,7 +22,7 @@ public class Dialogue : MonoBehaviour
     public bool textActive = false;
     public UnityEvent EndDialogueEvent;
 
-     public string[] dialogText;
+    public string[] dialogText;
 
     //public NPC npc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,13 +42,16 @@ public class Dialogue : MonoBehaviour
             Debug.Log("should skip line");
             LineSkip();
         }
-        
+
     }
 
-    public void startDialogue(){
+    public void startDialogue()
+    {
         Debug.Log("Start Text");
-        foreach (DialogSegment node in lines.nodes){
-            if(!node.GetInputPort("input").IsConnected){
+        foreach (DialogSegment node in lines.nodes)
+        {
+            if (!node.GetInputPort("input").IsConnected)
+            {
                 UpdateDialog(node);
             }
         }
@@ -62,22 +65,24 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(TypeLine());
     }
 
-    IEnumerator TypeLine(){
-        foreach (char c in activeSegment.DialogText[index].ToCharArray()){
+    IEnumerator TypeLine()
+    {
+        foreach (char c in activeSegment.DialogText[index].ToCharArray())
+        {
             TextBoxManager.Instance.textComponent.text += c;
             yield return new WaitForSecondsRealtime(textSpeed);
         }
     }
-    
+
     public void LineSkip()
     {
-        
-        if ( TextBoxManager.Instance.textComponent.text == activeSegment.DialogText[index])
+
+        if (TextBoxManager.Instance.textComponent.text == activeSegment.DialogText[index])
         {
-             if (index < activeSegment.DialogText.Length - 1)
-             {
+            if (index < activeSegment.DialogText.Length - 1)
+            {
                 NextLine();
-             }
+            }
             else
             {
                 NextNode();
@@ -86,10 +91,10 @@ public class Dialogue : MonoBehaviour
         else
         {
             StopAllCoroutines();
-             TextBoxManager.Instance.textComponent.text = activeSegment.DialogText[index];
+            TextBoxManager.Instance.textComponent.text = activeSegment.DialogText[index];
         }
     }
-    
+
 
     public void NextLine()
     {
@@ -143,17 +148,17 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-             if (activeSegment.GetPort("output").IsConnected)
+            if (activeSegment.GetPort("output").IsConnected)
             {
                 UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
-                  TextBoxManager.Instance.textComponent.text = string.Empty;
-                 StartCoroutine(TypeLine());
+                TextBoxManager.Instance.textComponent.text = string.Empty;
+                StartCoroutine(TypeLine());
             }
             else
             {
                 EndDialogue();
             }
-           
+
         }
     }
 
@@ -170,12 +175,14 @@ public class Dialogue : MonoBehaviour
         {
             EndDialogue();
         }
-            
+
     }
 
-    public void EndDialogue(){
+    public void EndDialogue()
+    {
         Debug.Log("End here");
-        foreach( Transform child in TextBoxManager.Instance.buttonParent){
+        foreach (Transform child in TextBoxManager.Instance.buttonParent)
+        {
             Destroy(child.gameObject);
         }
         textActive = false;
@@ -183,17 +190,25 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.Objportrait.SetActive(false);
         TextBoxManager.Instance.textComponent.text = string.Empty;
         TextBoxManager.Instance.DialogPanel.SetActive(false);
+        TextBoxManager.Instance.NoTalk = false;
         EndDialogueEvent.Invoke();
     }
 
-    private void UpdateDialog(DialogSegment newSegment){
+    private void UpdateDialog(DialogSegment newSegment)
+    {
         index = 0;
         activeSegment = newSegment;
         dialogText = newSegment.DialogText;
         TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
         TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
-        foreach(Transform child in TextBoxManager.Instance.buttonParent){
+        foreach (Transform child in TextBoxManager.Instance.buttonParent)
+        {
             Destroy(child.gameObject);
         }
+    }
+
+    public void SetDialogGraph(DialogGraph graph)
+    {
+        lines = graph;
     }
 }
