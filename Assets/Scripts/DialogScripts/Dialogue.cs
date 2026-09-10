@@ -113,7 +113,7 @@ public class Dialogue : MonoBehaviour
 
                 foreach (string answer in (activeSegment as DialogAnswerSegments).Answers)
                 {
-
+                    Debug.Log("should instantiate buttons");
                     GameObject btn = Instantiate(TextBoxManager.Instance.buttonPrefab, TextBoxManager.Instance.buttonParent);
                     btn.GetComponentInChildren<TMP_Text>().text = answer;
 

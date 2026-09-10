@@ -956,6 +956,7 @@ GameObject:
   - component: {fileID: 1191076300}
   - component: {fileID: 1191076299}
   - component: {fileID: 1191076298}
+  - component: {fileID: 1191076302}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1097,6 +1098,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191076296}
   m_CullTransparentMesh: 1
+--- !u!114 &1191076302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191076296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb587f990889d7947a5b3b26f5599909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogInteraction
+  InRange: 0
+  text: {fileID: 1191076298}
+  pauseGame: 0
+  once: 0
+  notAgain: 0
+  scriptedText: 0
+  canTalk: 1
 --- !u!1 &1264933088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,7 +1467,7 @@ MonoBehaviour:
   portrait: {fileID: 2020985486}
   nameText: {fileID: 44460598}
   buttonPrefab: {fileID: 8846818937023194472, guid: b40858fb104d7c244b31dc40233a0163, type: 3}
-  buttonParent: {fileID: 2009175446}
+  buttonParent: {fileID: 1968057198}
   textBox: {fileID: 0}
   skip: {fileID: 157833427}
   nameTextObj: {fileID: 44460596}
