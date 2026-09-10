@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f00797747d86024781f340918865206, type: 3}
+  m_Name: ButtonPress
+  m_EditorClassIdentifier: Assembly-CSharp::Quest
+  questID: a4b28060-a56f-4e85-9b38-15cd24db0c4c
+  questName: Button
+  description: Press the button
+  taskID: 1
+  objectives:
+  - objectiveID: NPCName
+    description: talk to NPCName
+    type: 0
+    isCompleted: 0
+  - objectiveID: Button1
+    description: press that button
+    type: 1
+    isCompleted: 0
+  - objectiveID: NPCName
+    description: Return to NPCName
+    type: 2
+    isCompleted: 0

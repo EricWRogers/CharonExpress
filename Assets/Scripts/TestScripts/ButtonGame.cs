@@ -8,6 +8,8 @@ public class ButtonGame : MonoBehaviour
     public GameObject player;
     public float TimerTime = 10f;
     public GameTimer timerscript;
+    public QuestController questController;
+    public string GameID = "Button1";
 
     public void StartGame()
     {
@@ -25,7 +27,16 @@ public class ButtonGame : MonoBehaviour
             gameRunning = false;
             gameUI.SetActive(false);
             timer.SetActive(false);
+
+            WinGame();
             player.GetComponent<player>().freeze = false;
         }
+    }
+    public void WinGame()
+    {
+        QuestController.Instance.CompleteObjective(
+            Quest.objectiveType.Microgame,
+            GameID
+        );
     }
 }

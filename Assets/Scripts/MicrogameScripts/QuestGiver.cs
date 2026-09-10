@@ -1,0 +1,70 @@
+using UnityEngine;
+
+public class QuestGiver : MonoBehaviour, IInteractable
+{
+    public ChairScript chair;
+
+    // Put the quests this NPC can give here.
+    public Quest[] quests;
+
+    // Unique ID for this NPC.
+    public string npcID;
+
+    public void Interact()
+    {
+        // see if this NPC is the return point for one of the player's active quests.
+        if (QuestController.Instance.CanCompleteObjective(
+            Quest.objectiveType.ReturnToNPC,
+            npcID))
+        {
+            QuestController.Instance.CompleteObjective(
+                Quest.objectiveType.ReturnToNPC,
+                npcID
+            );
+
+            return;
+        }
+
+        // give a new quest based on this NPC's chair task.
+        Quest quest = GetQuestFromChairTask();
+
+        if (quest == null)
+        {
+            Debug.Log(
+                "No quest found for task: " +
+                chair.task
+            );
+
+            return;
+        }
+
+        QuestController.Instance.StartQuest(quest);
+
+        // Complete the talking objective immediately
+        QuestController.Instance.CompleteObjective(
+            Quest.objectiveType.FirstTalk,
+            npcID
+        );
+    }
+
+    private Quest GetQuestFromChairTask()
+    {
+        foreach (Quest quest in quests)
+        {
+            if (quest.taskID == chair.task)
+            {
+                return quest;
+            }
+        }
+
+        return null;
+    }
+
+    public void OnTouchingPlayer()
+    {
+    }
+
+    public void OnNotTouchingPlayer()
+    {
+    }
+}
