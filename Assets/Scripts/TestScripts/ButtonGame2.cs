@@ -8,11 +8,10 @@ public class ButtonGame2 : MonoBehaviour
     public GameObject player;
     public float TimerTime = 10f;
     public GameTimer timerscript;
-    public QuestController questController;
     public string gameID = "ButtonGame2";
+
     public void StartGame()
     {
-        
         timerscript.sliderTimer = TimerTime;
         timerscript.StartGameTimer();
 
@@ -32,8 +31,21 @@ public class ButtonGame2 : MonoBehaviour
             player.GetComponent<player>().freeze = false;
         }
     }
+
     public void WinGame()
     {
-    QuestController.Instance.CompleteMicrogame(gameID);
+        QuestController.Instance.CompleteMicrogame(gameID);
+
+        MicroGameStart[] gameStarts =
+            FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None);
+
+        foreach (MicroGameStart gameStart in gameStarts)
+        {
+            if (gameStart.gameID == gameID)
+            {
+                gameStart.ResetInteraction();
+                break;
+            }
+        }
     }
 }

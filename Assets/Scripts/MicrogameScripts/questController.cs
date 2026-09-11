@@ -33,10 +33,24 @@ public class QuestController : MonoBehaviour
 
     public void StartQuest(Quest quest, QuestGiver questGiver)
     {
-        Quest.QuestProgress progress =
+        // Check if this NPC already gave the player this quest.
+        foreach (Quest.QuestProgress progress in activeQuests)
+        {
+            if (progress.questGiver == questGiver &&
+                progress.quest == quest)
+            {
+                Debug.Log(
+                    "This NPC already gave you this quest."
+                );
+
+                return;
+            }
+        }
+
+        Quest.QuestProgress newProgress =
             new Quest.QuestProgress(quest, questGiver);
 
-        activeQuests.Add(progress);
+        activeQuests.Add(newProgress);
 
         Debug.Log(
             "Started quest: " +
@@ -45,11 +59,11 @@ public class QuestController : MonoBehaviour
             questGiver.name
         );
 
-        if (!progress.IsCompleted &&
-            progress.CurrentObjective.type ==
+        if (!newProgress.IsCompleted &&
+            newProgress.CurrentObjective.type ==
             Quest.objectiveType.FirstTalk)
         {
-            progress.currentObjectiveIndex++;
+            newProgress.currentObjectiveIndex++;
         }
 
         UpdateQuestLog();

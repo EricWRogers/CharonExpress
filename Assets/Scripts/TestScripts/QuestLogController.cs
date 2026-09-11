@@ -14,6 +14,8 @@ public class QuestLogController : MonoBehaviour
 
     [Header("Text Colors")]
     public Color textColor = Color.white;
+
+    public Color currentTextColor = Color.green;
     public Color completedTextColor = Color.gray;
 
     private void Start()
@@ -73,33 +75,43 @@ public class QuestLogController : MonoBehaviour
 
             string questText =
                 "<b><color=#" + normalColor + ">" +
-                quest.questName +
-                "</color></b>\n\n" +
-
-                "<color=#" + normalColor + ">" +
-                quest.description +
-                "</color>\n\n";
-
+                quest.questName + ":" +
+                "</color></b>\n";
             for (int i = 0; i < quest.objectives.Count; i++)
             {
                 Quest.QuestObjective objective = quest.objectives[i];
 
                 if (i < progress.currentObjectiveIndex)
                 {
+                    // Completed objective.
                     questText +=
-                        "<color=#" + completedColor + ">" +
+                        "<color=#" +
+                        ColorUtility.ToHtmlStringRGBA(completedTextColor) +
+                        ">[Done] " +
                         objective.description +
                         "</color>\n";
                 }
+                else if (i == progress.currentObjectiveIndex)
+                {
+                    // Current objective.
+                    questText +=
+                        "<b><color=#" +
+                        ColorUtility.ToHtmlStringRGBA(currentTextColor) +
+                        ">→ " +
+                        objective.description +
+                        "</color></b>\n";
+                }
                 else
                 {
+                    // Future objective.
                     questText +=
-                        "<color=#" + normalColor + ">" +
+                        "<color=#" +
+                        ColorUtility.ToHtmlStringRGBA(textColor) +
+                        ">" +
                         objective.description +
                         "</color>\n";
                 }
             }
-
             text.text = questText;
         }
     }

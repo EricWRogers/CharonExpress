@@ -4,37 +4,25 @@ public class QuestGiver : MonoBehaviour, IInteractable
 {
     public ChairScript chair;
     public DialogInteraction text;
-    public Dialogue texts;
 
-    // Put the quests this NPC can give here.
-    public Quest[] quests;
-
-    // Unique ID for this NPC.
-    public string npcID;
     void Start()
     {
-        ChairScript chairScript = GetComponentInParent<ChairScript>();
+        chair = GetComponentInParent<ChairScript>();
     }
-
     public void Interact()
     {
-        // see if this NPC is the return point for one of the player's active quests.
-        if (QuestController.Instance.CanCompleteObjective(
-            Quest.objectiveType.ReturnToNPC,
-            npcID))
+        // Check if this NPC gave the player a quest that is now ready to be turned in.
+        if (QuestController.Instance.ReturnToNPC(this))
         {
-            QuestController.Instance.CompleteObjective(
-                Quest.objectiveType.ReturnToNPC,
-                npcID
-            );
-
             return;
         }
-
+        
         // call the dialogue stuff
         //text.StartDiologue();
-        // give a new quest based on this NPC's chair task.
-        Quest quest = GetQuestFromChair();
+
+        // Get the quest that matches the task assigned to this NPC's chair.
+        Quest quest =
+            QuestController.Instance.GetQuestFromTask(chair.task);
 
         if (quest == null)
         {
@@ -46,33 +34,13 @@ public class QuestGiver : MonoBehaviour, IInteractable
             return;
         }
 
-        QuestController.Instance.StartQuest(quest);
-
-        // Complete the talking objective immediately
-        QuestController.Instance.CompleteObjective(
-            Quest.objectiveType.FirstTalk,
-            npcID
+        // Start a new copy of the quest and remember this exact NPC as the NPC that gave the quest.
+        QuestController.Instance.StartQuest(
+            quest,
+            this
         );
     }
 
-    private Quest GetQuestFromChair()
-    {
-        foreach (Quest quest in quests)
-        {
-            if (quest.taskID == chair.task)
-            {
-                return quest;
-            }
-        }
-
-        return null;
-    }
-
-    public void OnTouchingPlayer()
-    {
-    }
-
-    public void OnNotTouchingPlayer()
-    {
-    }
+    public void OnTouchingPlayer() {}
+    public void OnNotTouchingPlayer() {}
 }
