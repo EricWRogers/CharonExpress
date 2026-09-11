@@ -3,24 +3,20 @@ using UnityEngine;
 public class MicroGameStart : MonoBehaviour, IInteractable
 {
     [Header("Quest ID")]
-    [Tooltip("Must match the MiniGame objective ID in the Quest asset.")]
-    public string taskID;
+    [Tooltip("Must match the Microgame game ID in the Quest asset.")]
+    public string gameID;
 
     [Header("Minigame")]
-    [Tooltip("The minigame this location starts.")]
-    public string minigameID;
     [Tooltip("The UI's for each game.")]
 
     public GameObject ButtonGame1UI;
     public GameObject ButtonGame2UI;
     public GameObject ButtonGame3UI;
 
-
     [Header("Interaction")]
     public bool interacted = false;
 
     [Header("Timer Stuff")]
-    public GameTimer timerScript;
     public GameObject TimerUI;
 
     void Start()
@@ -29,9 +25,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         ButtonGame2UI = FindInactiveObject("ButtonGame2UI");
         ButtonGame3UI = FindInactiveObject("ButtonGame3UI");
 
-
         TimerUI = FindInactiveObject("GameTimer");
-        timerScript = TimerUI.GetComponent<GameTimer>();
     }
 
     GameObject FindInactiveObject(string name)
@@ -51,7 +45,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // Only allow interaction if this location is the current objective of an active quest.
         if (!IsValidQuestTask())
         {
             Debug.Log("This task is not currently required by a quest.");
@@ -70,26 +63,28 @@ public class MicroGameStart : MonoBehaviour, IInteractable
     {
         return QuestController.Instance.CanCompleteObjective(
             Quest.objectiveType.Microgame,
-            taskID
+            gameID
         );
     }
 
     private void StartMinigame()
     {
-        Debug.Log("Starting minigame: " + minigameID);
+        Debug.Log("Starting minigame: " + gameID);
 
-        switch (minigameID)
+        switch (gameID)
         {
             case "ButtonGame1":
                 TimerUI.SetActive(true);
 
                 ButtonGame1UI.SetActive(true);
                 ButtonGame1UI.GetComponent<ButtonGame>().StartGame();
-                timerScript.sliderTimer = ButtonGame1UI.GetComponent<ButtonGame>().TimerTime;
                 break;
 
             case "ButtonGame2":
-                // Start ButtonGame2
+                TimerUI.SetActive(true);
+
+                ButtonGame2UI.SetActive(true);
+                ButtonGame2UI.GetComponent<ButtonGame2>().StartGame();
                 break;
 
             case "ButtonGame3":
@@ -98,19 +93,17 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
             default:
                 Debug.LogWarning(
-                    "No minigame found for ID: " + minigameID
+                    "No minigame found for ID: " + gameID
                 );
                 break;
         }
     }
 
-    public void OnTouchingPlayer()
+    public void ResetInteraction()
     {
-
+        interacted = false;
     }
 
-    public void OnNotTouchingPlayer()
-    {
-
-    }
+    public void OnTouchingPlayer() {}
+    public void OnNotTouchingPlayer() {}
 }

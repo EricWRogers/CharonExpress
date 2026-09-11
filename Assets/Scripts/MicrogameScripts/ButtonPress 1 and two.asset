@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f00797747d86024781f340918865206, type: 3}
-  m_Name: ButtonPress
+  m_Name: ButtonPress 1 and two
   m_EditorClassIdentifier: Assembly-CSharp::Quest
-  questName: Button
+  questName: Button 1 and 2
   description: Press the button
-  taskID: 1
+  taskID: 2
   objectives:
   - gameID: 
-    description: talk to NPCName
+    description: talk to NPC
     type: 0
   - gameID: ButtonGame1
     description: press that button
+    type: 1
+  - gameID: ButtonGame2
+    description: press that second button
     type: 1
   - gameID: 
     description: Return to NPCName

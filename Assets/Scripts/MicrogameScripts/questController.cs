@@ -8,44 +8,58 @@ public class QuestController : MonoBehaviour
     public List<Quest.QuestProgress> activeQuests =
         new List<Quest.QuestProgress>();
 
+    [Header("All Quests")]
+    public Quest[] quests;
+
+    public QuestLogController questLogUI;
+
     private void Awake()
     {
         Instance = this;
     }
 
-    public void StartQuest(Quest quest)
+    public Quest GetQuestFromTask(string taskID)
     {
-        // Don't start the same quest twice
-        if (HasQuest(quest.questID))
+        foreach (Quest quest in quests)
         {
-            Debug.Log("Already have quest: " + quest.questName);
-            return;
+            if (quest.taskID == taskID)
+            {
+                return quest;
+            }
         }
 
+        return null;
+    }
+
+    public void StartQuest(Quest quest, QuestGiver questGiver)
+    {
         Quest.QuestProgress progress =
-            new Quest.QuestProgress(quest);
+            new Quest.QuestProgress(quest, questGiver);
 
         activeQuests.Add(progress);
 
-        Debug.Log("Started quest: " + quest.questName);
-    }
+        Debug.Log(
+            "Started quest: " +
+            quest.questName +
+            " from " +
+            questGiver.name
+        );
 
-    public bool HasQuest(string questID)
-    {
-        foreach (var progress in activeQuests)
+        if (!progress.IsCompleted &&
+            progress.CurrentObjective.type ==
+            Quest.objectiveType.FirstTalk)
         {
-            if (progress.QuestID == questID)
-                return true;
+            progress.currentObjectiveIndex++;
         }
 
-        return false;
+        UpdateQuestLog();
     }
 
     public bool CanCompleteObjective(
         Quest.objectiveType type,
-        string objectiveID)
+        string gameID)
     {
-        foreach (var progress in activeQuests)
+        foreach (Quest.QuestProgress progress in activeQuests)
         {
             if (progress.IsCompleted)
                 continue;
@@ -54,7 +68,7 @@ public class QuestController : MonoBehaviour
                 progress.CurrentObjective;
 
             if (objective.type == type &&
-                objective.objectiveID == objectiveID)
+                objective.gameID == gameID)
             {
                 return true;
             }
@@ -63,11 +77,9 @@ public class QuestController : MonoBehaviour
         return false;
     }
 
-    public void CompleteObjective(
-        Quest.objectiveType type,
-        string objectiveID)
+    public void CompleteMicrogame(string gameID)
     {
-        foreach (var progress in activeQuests)
+        foreach (Quest.QuestProgress progress in activeQuests)
         {
             if (progress.IsCompleted)
                 continue;
@@ -75,26 +87,59 @@ public class QuestController : MonoBehaviour
             Quest.QuestObjective objective =
                 progress.CurrentObjective;
 
-            if (objective.type == type &&
-                objective.objectiveID == objectiveID)
+            if (objective.type == Quest.objectiveType.Microgame &&
+                objective.gameID == gameID)
             {
                 Debug.Log(
-                    "Completed objective: " +
+                    "Completed microgame objective: " +
                     objective.description
                 );
 
                 progress.currentObjectiveIndex++;
 
-                if (progress.IsCompleted)
-                {
-                    Debug.Log(
-                        "QUEST COMPLETE: " +
-                        progress.quest.questName
-                    );
-                }
+                UpdateQuestLog();
 
                 return;
             }
+        }
+    }
+
+    public bool ReturnToNPC(QuestGiver questGiver)
+    {
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            Quest.QuestProgress progress = activeQuests[i];
+
+            if (progress.IsCompleted)
+                continue;
+
+            if (progress.questGiver != questGiver)
+                continue;
+
+            if (progress.CurrentObjective.type ==
+                Quest.objectiveType.ReturnToNPC)
+            {
+                Debug.Log(
+                    "Completed quest: " +
+                    progress.quest.questName
+                );
+
+                activeQuests.RemoveAt(i);
+
+                UpdateQuestLog();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void UpdateQuestLog()
+    {
+        if (questLogUI != null)
+        {
+            questLogUI.UpdateQuestLog();
         }
     }
 }

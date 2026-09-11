@@ -1,51 +1,46 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
-
-[CreateAssetMenu(menuName = "Quests/Quest:")]
+[CreateAssetMenu(menuName = "Quests/Quest")]
 public class Quest : ScriptableObject
 {
-    public string questID;
     public string questName;
+
+    [TextArea]
     public string description;
-    [Tooltip("Must be the same as the task set in the chair manager/chair script.")]
+
+    [Tooltip("Must match the task value from ChairScript.")]
     public string taskID;
+
     public List<QuestObjective> objectives;
-    public enum objectiveType {FirstTalk, Microgame, ReturnToNPC}
 
-
-    //called when scriptable object is edited
-    private void OnValidate()
+    public enum objectiveType
     {
-        if (string.IsNullOrEmpty(questID))
-        {
-            questID = questName + Guid.NewGuid().ToString();
-        }
+        FirstTalk,
+        Microgame,
+        ReturnToNPC
     }
-    [System.Serializable]
+
+    [Serializable]
     public class QuestObjective
     {
-        public string objectiveID; //match this with item ID that you need to collect, microgame to complete, etc
+        public string gameID;
         public string description;
         public objectiveType type;
-
-        public bool isCompleted;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class QuestProgress
     {
         public Quest quest;
-
-        // Which objective the player is currently doing
+        public QuestGiver questGiver;
         public int currentObjectiveIndex;
 
-        public QuestProgress(Quest quest)
+        public QuestProgress(Quest quest, QuestGiver questGiver)
         {
             this.quest = quest;
+            this.questGiver = questGiver;
             currentObjectiveIndex = 0;
         }
 
@@ -62,12 +57,7 @@ public class Quest : ScriptableObject
 
         public bool IsCompleted
         {
-            get
-            {
-                return currentObjectiveIndex >= quest.objectives.Count;
-            }
+            get { return currentObjectiveIndex >= quest.objectives.Count; }
         }
-
-        public string QuestID => quest.questID;
     }
 }

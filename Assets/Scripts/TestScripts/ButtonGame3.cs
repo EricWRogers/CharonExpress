@@ -8,11 +8,12 @@ public class ButtonGame3 : MonoBehaviour
     public GameObject player;
     public float TimerTime = 10f;
     public GameTimer timerscript;
-    
+    public QuestController questController;
+    public string gameID = "ButtonGame3";
 
     public void StartGame()
     {
-
+        
         timerscript.sliderTimer = TimerTime;
         timerscript.StartGameTimer();
 
@@ -27,7 +28,13 @@ public class ButtonGame3 : MonoBehaviour
             gameRunning = false;
             gameUI.SetActive(false);
             timer.SetActive(false);
+
+            WinGame();
             player.GetComponent<player>().freeze = false;
         }
+    }
+    public void WinGame()
+    {
+    QuestController.Instance.CompleteMicrogame(gameID);
     }
 }
