@@ -7,6 +7,7 @@ public class ChairManager : MonoBehaviour
     public bool testBool;
     public GameObject[] chairs;
     [SerializeField] GameObject[] ghosts;
+    public GameObject ghostPrefab;
 
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
