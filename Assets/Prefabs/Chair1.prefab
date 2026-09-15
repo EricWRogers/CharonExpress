@@ -241,6 +241,8 @@ GameObject:
   - component: {fileID: 3219103163458912131}
   - component: {fileID: 3955111053312917804}
   - component: {fileID: 828216698198375865}
+  - component: {fileID: 4338010756403523191}
+  - component: {fileID: 1286369975210838628}
   m_Layer: 0
   m_Name: Ghost1
   m_TagString: Ghost
@@ -343,6 +345,46 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4338010756403523191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3087103871221183328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb587f990889d7947a5b3b26f5599909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogInteraction
+  InRange: 0
+  text: {fileID: 1286369975210838628}
+  pauseGame: 0
+  once: 0
+  notAgain: 0
+  scriptedText: 0
+  canTalk: 1
+--- !u!114 &1286369975210838628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3087103871221183328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96c9c3b4c833674e928a2c499f3bd7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
+  lines: {fileID: 11400000, guid: f71626beb80f654439bb29de280eb231, type: 2}
+  activeSegment: {fileID: 0}
+  textSpeed: 0
+  textActive: 0
+  EndDialogueEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  dialogText: []
+  questGiver: {fileID: 4639771464614631377}
 --- !u!1 &4639771464614631377
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,8 +510,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e8325c7bb2a6d4c93f8420412534ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiver
-  chair: {fileID: 0}
-  text: {fileID: 0}
+  chair: {fileID: 3745415525123190167}
+  text: {fileID: 4338010756403523191}
+  questid: 
 --- !u!1 &5321342558152699112
 GameObject:
   m_ObjectHideFlags: 0

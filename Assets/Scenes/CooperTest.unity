@@ -2537,9 +2537,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
   gameID: 
-  ButtonGame1UI: {fileID: 0}
-  ButtonGame2UI: {fileID: 0}
-  ButtonGame3UI: {fileID: 0}
+  ButtonGame1UI: {fileID: 668979142}
+  ButtonGame2UI: {fileID: 223731170}
+  ButtonGame3UI: {fileID: 500571888}
   interacted: 0
   TimerUI: {fileID: 0}
 --- !u!135 &822771890
