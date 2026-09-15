@@ -1,9 +1,11 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class QuestGiver : MonoBehaviour, IInteractable
 {
     public ChairScript chair;
     public DialogInteraction text;
+    public string questid;
 
     void Start()
     {
@@ -18,21 +20,44 @@ public class QuestGiver : MonoBehaviour, IInteractable
         }
         
         // call the dialogue stuff
-        //text.StartDiologue();
+        text.StartDiologue();
 
         // Get the quest that matches the task assigned to this NPC's chair.
-        Quest quest =
-            QuestController.Instance.GetQuestFromTask(chair.task);
+        /* Quest quest =
+            QuestController.Instance.GetQuestFromTask(questid);
 
         if (quest == null)
         {
             Debug.Log(
                 "No quest found for task: " +
-                chair.task
+                questid
             );
 
             return;
         }
+        Debug.Log(quest);
+
+        // Start a new copy of the quest and remember this exact NPC as the NPC that gave the quest.
+        QuestController.Instance.StartQuest(
+            quest,
+            this
+        );*/
+    }
+    public void GiveQuest(string questid)
+    {
+         Quest quest =
+            QuestController.Instance.GetQuestFromTask(questid);
+
+        if (quest == null)
+        {
+            Debug.Log(
+                "No quest found for task: " +
+                questid
+            );
+
+            return;
+        }
+        Debug.Log(quest);
 
         // Start a new copy of the quest and remember this exact NPC as the NPC that gave the quest.
         QuestController.Instance.StartQuest(
@@ -41,6 +66,6 @@ public class QuestGiver : MonoBehaviour, IInteractable
         );
     }
 
-    public void OnTouchingPlayer() {}
+    public void OnTouchingPlayer() { }
     public void OnNotTouchingPlayer() {}
 }

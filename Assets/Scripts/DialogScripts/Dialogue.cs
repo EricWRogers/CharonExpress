@@ -23,6 +23,7 @@ public class Dialogue : MonoBehaviour
     public UnityEvent EndDialogueEvent;
 
     public string[] dialogText;
+    public GameObject questGiver;
 
     //public NPC npc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -145,6 +146,30 @@ public class Dialogue : MonoBehaviour
                 }
             }
 
+        }
+        else if (activeSegment is QuestGiverSegment)
+        {
+            if ((activeSegment as QuestGiverSegment).quest != null)
+            {
+                questGiver.GetComponent<QuestGiver>().GiveQuest((activeSegment as QuestGiverSegment).quest);
+                Debug.Log("gave questid");
+            }
+
+
+            if (activeSegment.GetPort("output").IsConnected)
+            {
+                Debug.Log("new segment");
+                UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
+                TextBoxManager.Instance.textComponent.text = string.Empty;
+                StartCoroutine(TypeLine());
+            }
+            else
+            {
+                Debug.Log("no output detected");
+                EndDialogue();
+            }
+            
+            
         }
         else
         {
