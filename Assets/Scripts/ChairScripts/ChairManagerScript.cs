@@ -16,7 +16,7 @@ public class ChairManager : MonoBehaviour
 
     //Sample list of names that is assigned to the chair/ghost
     String[] names = {"Sawyer", "Zek", "Cooper", "John", "Joe"};
-    [SerializeField] String[] tasks = {"1", "2", "3"};
+    public DialogGraph[] tasks = {};
 
 
     void Start()
@@ -42,9 +42,9 @@ public class ChairManager : MonoBehaviour
     public void AssignGhost(GameObject chair)
     {
         customerTotal++;
-        ChairScript chairScript = chair.GetComponent<ChairScript>();
-        string taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
-        chairScript.task = taskToAssign;
+        Dialogue chairScript = chair.GetComponent<Dialogue>();
+        DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
+        chairScript.lines = taskToAssign;
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
     }
 }
