@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6fdf8a2ea96ae4449489faeac4db301, type: 3}
-  m_Name: New Dialog Graph
+  m_Name: DialogueGraph1
   m_EditorClassIdentifier: Assembly-CSharp::DialogGraph
   nodes:
   - {fileID: 2469312536132089803}

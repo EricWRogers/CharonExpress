@@ -52,7 +52,7 @@ public class ChairScript : MonoBehaviour
             ghostObject.SetActive(true);
             ghostObject.transform.GetChild(0).gameObject.SetActive(true);
             Debug.Log("I GAVE IT LIFE");
-            chairManagerScript.AssignGhost(gameObject);
+            chairManagerScript.AssignGhost(ghostObject);
             customerTimer = UnityEngine.Random.Range(300, 500);
             maxCustomerTimer = customerTimer;
         }
