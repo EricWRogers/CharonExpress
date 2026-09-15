@@ -48,6 +48,7 @@ public class Dialogue : MonoBehaviour
 
     public void startDialogue()
     {
+        Time.timeScale = 0f;
         Debug.Log("Start Text");
         foreach (DialogSegment node in lines.nodes)
         {
@@ -216,6 +217,7 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.textComponent.text = string.Empty;
         TextBoxManager.Instance.DialogPanel.SetActive(false);
         TextBoxManager.Instance.NoTalk = false;
+        Time.timeScale = 1f;
         EndDialogueEvent.Invoke();
     }
 
