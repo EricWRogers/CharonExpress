@@ -719,6 +719,8 @@ MonoBehaviour:
   timer: {fileID: 95840085}
   player: {fileID: 120738306}
   TimerTime: 100
+  timerscript: {fileID: 0}
+  gameID: ButtonGame2
 --- !u!114 &223827667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2023,67 +2025,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068778547}
   m_CullTransparentMesh: 1
---- !u!1001 &1148100817
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 29816501188395043, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_Name
-      value: Chair1 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3087103871221183328, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.159502
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.4608849
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
 --- !u!1 &1166144655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,13 +2769,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   testBool: 0
   chairs: []
-  ghosts:
-  - {fileID: 0}
+  ghostPrefab: {fileID: 0}
   customerTotal: 0
   tasks:
-  - 1
-  - 2
-  - 3
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1426898067
 Transform:
   m_ObjectHideFlags: 0
@@ -3020,67 +2960,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!1001 &1457485037
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 29816501188395043, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_Name
-      value: Chair1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3087103871221183328, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.591354
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.4608852
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
 --- !u!1 &1460768406
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3195,8 @@ MonoBehaviour:
   timer: {fileID: 95840085}
   player: {fileID: 120738306}
   TimerTime: 10
+  timerscript: {fileID: 0}
+  gameID: ButtonGame1
 --- !u!114 &1841423534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3331,6 +3212,76 @@ MonoBehaviour:
   timerBar: {fileID: 1305868207}
   sliderTimer: 10
   stopTimer: 0
+--- !u!1001 &1908395601
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 29816501188395043, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_Name
+      value: Chair1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 120738306}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: chairManager
+      value: 
+      objectReference: {fileID: 1426898065}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.7496486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.4608848
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.2746121
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 3087103871221183328, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
 --- !u!1 &2067459579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,6 +3320,8 @@ MonoBehaviour:
   timer: {fileID: 95840085}
   player: {fileID: 120738306}
   TimerTime: 1
+  timerscript: {fileID: 0}
+  gameID: ButtonGame3
 --- !u!114 &2067459581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3620,5 +3573,4 @@ SceneRoots:
   - {fileID: 2067459585}
   - {fileID: 95840091}
   - {fileID: 1426898067}
-  - {fileID: 1457485037}
-  - {fileID: 1148100817}
+  - {fileID: 1908395601}

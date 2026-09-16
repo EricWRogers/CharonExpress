@@ -1043,6 +1043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiver
   chair: {fileID: 920676267}
   text: {fileID: 0}
+  questid: 
 --- !u!65 &227053919
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1342,6 +1343,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
     - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.6131654
@@ -1383,7 +1388,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3087103871221183328, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
@@ -2816,12 +2822,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   chairManager: {fileID: 0}
+  ghostPrefab: {fileID: 0}
   player: {fileID: 0}
   ghostName: 
   ghostActive: 0
   task: 
-  customerTimer: 0
-  maxCustomerTimer: 0
   cooldownTimer: 0
   ghostObject: {fileID: 0}
   InteractUI: {fileID: 0}
@@ -3667,12 +3672,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   chairManager: {fileID: 0}
+  ghostPrefab: {fileID: 0}
   player: {fileID: 0}
   ghostName: 
   ghostActive: 0
   task: 
-  customerTimer: 0
-  maxCustomerTimer: 0
   cooldownTimer: 0
   ghostObject: {fileID: 0}
   InteractUI: {fileID: 655806832}
@@ -4009,14 +4013,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   testBool: 0
   chairs: []
-  ghosts:
-  - {fileID: 2014276177}
-  - {fileID: 569388824}
+  ghostPrefab: {fileID: 0}
   customerTotal: 0
   tasks:
-  - 1
-  - 2
-  - 3
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1426898067
 Transform:
   m_ObjectHideFlags: 0
@@ -4496,6 +4498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiver
   chair: {fileID: 1334924836}
   text: {fileID: 0}
+  questid: 
 --- !u!1 &1841423527
 GameObject:
   m_ObjectHideFlags: 0
@@ -4630,6 +4633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chair1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
     - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.550983
@@ -4671,7 +4678,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3087103871221183328, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}

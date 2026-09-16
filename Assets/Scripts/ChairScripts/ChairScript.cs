@@ -24,8 +24,7 @@ public class ChairScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        cooldownTimer = UnityEngine.Random.Range(10, 500);
-        ghostObject = transform.GetChild(1).gameObject;
+        cooldownTimer = UnityEngine.Random.Range(1, 5);
         chairManager = GameObject.Find("ChairManager");
         InteractUI = GameObject.Find("InteractUI");
         chairManagerScript = chairManager.GetComponent<ChairManager>();
@@ -41,9 +40,11 @@ public class ChairScript : MonoBehaviour
         else if (cooldownTimer <= 0 && ghostActive == false)
         {
             ghostObject = Instantiate(ghostPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            Debug.Log(ghostObject.name);
             ghostActive = true;
+            Debug.Log(ghostObject.GetComponent<GhostScript>());
             GhostScript ghostScript = ghostObject.GetComponent<GhostScript>();
-            ghostScript.chairScript = this;
+            ghostScript.chairScript = gameObject.GetComponent<ChairScript>();
             ghostScript.customerTimer = UnityEngine.Random.Range(5,10);
             Debug.Log("I GAVE IT LIFE");
             chairManagerScript.AssignGhost(gameObject);

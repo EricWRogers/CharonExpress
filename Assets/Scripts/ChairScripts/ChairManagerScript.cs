@@ -6,7 +6,6 @@ public class ChairManager : MonoBehaviour
 {
     public bool testBool;
     public GameObject[] chairs;
-    [SerializeField] GameObject[] ghosts;
     public GameObject ghostPrefab;
 
     //Keeps track of how many ghosts have been through in total
@@ -24,10 +23,6 @@ public class ChairManager : MonoBehaviour
         chairs = GameObject.FindGameObjectsWithTag("Chair");
 
         //Hides the ghosts. They will be toggled on when appropriate.
-        foreach (GameObject ghost in ghosts)
-        {
-            ghost.SetActive(false);
-        }
     }
 
     void Update()
@@ -41,10 +36,11 @@ public class ChairManager : MonoBehaviour
 
     public void AssignGhost(GameObject chair)
     {
+        /*
         customerTotal++;
         Dialogue chairScript = chair.GetComponent<Dialogue>();
         DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
-        chairScript.lines = taskToAssign;
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
+        */
     }
 }
