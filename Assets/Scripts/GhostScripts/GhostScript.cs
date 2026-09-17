@@ -8,20 +8,20 @@ public class GhostScript : MonoBehaviour
     public GameObject player;
     public ChairScript chairScript;
     public String ghostName = "";
-    public bool ghostActive = false;
     public String task = "";
     public float customerTimer;
     public float maxCustomerTimer;
-    float ratio;
+    public float ratio;
     public GameObject InteractUI;
     public GameObject meter;
     void Start()
     {
         player = GameObject.Find("Player");
-        customerTimer = 0;
         ghostObject = transform.GetChild(1).gameObject;
         chairManager = GameObject.Find("ChairManager");
         InteractUI = GameObject.Find("InteractUI");
+        meter = transform.GetChild(1).gameObject;
+        maxCustomerTimer = customerTimer;
     }
 
     // Update is called once per frame
@@ -31,9 +31,9 @@ public class GhostScript : MonoBehaviour
         {
             customerTimer-= Time.deltaTime;
             ratio = customerTimer / maxCustomerTimer;
-            meter.transform.localScale = new Vector3(ratio, 1.0f, 1.0f);
+            meter.transform.localScale = new Vector3(ratio, 0.2f, 1.0f);
         } 
-        else if (customerTimer <= 0 && ghostActive == true) 
+        else if (customerTimer <= 0 && chairScript.ghostActive) 
         {
             chairScript.cooldownTimer = UnityEngine.Random.Range(5,10);
             chairScript.ghostActive = false;
