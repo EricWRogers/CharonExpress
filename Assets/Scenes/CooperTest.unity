@@ -2283,7 +2283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   testBool: 0
   chairs: []
-  ghostPrefab: {fileID: 0}
+  ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
   customerTotal: 0
   tasks:
   - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
