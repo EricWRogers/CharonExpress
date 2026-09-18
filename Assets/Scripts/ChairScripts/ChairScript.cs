@@ -47,7 +47,6 @@ public class ChairScript : MonoBehaviour
             ghostScript.chairScript = gameObject.GetComponent<ChairScript>();
             ghostScript.customerTimer = UnityEngine.Random.Range(5,10);
             Debug.Log("I GAVE IT LIFE");
-            chairManagerScript.AssignGhost(gameObject);
             chairManagerScript.AssignGhost(ghostObject);
         }
     }

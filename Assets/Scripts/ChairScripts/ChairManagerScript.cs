@@ -36,11 +36,10 @@ public class ChairManager : MonoBehaviour
 
     public void AssignGhost(GameObject chair)
     {
-        /*
         customerTotal++;
         Dialogue chairScript = chair.GetComponent<Dialogue>();
         DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
+        chairScript.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
-        */
     }
 }
