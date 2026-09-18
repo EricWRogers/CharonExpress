@@ -10,6 +10,8 @@ public class GameTimer : MonoBehaviour
     public bool stopTimer = false;
     public void StartGameTimer()
     {
+        stopTimer = false;
+
         timerBar.maxValue = sliderTimer;
         timerBar.value = sliderTimer;
         currentTime = sliderTimer;

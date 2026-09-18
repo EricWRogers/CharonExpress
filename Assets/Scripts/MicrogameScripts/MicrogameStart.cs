@@ -12,6 +12,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
     public GameObject ButtonGame1UI;
     public GameObject ButtonGame2UI;
     public GameObject ButtonGame3UI;
+    public GameObject FallingCatchUI;
 
     [Header("Interaction")]
     public bool interacted = false;
@@ -24,6 +25,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         ButtonGame1UI = FindInactiveObject("ButtonGame1UI");
         ButtonGame2UI = FindInactiveObject("ButtonGame2UI");
         ButtonGame3UI = FindInactiveObject("ButtonGame3UI");
+        FallingCatchUI = FindInactiveObject("FallingCatchUI");
 
         TimerUI = FindInactiveObject("GameTimer");
     }
@@ -89,6 +91,13 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
             case "ButtonGame3":
                 // Start ButtonGame3
+                break;
+
+            case "FallingCatchGame":
+                TimerUI.SetActive(true);
+
+                FallingCatchUI.SetActive(true);
+                FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
                 break;
 
             default:

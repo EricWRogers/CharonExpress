@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96c9c3b4c833674e928a2c499f3bd7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  lines: {fileID: 11400000, guid: f71626beb80f654439bb29de280eb231, type: 2}
+  lines: {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   activeSegment: {fileID: 0}
   textSpeed: 0
   textActive: 0
