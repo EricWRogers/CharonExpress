@@ -50,9 +50,7 @@ public class FallingObjectSpawner : MonoBehaviour
     {
         bool good = Random.value * 100f < goodSpawnPercentage;
 
-        RectTransform prefab = good
-            ? goodPrefab
-            : badPrefab;
+        RectTransform prefab = good ? goodPrefab : badPrefab;
 
         FallingObject obj =
             Instantiate(prefab, playArea)
