@@ -15,7 +15,8 @@ public class FallingCatchGame : MonoBehaviour
 
     public float basketSpeed = 500f;
     public float timerTime = 10f;
-    public float winPercentage = 70f;
+    //public float winPercentage = 70f;
+    public int winAmount = 5;
 
     public string gameID = "FallingCatchGame";
 
@@ -100,7 +101,13 @@ public class FallingCatchGame : MonoBehaviour
         if (good)
             goodCaught++;
         else
-            badCaught++;
+            //badCaught++;
+            EndGame();
+
+        if (goodCaught >= winAmount)
+        {
+            EndGame();
+        }
     }
 
     void EndGame()
@@ -110,19 +117,22 @@ public class FallingCatchGame : MonoBehaviour
 
         int total = goodCaught + badCaught;
 
+        /*
         float percentage = total == 0
             ? 0
             : (float)goodCaught / total * 100f;
 
         Debug.Log(
             $"Good: {goodCaught} Bad: {badCaught} Percentage: {percentage}"
-        );
+        ); 
+        */
 
         gameUI.SetActive(false);
         timer.SetActive(false);
 
         playerController.freeze = false;
 
+        /*
         if (percentage >= winPercentage)
         {
             QuestController.Instance.CompleteMicrogame(gameID);
@@ -131,6 +141,12 @@ public class FallingCatchGame : MonoBehaviour
         else
         {
             Debug.Log("YOU LOSE!");
+        }
+        */
+
+        if (goodCaught >= winAmount)
+        {
+            QuestController.Instance.CompleteMicrogame(gameID);
         }
 
         spawner.ClearObjects();
