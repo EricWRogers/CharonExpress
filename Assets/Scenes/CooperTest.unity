@@ -461,6 +461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140641089}
   - component: {fileID: 140641090}
+  - component: {fileID: 140641091}
   m_Layer: 0
   m_Name: Typer
   m_TagString: Untagged
@@ -497,6 +498,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Typer
   typingPanel: {fileID: 331707915}
   wordOutput: {fileID: 1403244923}
+  wordBank: {fileID: 140641091}
+--- !u!114 &140641091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140641088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2821d28444c3f3249bfd517f55ab212a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WordBank
+  originalWords:
+  - Katabasis
+  - Charon
+  - Express
 --- !u!1 &157833427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1391334736195506634, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}

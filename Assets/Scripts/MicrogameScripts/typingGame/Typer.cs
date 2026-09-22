@@ -7,6 +7,7 @@ public class Typer : MonoBehaviour
 {
     public GameObject typingPanel;
     public TMP_Text wordOutput;
+    public WordBank wordBank;
 
     private string remainingWord = string.Empty;
     private string currentWord = "testing a sentence in the typing game";
@@ -19,6 +20,7 @@ public class Typer : MonoBehaviour
     private void SetCurrentWord()
     {
         //Get bank word
+        currentWord = wordBank.GetWord();
         SetRemainingWord(currentWord);
     }
 
