@@ -460,6 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 140641089}
+  - component: {fileID: 140641090}
   m_Layer: 0
   m_Name: Typer
   m_TagString: Untagged
@@ -482,6 +483,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &140641090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140641088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d8b60039e05be4ab00e518cd9e29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Typer
+  typingPanel: {fileID: 331707915}
+  wordOutput: {fileID: 1403244923}
 --- !u!1 &157833427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1391334736195506634, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
@@ -1185,7 +1200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &331707916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3247,9 +3262,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191076302}
-        m_TargetAssemblyTypeName: DialogInteraction, Assembly-CSharp
-        m_MethodName: StartDiologue
+      - m_Target: {fileID: 140641090}
+        m_TargetAssemblyTypeName: Typer, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
