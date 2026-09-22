@@ -4008,11 +4008,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.000030517578, y: -0.29486084}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4022,7 +4022,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 100.07416, y: 99.48425}
+  m_Size: {x: 115, y: 115}
   m_EdgeRadius: 0
 --- !u!114 &1140472105
 MonoBehaviour:
@@ -4946,7 +4946,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8385e03659d242a63e6f0af095bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestController
-  activeQuests: []
+  activeQuests:
+  - quest: {fileID: 11400000, guid: e8b940aebc3c0ce4facad10a684b44fe, type: 2}
+    questGiver: {fileID: 0}
+    currentObjectiveIndex: 0
   quests:
   - {fileID: 11400000, guid: 4ce40ad558a98a0418322f56ea29b00a, type: 2}
   - {fileID: 11400000, guid: aa64d52327279bb42a049f5c402e298b, type: 2}
@@ -5013,7 +5016,7 @@ RectTransform:
   m_GameObject: {fileID: 1405509289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1140472103}
@@ -5074,6 +5077,7 @@ GameObject:
   - component: {fileID: 1413671314}
   - component: {fileID: 1413671313}
   - component: {fileID: 1413671312}
+  - component: {fileID: 1413671315}
   m_Layer: 5
   m_Name: FallingCatchUI
   m_TagString: Untagged
@@ -5118,12 +5122,9 @@ MonoBehaviour:
   player: {fileID: 120738306}
   playArea: {fileID: 1405509290}
   basket: {fileID: 1140472103}
-  goodPrefab: {fileID: 6544927775780678794, guid: ac58625b65a10fc4c91d0dafa9d1fc44, type: 3}
-  badPrefab: {fileID: 6544927775780678794, guid: 39c2d9af4cc4edf4a9ca7232a9f271cd, type: 3}
-  timerscript: {fileID: 95840087}
+  gameTimer: {fileID: 95840087}
+  spawner: {fileID: 1413671315}
   basketSpeed: 1000
-  fallSpeed: 600
-  spawnRate: 1
   timerTime: 10
   winPercentage: 70
   gameID: FallingCatchGame
@@ -5165,6 +5166,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413671310}
   m_CullTransparentMesh: 1
+--- !u!114 &1413671315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413671310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797ff12b43822e3429c53ffa1ba8c548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FallingObjectSpawner
+  playArea: {fileID: 1405509290}
+  goodPrefab: {fileID: 6544927775780678794, guid: ac58625b65a10fc4c91d0dafa9d1fc44, type: 3}
+  badPrefab: {fileID: 6544927775780678794, guid: 39c2d9af4cc4edf4a9ca7232a9f271cd, type: 3}
+  spawnRate: 0.2
+  goodSpawnPercentage: 45
+  fallSpeed: 650
 --- !u!1 &1426898065
 GameObject:
   m_ObjectHideFlags: 0
