@@ -13,6 +13,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
     public GameObject ButtonGame2UI;
     public GameObject ButtonGame3UI;
     public GameObject FallingCatchUI;
+    public GameObject TypingUI;
 
     [Header("Interaction")]
     public bool interacted = false;
@@ -26,6 +27,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         ButtonGame2UI = FindInactiveObject("ButtonGame2UI");
         ButtonGame3UI = FindInactiveObject("ButtonGame3UI");
         FallingCatchUI = FindInactiveObject("FallingCatchUI");
+        TypingUI = FindInactiveObject("TypingUI");
 
         TimerUI = FindInactiveObject("GameTimer");
     }
@@ -49,7 +51,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
     {
         if (!IsValidQuestTask())
         {
-            Debug.Log("This task is not currently required by a quest.");
+            Debug.Log("This task is not currently required by a quest." + gameID);
             return;
         }
 
@@ -98,6 +100,13 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
                 FallingCatchUI.SetActive(true);
                 FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
+                break;
+            
+            case "TypingGame":
+                //TimerUI.SetActive(true);
+
+                TypingUI.SetActive(true);
+                TypingUI.GetComponent<TypingGame>().StartGame();
                 break;
 
             default:

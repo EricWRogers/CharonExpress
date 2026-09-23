@@ -499,6 +499,8 @@ MonoBehaviour:
   typingPanel: {fileID: 331707915}
   wordOutput: {fileID: 1403244923}
   wordBank: {fileID: 140641091}
+  player: {fileID: 2078152463}
+  gameID: Typing
 --- !u!114 &140641091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1212,8 +1214,10 @@ GameObject:
   - component: {fileID: 331707916}
   - component: {fileID: 331707918}
   - component: {fileID: 331707917}
+  - component: {fileID: 331707920}
+  - component: {fileID: 331707919}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: TypingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1277,6 +1281,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331707915}
   m_CullTransparentMesh: 1
+--- !u!114 &331707919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331707915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2821d28444c3f3249bfd517f55ab212a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WordBank
+  originalWords:
+  - Katabasis
+  - Charon
+  - Express
+--- !u!114 &331707920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331707915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d8b60039e05be4ab00e518cd9e29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Typer
+  typingPanel: {fileID: 331707915}
+  wordOutput: {fileID: 1403244923}
+  wordBank: {fileID: 331707919}
+  player: {fileID: 2078152463}
+  gameID: TypingGame
 --- !u!1 &397038006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,11 +2200,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38926ca443661ed44b9a091920199761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
-  gameID: ButtonGame1
+  gameID: TypingGame
   ButtonGame1UI: {fileID: 668979142}
   ButtonGame2UI: {fileID: 223731170}
   ButtonGame3UI: {fileID: 500571888}
   FallingCatchUI: {fileID: 0}
+  TypingUI: {fileID: 331707915}
   interacted: 0
   TimerUI: {fileID: 0}
 --- !u!135 &822771890
@@ -4242,10 +4280,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8385e03659d242a63e6f0af095bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestController
-  activeQuests: []
+  activeQuests:
+  - quest: {fileID: 11400000, guid: 0b97bb7cefb494b4fae406626bf130cf, type: 2}
+    questGiver: {fileID: 0}
+    currentObjectiveIndex: 0
   quests:
   - {fileID: 11400000, guid: aa64d52327279bb42a049f5c402e298b, type: 2}
   - {fileID: 11400000, guid: 4ce40ad558a98a0418322f56ea29b00a, type: 2}
+  - {fileID: 11400000, guid: 0b97bb7cefb494b4fae406626bf130cf, type: 2}
   questLogUI: {fileID: 0}
 --- !u!4 &1979473971
 Transform:
@@ -4700,8 +4742,8 @@ SceneRoots:
   - {fileID: 397038007}
   - {fileID: 303292866}
   - {fileID: 822771893}
-  - {fileID: 223731175}
   - {fileID: 2078152469}
+  - {fileID: 223731175}
   - {fileID: 307831641}
   - {fileID: 879260259}
   - {fileID: 1628263483}

@@ -3,20 +3,23 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class Typer : MonoBehaviour
+public class TypingGame : MonoBehaviour
 {
     public GameObject typingPanel;
     public TMP_Text wordOutput;
     public WordBank wordBank;
+    public GameObject player;
+    player playerController;
+    public string gameID = "TypingGame";
 
     private string remainingWord = string.Empty;
     private string currentWord = "testing a sentence in the typing game";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
-    {
-        SetCurrentWord();
-    }
 
+    void Awake()
+    {
+        playerController = player.GetComponent<player>();
+    }
     private void SetCurrentWord()
     {
         //Get bank word
@@ -57,8 +60,7 @@ public class Typer : MonoBehaviour
 
             if (WordComplete())
             {
-                typingPanel.SetActive(false);
-                Time.timeScale = 1f;
+                WinGame();
             }
         }
     }
@@ -78,10 +80,26 @@ public class Typer : MonoBehaviour
     {
         return remainingWord.Length == 0;
     }
+
+    void WinGame()
+    {
+        typingPanel.SetActive(false);
+        playerController.freeze = false;
+
+        QuestController.Instance.CompleteMicrogame(gameID);
+        foreach (MicroGameStart gameStart in
+            FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
+        {
+            if (gameStart.gameID == gameID)
+            {
+                gameStart.ResetInteraction();
+                break;
+            }
+        }
+    }
     public void StartGame()
     {
         SetCurrentWord();
-        typingPanel.SetActive(true);
-        Time.timeScale = 0f;
+        playerController.freeze = true;
     }
 }
