@@ -97,7 +97,7 @@ MonoBehaviour:
   basket: {fileID: 4112100734824668417}
   gameTimer: {fileID: 0}
   spawner: {fileID: 2579086163826468047}
-  basketSpeed: 1000
+  basketSpeed: 15
   timerTime: 10
   winAmount: 5
   gameID: FallingCatchGame
@@ -118,7 +118,7 @@ MonoBehaviour:
   badPrefab: {fileID: 6544927775780678794, guid: 39c2d9af4cc4edf4a9ca7232a9f271cd, type: 3}
   spawnRate: 0.5
   goodSpawnPercentage: 50.6
-  fallSpeed: 650
+  fallSpeed: 10
 --- !u!1 &7504658535434262449
 GameObject:
   m_ObjectHideFlags: 0

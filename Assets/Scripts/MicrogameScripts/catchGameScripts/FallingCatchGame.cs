@@ -83,7 +83,7 @@ public class FallingCatchGame : MonoBehaviour
             move = 1;
 
         basket.anchoredPosition +=
-            Vector2.right * move * basketSpeed * Time.deltaTime;
+            Vector2.right * move * basketSpeed;
 
         float minX = -playArea.rect.width / 2 + basket.rect.width / 2;
         float maxX = playArea.rect.width / 2 - basket.rect.width / 2;

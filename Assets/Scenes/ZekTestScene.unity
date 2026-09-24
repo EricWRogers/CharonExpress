@@ -3309,7 +3309,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -786.3975, w: -28.032612}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5494,6 +5494,14 @@ PrefabInstance:
       propertyPath: gameTimer
       value: 
       objectReference: {fileID: 95840087}
+    - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: basketSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579086163826468047, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: fallSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3349705267291792607, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
