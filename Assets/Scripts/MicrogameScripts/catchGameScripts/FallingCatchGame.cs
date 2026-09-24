@@ -49,6 +49,7 @@ public class FallingCatchGame : MonoBehaviour
         playing = true;
         goodCaught = 0;
         badCaught = 0;
+        Time.timeScale = 0f;
 
         gameUI.SetActive(true);
         timer.SetActive(true);
@@ -131,6 +132,7 @@ public class FallingCatchGame : MonoBehaviour
         timer.SetActive(false);
 
         playerController.freeze = false;
+        Time.timeScale = 1f;
 
         /*
         if (percentage >= winPercentage)

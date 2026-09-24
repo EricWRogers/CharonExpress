@@ -370,12 +370,26 @@ MonoBehaviour:
   lines: {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   activeSegment: {fileID: 0}
   textSpeed: 0
+  typingUI: {fileID: 6786480015035864388, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
   textActive: 0
   EndDialogueEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 833596100761407672}
+        m_TargetAssemblyTypeName: Dialogue, Assembly-CSharp
+        m_MethodName: StartConversation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   dialogText: []
   questGiver: {fileID: 3578365062610817730}
+  conversation: 0
 --- !u!114 &1701167699368655108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,9 +407,9 @@ MonoBehaviour:
   player: {fileID: 0}
   chairScript: {fileID: 0}
   ghostName: 
-  ghostActive: 0
   task: 
   customerTimer: 0
   maxCustomerTimer: 0
+  ratio: 0
   InteractUI: {fileID: 0}
   meter: {fileID: 0}

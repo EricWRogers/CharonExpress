@@ -15,6 +15,7 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
 
     private int index;
+    public GameObject typingUI;
 
 
     //public PlayerController pc;
@@ -24,6 +25,7 @@ public class Dialogue : MonoBehaviour
 
     public string[] dialogText;
     public GameObject questGiver;
+    public bool conversation = false;
 
     //public NPC npc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,7 +35,24 @@ public class Dialogue : MonoBehaviour
         {
             EndDialogueEvent = new UnityEvent();
         }
+        typingUI = FindInactiveObject("TypingUI");
     }
+
+    GameObject FindInactiveObject(string name)
+    {
+        GameObject[] objects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+        foreach (GameObject obj in objects)
+        {
+            if (obj.name == name && obj.scene.IsValid())
+            {
+                return obj;
+            }
+        }
+
+        return null;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -153,6 +172,10 @@ public class Dialogue : MonoBehaviour
             {
                 questGiver.GetComponent<QuestGiver>().GiveQuest((activeSegment as QuestGiverSegment).quest);
                 Debug.Log("gave questid" + (activeSegment as QuestGiverSegment).quest);
+                if ((activeSegment as QuestGiverSegment).conversation)
+                {
+                    conversation = true;
+                }
             }
 
 
@@ -168,8 +191,8 @@ public class Dialogue : MonoBehaviour
                 Debug.Log("no output detected");
                 EndDialogue();
             }
-            
-            
+
+
         }
         else
         {
@@ -236,5 +259,14 @@ public class Dialogue : MonoBehaviour
     public void SetDialogGraph(DialogGraph graph)
     {
         lines = graph;
+    }
+    public void StartConversation()
+    {
+        if (conversation)
+        {
+            typingUI.SetActive(true);
+            typingUI.GetComponent<TypingGame>().StartGame();
+            conversation = false;
+        }
     }
 }
