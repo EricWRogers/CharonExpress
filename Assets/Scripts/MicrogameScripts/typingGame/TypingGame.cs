@@ -85,6 +85,7 @@ public class TypingGame : MonoBehaviour
     {
         typingPanel.SetActive(false);
         playerController.freeze = false;
+        Time.timeScale = 1f;
 
         QuestController.Instance.CompleteMicrogame(gameID);
         foreach (MicroGameStart gameStart in
@@ -101,5 +102,6 @@ public class TypingGame : MonoBehaviour
     {
         SetCurrentWord();
         playerController.freeze = true;
+        Time.timeScale = 0f;
     }
 }

@@ -43,7 +43,7 @@ public class FallingObject : MonoBehaviour
     void Update()
     {
         rectTransform.anchoredPosition +=
-            Vector2.down * fallSpeed * Time.deltaTime;
+            Vector2.down * fallSpeed;
 
         Physics2D.SyncTransforms();
 

@@ -49,6 +49,7 @@ public class FallingCatchGame : MonoBehaviour
         playing = true;
         goodCaught = 0;
         badCaught = 0;
+        Time.timeScale = 0f;
 
         gameUI.SetActive(true);
         timer.SetActive(true);
@@ -83,7 +84,7 @@ public class FallingCatchGame : MonoBehaviour
             move = 1;
 
         basket.anchoredPosition +=
-            Vector2.right * move * basketSpeed * Time.deltaTime;
+            Vector2.right * move * basketSpeed;
 
         float minX = -playArea.rect.width / 2 + basket.rect.width / 2;
         float maxX = playArea.rect.width / 2 - basket.rect.width / 2;
@@ -131,6 +132,7 @@ public class FallingCatchGame : MonoBehaviour
         timer.SetActive(false);
 
         playerController.freeze = false;
+        Time.timeScale = 1f;
 
         /*
         if (percentage >= winPercentage)
