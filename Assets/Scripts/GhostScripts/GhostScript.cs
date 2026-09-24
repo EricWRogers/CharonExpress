@@ -14,6 +14,10 @@ public class GhostScript : MonoBehaviour
     public float ratio;
     public GameObject InteractUI;
     public GameObject meter;
+    public int chairIndex;
+
+    public bool gamePaused;
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -27,7 +31,8 @@ public class GhostScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (customerTimer > 0)
+        Debug.Log(customerTimer);
+        if (customerTimer > 0 && !gamePaused)
         {
             customerTimer-= Time.deltaTime;
             ratio = customerTimer / maxCustomerTimer;
