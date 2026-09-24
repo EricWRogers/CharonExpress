@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: Button
   description: Press the button
-  taskID: 1
+  taskID: 
   objectives:
   - gameID: 
     description: talk to NPCName

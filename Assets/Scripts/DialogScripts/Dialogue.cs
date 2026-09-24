@@ -131,7 +131,6 @@ public class Dialogue : MonoBehaviour
                     answerIndex++;
                 }
             }
-
             else
             {
                 if (activeSegment.GetPort("output").IsConnected)
@@ -153,7 +152,7 @@ public class Dialogue : MonoBehaviour
             if ((activeSegment as QuestGiverSegment).quest != null)
             {
                 questGiver.GetComponent<QuestGiver>().GiveQuest((activeSegment as QuestGiverSegment).quest);
-                Debug.Log("gave questid");
+                Debug.Log("gave questid" + (activeSegment as QuestGiverSegment).quest);
             }
 
 

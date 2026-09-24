@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: Typing
   description: 
-  taskID: 
+  taskID: 2
   objectives:
+  - gameID: 
+    description: talk to NPCName
+    type: 0
   - gameID: TypingGame
     description: type word
     type: 1
+  - gameID: 
+    description: return to NPCName
+    type: 2
