@@ -139,6 +139,7 @@ MonoBehaviour:
   - could you have a conversation with me
   textSpeed: 1
   quest: 2
+  conversation: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

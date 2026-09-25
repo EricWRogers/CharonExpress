@@ -31,7 +31,6 @@ public class GhostScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(customerTimer);
         if (customerTimer > 0 && !gamePaused)
         {
             customerTimer-= Time.deltaTime;

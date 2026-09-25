@@ -14,6 +14,7 @@ public class TypingGame : MonoBehaviour
 
     private string remainingWord = string.Empty;
     private string currentWord = "testing a sentence in the typing game";
+    public GhostScript ghost;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake()
@@ -85,7 +86,7 @@ public class TypingGame : MonoBehaviour
     {
         typingPanel.SetActive(false);
         playerController.freeze = false;
-        Time.timeScale = 1f;
+        ghost.gamePaused = false;
 
         QuestController.Instance.CompleteMicrogame(gameID);
         foreach (MicroGameStart gameStart in
@@ -98,10 +99,11 @@ public class TypingGame : MonoBehaviour
             }
         }
     }
-    public void StartGame()
+    public void StartGame(GhostScript ghosts)
     {
         SetCurrentWord();
         playerController.freeze = true;
-        Time.timeScale = 0f;
+        ghost = ghosts;
+        ghost.gamePaused = true;
     }
 }

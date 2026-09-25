@@ -26,6 +26,7 @@ public class Dialogue : MonoBehaviour
     public string[] dialogText;
     public GameObject questGiver;
     public bool conversation = false;
+    public GhostScript ghost;
 
     //public NPC npc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -67,8 +68,9 @@ public class Dialogue : MonoBehaviour
 
     public void startDialogue()
     {
-        Time.timeScale = 0f;
+        
         Debug.Log("Start Text");
+        ghost.gamePaused = true;
         foreach (DialogSegment node in lines.nodes)
         {
             if (!node.GetInputPort("input").IsConnected)
@@ -82,6 +84,7 @@ public class Dialogue : MonoBehaviour
 
         TextBoxManager.Instance.textComponent.text = string.Empty;
         index = 0;
+        
 
         StartCoroutine(TypeLine());
     }
@@ -239,7 +242,8 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.textComponent.text = string.Empty;
         TextBoxManager.Instance.DialogPanel.SetActive(false);
         TextBoxManager.Instance.NoTalk = false;
-        Time.timeScale = 1f;
+        
+        ghost.gamePaused = false;
         EndDialogueEvent.Invoke();
     }
 
@@ -260,13 +264,14 @@ public class Dialogue : MonoBehaviour
     {
         lines = graph;
     }
-    public void StartConversation()
+    public void StartConversation(GhostScript ghost)
     {
         if (conversation)
         {
             typingUI.SetActive(true);
-            typingUI.GetComponent<TypingGame>().StartGame();
+            typingUI.GetComponent<TypingGame>().StartGame(ghost);
             conversation = false;
+            ghost.gamePaused = true;
         }
     }
 }

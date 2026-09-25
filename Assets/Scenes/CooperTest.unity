@@ -629,6 +629,7 @@ MonoBehaviour:
   wordBank: {fileID: 140641091}
   player: {fileID: 2078152463}
   gameID: Typing
+  ghost: {fileID: 0}
 --- !u!114 &140641091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2408,7 +2409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8153476089286738874, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.809906
+      value: 1.8098755
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153476089286738874, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0077209473
       objectReference: {fileID: 0}
     - target: {fileID: 9092426596618444987, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_LocalScale.y
@@ -2546,7 +2551,7 @@ Transform:
   m_GameObject: {fileID: 706345594}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.12, y: 0, z: -2.668}
+  m_LocalPosition: {x: -4.29, y: 0, z: -2.668}
   m_LocalScale: {x: 1.9899, y: 1.9899, z: 1.9899}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2584,6 +2589,7 @@ MonoBehaviour:
   testBool: 0
   chairs: []
   ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
+  escortChair: 0
   customerTotal: 0
   tasks:
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
@@ -3704,12 +3710,15 @@ MonoBehaviour:
   lines: {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   activeSegment: {fileID: 0}
   textSpeed: 0
+  typingUI: {fileID: 0}
   textActive: 0
   EndDialogueEvent:
     m_PersistentCalls:
       m_Calls: []
   dialogText: []
   questGiver: {fileID: 0}
+  conversation: 0
+  ghost: {fileID: 0}
 --- !u!114 &1191076299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4665,10 +4674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8385e03659d242a63e6f0af095bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestController
-  activeQuests:
-  - quest: {fileID: 11400000, guid: 0b97bb7cefb494b4fae406626bf130cf, type: 2}
-    questGiver: {fileID: 0}
-    currentObjectiveIndex: 0
+  activeQuests: []
   quests:
   - {fileID: 11400000, guid: aa64d52327279bb42a049f5c402e298b, type: 2}
   - {fileID: 11400000, guid: 4ce40ad558a98a0418322f56ea29b00a, type: 2}
@@ -5038,6 +5044,10 @@ PrefabInstance:
     - target: {fileID: 6786480015035864388, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
       propertyPath: m_Name
       value: TypingUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786480015035864388, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

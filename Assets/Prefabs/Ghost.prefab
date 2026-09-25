@@ -390,6 +390,7 @@ MonoBehaviour:
   dialogText: []
   questGiver: {fileID: 3578365062610817730}
   conversation: 0
+  ghost: {fileID: 1701167699368655108}
 --- !u!114 &1701167699368655108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,3 +414,5 @@ MonoBehaviour:
   ratio: 0
   InteractUI: {fileID: 0}
   meter: {fileID: 0}
+  chairIndex: 0
+  gamePaused: 0

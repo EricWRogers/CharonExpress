@@ -102,12 +102,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
                 FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
                 break;
             
-            case "TypingGame":
-                //TimerUI.SetActive(true);
-
-                TypingUI.SetActive(true);
-                TypingUI.GetComponent<TypingGame>().StartGame();
-                break;
 
             default:
                 Debug.LogWarning(
