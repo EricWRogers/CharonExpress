@@ -70,7 +70,7 @@ public class Dialogue : MonoBehaviour
     {
         
         Debug.Log("Start Text");
-        ghost.gamePaused = true;
+        GhostScript.gamePaused = true;
         foreach (DialogSegment node in lines.nodes)
         {
             if (!node.GetInputPort("input").IsConnected)
@@ -243,7 +243,7 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.DialogPanel.SetActive(false);
         TextBoxManager.Instance.NoTalk = false;
         
-        ghost.gamePaused = false;
+        GhostScript.gamePaused = false;
         EndDialogueEvent.Invoke();
     }
 
@@ -271,7 +271,7 @@ public class Dialogue : MonoBehaviour
             typingUI.SetActive(true);
             typingUI.GetComponent<TypingGame>().StartGame(ghost);
             conversation = false;
-            ghost.gamePaused = true;
+            GhostScript.gamePaused = true;
         }
     }
 }

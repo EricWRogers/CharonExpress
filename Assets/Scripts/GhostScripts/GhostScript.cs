@@ -16,7 +16,7 @@ public class GhostScript : MonoBehaviour
     public GameObject meter;
     public int chairIndex;
 
-    public bool gamePaused;
+    static public bool gamePaused;
 
     void Start()
     {

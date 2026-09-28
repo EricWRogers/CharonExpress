@@ -86,7 +86,7 @@ public class TypingGame : MonoBehaviour
     {
         typingPanel.SetActive(false);
         playerController.freeze = false;
-        ghost.gamePaused = false;
+        GhostScript.gamePaused = false;
 
         QuestController.Instance.CompleteMicrogame(gameID);
         foreach (MicroGameStart gameStart in
@@ -104,6 +104,6 @@ public class TypingGame : MonoBehaviour
         SetCurrentWord();
         playerController.freeze = true;
         ghost = ghosts;
-        ghost.gamePaused = true;
+        GhostScript.gamePaused = true;
     }
 }
