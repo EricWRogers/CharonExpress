@@ -19,10 +19,16 @@ public class BookRequestGame : MonoBehaviour
     [Header("Books")]
     public Book[] books;
 
-    [Header("Request")]
+    [Header("Dialogue")]
+    public DialogSegment requestDialogue;
+
     [TextArea]
     public string requestText =
         "I am looking for a {color} book about {subject}.";
+
+    [Header("Quest Log")]
+    public string questLogText =
+        "Find a {color} book about {subject}";
 
     [Header("Game UI")]
     public GameObject gameUI;
@@ -44,28 +50,65 @@ public class BookRequestGame : MonoBehaviour
     {
         if (books == null || books.Length < 2)
         {
-            Debug.LogError("BookRequestGame needs at least 2 books.");
+            Debug.LogError(
+                "BookRequestGame needs at least 2 books."
+            );
+
             return;
         }
 
-        requestedBook = books[Random.Range(0, books.Length)];
+        requestedBook =
+            books[Random.Range(0, books.Length)];
 
-        Debug.Log("Requested book: " + requestedBook.title);
+        // Update the dialogue request.
+        if (requestDialogue != null &&
+            requestDialogue.DialogText != null &&
+            requestDialogue.DialogText.Length > 0)
+        {
+            requestDialogue.DialogText[0] =
+                GetRequestDescription();
+        }
+
+        Debug.Log(
+            "Requested book: " +
+            requestedBook.title
+        );
+    }
+    public string GetRequestDescription()
+    {
+        if (requestedBook == null)
+            return "";
+
+        return requestText
+            .Replace("{color}", requestedBook.color)
+            .Replace("{subject}", requestedBook.subject);
+    }
+
+    public string GetQuestLogDescription()
+    {
+        if (requestedBook == null)
+            return "";
+
+        return questLogText
+            .Replace("{color}", requestedBook.color)
+            .Replace("{subject}", requestedBook.subject);
     }
 
     public void StartGame()
     {
         if (requestedBook == null)
         {
-            Debug.LogError("No book has been requested. Call PrepareRequest() first.");
+            Debug.LogError(
+                "No book has been requested. Call PrepareRequest() first."
+            );
+
             return;
         }
 
         gameRunning = true;
 
-        requestDescriptionText.text = requestText
-            .Replace("{color}", requestedBook.color)
-            .Replace("{subject}", requestedBook.subject);
+        requestDescriptionText.text =
+            GetRequestDescription();
 
         gameUI.SetActive(true);
 
@@ -74,17 +117,21 @@ public class BookRequestGame : MonoBehaviour
 
         CreateBooks();
     }
-
     public void CreateBooks()
     {
         ClearBooks();
 
         int totalBooks = columns * rows;
-        int correctPosition = Random.Range(0, totalBooks);
+        int correctPosition =
+            Random.Range(0, totalBooks);
 
         for (int i = 0; i < totalBooks; i++)
         {
-            Button button = Instantiate(bookButtonPrefab, gridParent);
+            Button button =
+                Instantiate(
+                    bookButtonPrefab,
+                    gridParent
+                );
 
             Book book;
 
@@ -94,11 +141,13 @@ public class BookRequestGame : MonoBehaviour
             }
             else
             {
-                book = books[Random.Range(0, books.Length)];
+                book =
+                    books[Random.Range(0, books.Length)];
 
                 while (book == requestedBook)
                 {
-                    book = books[Random.Range(0, books.Length)];
+                    book =
+                        books[Random.Range(0, books.Length)];
                 }
             }
 
@@ -115,7 +164,9 @@ public class BookRequestGame : MonoBehaviour
     {
         for (int i = gridParent.childCount - 1; i >= 0; i--)
         {
-            Destroy(gridParent.GetChild(i).gameObject);
+            Destroy(
+                gridParent.GetChild(i).gameObject
+            );
         }
     }
 
@@ -127,7 +178,6 @@ public class BookRequestGame : MonoBehaviour
         gameRunning = false;
 
         ClearBooks();
-
         gameUI.SetActive(false);
 
         player.GetComponent<player>().freeze = false;
@@ -135,10 +185,15 @@ public class BookRequestGame : MonoBehaviour
 
         QuestController.Instance.CompleteMicrogame(gameID);
 
-        Debug.Log("Found book: " + requestedBook.title);
+        Debug.Log(
+            "Found book: " +
+            requestedBook.title
+        );
 
         MicroGameStart[] gameStarts =
-            FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None);
+            FindObjectsByType<MicroGameStart>(
+                FindObjectsSortMode.None
+            );
 
         foreach (MicroGameStart gameStart in gameStarts)
         {

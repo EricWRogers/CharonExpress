@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class QuestGiver : MonoBehaviour, IInteractable
@@ -11,41 +10,22 @@ public class QuestGiver : MonoBehaviour, IInteractable
     {
         chair = GetComponentInParent<ChairScript>();
     }
+
     public void Interact()
     {
-        // Check if this NPC gave the player a quest that is now ready to be turned in.
+        // Try to turn in the quest first.
         if (QuestController.Instance.ReturnToNPC(this))
         {
             return;
         }
-        
-        // call the dialogue stuff
+
+        // Start the dialogue.
         text.StartDiologue();
-
-        // Get the quest that matches the task assigned to this NPC's chair.
-        /* Quest quest =
-            QuestController.Instance.GetQuestFromTask(questid);
-
-        if (quest == null)
-        {
-            Debug.Log(
-                "No quest found for task: " +
-                questid
-            );
-
-            return;
-        }
-        Debug.Log(quest);
-
-        // Start a new copy of the quest and remember this exact NPC as the NPC that gave the quest.
-        QuestController.Instance.StartQuest(
-            quest,
-            this
-        );*/
     }
+
     public void GiveQuest(string questid)
     {
-         Quest quest =
+        Quest quest =
             QuestController.Instance.GetQuestFromTask(questid);
 
         if (quest == null)
@@ -57,15 +37,46 @@ public class QuestGiver : MonoBehaviour, IInteractable
 
             return;
         }
-        Debug.Log(quest);
 
-        // Start a new copy of the quest and remember this exact NPC as the NPC that gave the quest.
+        // Choose the book HERE.
+        // This happens before the quest log updates
+        // and before the dialogue moves to the next node.
+        foreach (Quest.QuestObjective objective in quest.objectives)
+        {
+            if (objective.gameID == "BookRequestGame")
+            {
+                BookRequestGame bookGame =
+                    FindFirstObjectByType<BookRequestGame>(
+                        FindObjectsInactive.Include
+                    );
+
+                if (bookGame != null)
+                {
+                    bookGame.PrepareRequest();
+                }
+                else
+                {
+                    Debug.LogError(
+                        "BookRequestGame not found."
+                    );
+                }
+
+                break;
+            }
+        }
+
+        // Now give the quest.
         QuestController.Instance.StartQuest(
             quest,
             this
         );
     }
 
-    public void OnTouchingPlayer() { }
-    public void OnNotTouchingPlayer() {}
+    public void OnTouchingPlayer()
+    {
+    }
+
+    public void OnNotTouchingPlayer()
+    {
+    }
 }
