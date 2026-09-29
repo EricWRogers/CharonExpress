@@ -9,6 +9,8 @@ public class TaskStart : MonoBehaviour, IInteractable
     public GameObject ButtonGame2UI;
     public GameObject ButtonGame3UI;
 
+    public GhostScript ghost;
+
 
     public bool interacted = false;
     void Start()

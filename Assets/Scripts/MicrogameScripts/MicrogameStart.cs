@@ -14,6 +14,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
     public GameObject ButtonGame3UI;
     public GameObject FallingCatchUI;
     public GameObject TypingUI;
+    public GameObject BookRequestUI;
 
     [Header("Interaction")]
     public bool interacted = false;
@@ -28,6 +29,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         ButtonGame3UI = FindInactiveObject("ButtonGame3UI");
         FallingCatchUI = FindInactiveObject("FallingCatchUI");
         TypingUI = FindInactiveObject("TypingUI");
+        BookRequestUI = FindInactiveObject("BookRequestUI");
 
         TimerUI = FindInactiveObject("GameTimer");
     }
@@ -77,31 +79,18 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
         switch (gameID)
         {
-            case "ButtonGame1":
-                TimerUI.SetActive(true);
-
-                ButtonGame1UI.SetActive(true);
-                ButtonGame1UI.GetComponent<ButtonGame>().StartGame();
-                break;
-
-            case "ButtonGame2":
-                TimerUI.SetActive(true);
-
-                ButtonGame2UI.SetActive(true);
-                ButtonGame2UI.GetComponent<ButtonGame2>().StartGame();
-                break;
-
-            case "ButtonGame3":
-                // Start ButtonGame3
-                break;
-
             case "FallingCatchGame":
                 TimerUI.SetActive(true);
 
                 FallingCatchUI.SetActive(true);
                 FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
                 break;
-            
+
+            case "BookRequestGame":
+                BookRequestUI.SetActive(true);
+                BookRequestUI.GetComponent<BookRequestGame>().PrepareRequest();
+                BookRequestUI.GetComponent<BookRequestGame>().StartGame();
+                break;
 
             default:
                 Debug.LogWarning(
