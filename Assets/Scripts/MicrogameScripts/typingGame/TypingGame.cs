@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections.Generic;
 
 public class TypingGame : MonoBehaviour
 {
@@ -15,18 +16,34 @@ public class TypingGame : MonoBehaviour
     private string remainingWord = string.Empty;
     private string currentWord = "testing a sentence in the typing game";
     private WordObject currentWordObject = null;
+    public List<string> letters = null;
     public GhostScript ghost;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    [Header("quick time event stuff")]
+    private float direction = 1f; // 1 for moving towards B, -1 for moving towards A
+    public RectTransform pointerTransform;
+    private Vector3 targetPosition;
+    public RectTransform safeZone; // Reference to the safe zone RectTransform
+    public float moveSpeed = 100f; 
+    public Transform pointA; // Reference to the starting point
+    public Transform pointB;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         playerController = player.GetComponent<player>();
+    }
+    void Start()
+    {
+        targetPosition = pointB.position;
+        
     }
     private void SetCurrentWord()
     {
         //Get bank word
         currentWordObject = wordBank.GetWord();
         currentWord = currentWordObject.word;
+        letters = currentWordObject.letters;
         SetRemainingWord(currentWord);
     }
 
@@ -37,21 +54,45 @@ public class TypingGame : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    void Update()
     {
-        CheckInput();
+        pointerMovement();
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            CheckSuccess();
+        }
     }
 
-    private void CheckInput()
+    void pointerMovement()
     {
-        if (Input.anyKeyDown)
-        {
-            string keysPressed = Input.inputString;
+        // Move the pointer towards the target position
+        pointerTransform.position = Vector3.MoveTowards(pointerTransform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            if (keysPressed.Length == 1)
-            {
-                EnterLetter(keysPressed);
-            }
+        // Change direction if the pointer reaches one of the points
+        if (Vector3.Distance(pointerTransform.position, pointA.position) < 0.1f)
+        {
+            targetPosition = pointB.position;
+            direction = 1f;
+        }
+        else if (Vector3.Distance(pointerTransform.position, pointB.position) < 0.1f)
+        {
+            targetPosition = pointA.position;
+            direction = -1f;
+        }
+    }
+
+    void CheckSuccess()
+    {
+        // Check if the pointer is within the safe zone
+        if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
+        {
+            Debug.Log("Success!");
+            
+        }
+        else
+        {
+            Debug.Log("Wrong");
         }
     }
 

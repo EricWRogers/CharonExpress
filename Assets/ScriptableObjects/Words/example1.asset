@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d05a31858e7f649aeb2d445351d742, type: 3}
   m_Name: example1
   m_EditorClassIdentifier: Assembly-CSharp::WordObject
-  word: 
-  letters: []
+  word: Life
+  letters:
+  - L
+  - i
+  - f
+  - e
+  - s
+  - h
