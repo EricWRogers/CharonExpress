@@ -32,10 +32,10 @@ public class DialogInteraction : MonoBehaviour
     void Start()
     {
         
-        TextBoxManager.Instance.DiologueBox.SetActive(false);
-        TextBoxManager.Instance.skip.SetActive(false);
-        TextBoxManager.Instance.nameTextObj.SetActive(false);
-        TextBoxManager.Instance.Objportrait.SetActive(false);
+        //TextBoxManager.Instance.DiologueBox.SetActive(false);
+        //TextBoxManager.Instance.skip.SetActive(false);
+        //TextBoxManager.Instance.nameTextObj.SetActive(false);
+        //TextBoxManager.Instance.Objportrait.SetActive(false);
         
          
     }
