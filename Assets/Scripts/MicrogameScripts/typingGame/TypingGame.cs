@@ -88,6 +88,7 @@ public class TypingGame : MonoBehaviour
         playerController.freeze = false;
         GhostScript.gamePaused = false;
         ghost.customerTimer += 10;
+        ghost.maxCustomerTimer = ghost.customerTimer;
 
         QuestController.Instance.CompleteMicrogame(gameID);
         foreach (MicroGameStart gameStart in
