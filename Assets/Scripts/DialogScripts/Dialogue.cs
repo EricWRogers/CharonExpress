@@ -242,7 +242,7 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.textComponent.text = string.Empty;
         TextBoxManager.Instance.DialogPanel.SetActive(false);
         TextBoxManager.Instance.NoTalk = false;
-        
+        StartConversation(ghost);
         GhostScript.gamePaused = false;
         EndDialogueEvent.Invoke();
     }
@@ -266,8 +266,10 @@ public class Dialogue : MonoBehaviour
     }
     public void StartConversation(GhostScript ghost)
     {
+        Debug.Log("shouild start conversation");
         if (conversation)
         {
+            Debug.Log("conversation is true");
             typingUI.SetActive(true);
             typingUI.GetComponent<TypingGame>().StartGame(ghost);
             conversation = false;
