@@ -84,16 +84,6 @@ public class BookRequestGame : MonoBehaviour
             .Replace("{subject}", requestedBook.subject);
     }
 
-    public string GetQuestLogDescription()
-    {
-        if (requestedBook == null)
-            return "";
-
-        return questLogText
-            .Replace("{color}", requestedBook.color)
-            .Replace("{subject}", requestedBook.subject);
-    }
-
     public void StartGame()
     {
         if (requestedBook == null)
