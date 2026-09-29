@@ -3373,15 +3373,15 @@ MonoBehaviour:
   books:
   - title: wrong or right?
     subject: morality
-    color: red
+    color: circle
     sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   - title: right or wrong?
     subject: ethics
-    color: blue
+    color: square
     sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   - title: 'right or '
     subject: something
-    color: yellow
+    color: checkmark
     sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   requestDialogue: {fileID: 5729817106802552448, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
   requestText: I am looking for a {color} book about {subject}.
@@ -4114,9 +4114,9 @@ MonoBehaviour:
   escortChair: 0
   customerTotal: 0
   tasks:
+  - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
   - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
-  - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
 --- !u!4 &1426898067
 Transform:
   m_ObjectHideFlags: 0
@@ -5811,14 +5811,6 @@ PrefabInstance:
       propertyPath: gameTimer
       value: 
       objectReference: {fileID: 95840087}
-    - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: basketSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2579086163826468047, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: fallSpeed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3349705267291792607, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

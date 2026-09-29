@@ -24,7 +24,7 @@ public class ChairManager : MonoBehaviour
     void Start()
     {
         chairs = GameObject.FindGameObjectsWithTag("Chair");
-        UnityEngine.Random.Range(0, chairs.Length);
+        escortChair = UnityEngine.Random.Range(0, chairs.Length);
         //Hides the ghosts. They will be toggled on when appropriate.
     }
 
@@ -35,27 +35,28 @@ public class ChairManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        foreach (GameObject chair in chairs)
-        {
-            ChairScript chairScript = chair.GetComponent<ChairScript>();
-            if (chairScript.cooldownTimer > 0)
-            {
-                chairScript.cooldownTimer-= Time.deltaTime;
-            } 
-            else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false)
-            {
-                chairScript.ghostObject = Instantiate(chairScript.ghostPrefab, chairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-                Debug.Log(chairScript.ghostObject.name);
-                chairScript.ghostActive = true;
-                Debug.Log(chairScript.ghostObject.GetComponent<GhostScript>());
-                GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
-                ghostScript.chairScript = chairScript;
-                ghostScript.customerTimer = UnityEngine.Random.Range(5,10);
-                Debug.Log("I GAVE IT LIFE");
-                AssignGhost(chairScript.ghostObject);
+        for (int i = 0; i < chairs.Length; i++) {
+            if (i != escortChair)
+            {     
+                ChairScript chairScript = chairs[i].GetComponent<ChairScript>();
+                if (chairScript.cooldownTimer > 0)
+                {
+                    chairScript.cooldownTimer-= Time.deltaTime;
+                } 
+                else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false)
+                {
+                    chairScript.ghostObject = Instantiate(chairScript.ghostPrefab, chairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                    Debug.Log(chairScript.ghostObject.name);
+                    chairScript.ghostActive = true;
+                    Debug.Log(chairScript.ghostObject.GetComponent<GhostScript>());
+                    GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
+                    ghostScript.chairScript = chairScript;
+                    ghostScript.customerTimer = UnityEngine.Random.Range(5,10);
+                    Debug.Log("I GAVE IT LIFE");
+                    AssignGhost(chairScript.ghostObject);
+                }
             }
         }
-        
     }
 
     public void AssignGhost(GameObject chair)

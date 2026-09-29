@@ -242,7 +242,7 @@ MonoBehaviour:
   portrait: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   speakerName: BookGuy
   DialogText:
-  - I am looking for a blue book about ethics.
+  - I am looking for a circle book about morality.
   textSpeed: 1
 --- !u!114 &7716850402820735251
 MonoBehaviour:
