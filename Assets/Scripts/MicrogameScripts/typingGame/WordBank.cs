@@ -4,39 +4,37 @@ using System.Linq;
 
 public class WordBank : MonoBehaviour
 {
-    public List<string> originalWords = new List<string>()
-    {
-        "Katabasis", "Charon", "Express"
-    };
+    public List<WordObject> words;
 
-    private List<string> copiedWords = new List<string>();
+    private List<WordObject> copiedWords = new List<WordObject>();
     private void Awake()
     {
-        copiedWords.AddRange(originalWords);
-        Shuffle(copiedWords);
+        
+        Shuffle(words,copiedWords);
 
 
     }
 
-    private void Shuffle(List<string> strings)
+    private void Shuffle(List<WordObject> strings, List<WordObject> tempwords)
     {
+        List<WordObject> temp = new List<WordObject>();
+        temp.AddRange(strings);
+
         for (int i = 0; i < strings.Count; i++)
         {
-            int random = Random.Range(i, strings.Count);
-            string temp = strings[i];
-
-            strings[i] = strings[random];
-            strings[random] = temp;
+            int index = Random.Range(0, temp.Count - 1);
+            tempwords.Add(temp[index]);
+            temp.RemoveAt(index);
         }
     }
 
-    public string GetWord()
+    public WordObject GetWord()
     {
-        string newWord = string.Empty;
+        WordObject newWord=null;
 
         if (copiedWords.Count != 0)
         {
-            newWord = copiedWords.Last();
+            newWord = copiedWords[copiedWords.Count - 1];
             copiedWords.Remove(copiedWords.Last());
         }
         return newWord;

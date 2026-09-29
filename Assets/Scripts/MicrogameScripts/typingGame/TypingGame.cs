@@ -14,6 +14,7 @@ public class TypingGame : MonoBehaviour
 
     private string remainingWord = string.Empty;
     private string currentWord = "testing a sentence in the typing game";
+    private WordObject currentWordObject = null;
     public GhostScript ghost;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -24,7 +25,8 @@ public class TypingGame : MonoBehaviour
     private void SetCurrentWord()
     {
         //Get bank word
-        currentWord = wordBank.GetWord();
+        currentWordObject = wordBank.GetWord();
+        currentWord = currentWordObject.word;
         SetRemainingWord(currentWord);
     }
 
