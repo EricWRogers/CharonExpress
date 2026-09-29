@@ -88,7 +88,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
             case "BookRequestGame":
                 BookRequestUI.SetActive(true);
-                BookRequestUI.GetComponent<BookRequestGame>().PrepareRequest();
                 BookRequestUI.GetComponent<BookRequestGame>().StartGame();
                 break;
 
