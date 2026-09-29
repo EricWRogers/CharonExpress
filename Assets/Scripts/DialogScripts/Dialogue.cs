@@ -179,6 +179,7 @@ public class Dialogue : MonoBehaviour
                 {
                     conversation = true;
                 }
+                ghost.customerTimer += 3;
             }
 
 

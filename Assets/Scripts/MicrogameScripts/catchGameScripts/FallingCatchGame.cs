@@ -4,17 +4,14 @@ using UnityEngine.InputSystem;
 public class FallingCatchGame : MonoBehaviour
 {
     public GameObject gameUI;
-    public GameObject timer;
     public GameObject player;
 
     public RectTransform playArea;
     public RectTransform basket;
 
-    public GameTimer gameTimer;
     public FallingObjectSpawner spawner;
 
     public float basketSpeed = 500f;
-    public float timerTime = 10f;
     //public float winPercentage = 70f;
     public int winAmount = 5;
 
@@ -51,10 +48,6 @@ public class FallingCatchGame : MonoBehaviour
         badCaught = 0;
         
         gameUI.SetActive(true);
-        timer.SetActive(true);
-
-        gameTimer.sliderTimer = timerTime;
-        gameTimer.StartGameTimer();
 
         playerController.freeze = true;
         GhostScript.gamePaused = true;
@@ -68,9 +61,6 @@ public class FallingCatchGame : MonoBehaviour
             return;
 
         MoveBasket();
-
-        if (gameTimer.stopTimer)
-            EndGame();
     }
 
     void MoveBasket()
@@ -115,10 +105,10 @@ public class FallingCatchGame : MonoBehaviour
     {
         playing = false;
         spawner.StopSpawning();
-
+        /*
         int total = goodCaught + badCaught;
 
-        /*
+        
         float percentage = total == 0
             ? 0
             : (float)goodCaught / total * 100f;
@@ -129,7 +119,6 @@ public class FallingCatchGame : MonoBehaviour
         */
 
         gameUI.SetActive(false);
-        timer.SetActive(false);
 
         playerController.freeze = false;
         GhostScript.gamePaused = false;

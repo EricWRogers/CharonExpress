@@ -80,8 +80,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         switch (gameID)
         {
             case "FallingCatchGame":
-                TimerUI.SetActive(true);
-
                 FallingCatchUI.SetActive(true);
                 FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
                 break;
