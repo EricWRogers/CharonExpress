@@ -8,7 +8,7 @@ public class ChairManager : MonoBehaviour
     public GameObject[] chairs;
     public GameObject ghostPrefab;
     //escortChair marks which chair object will be left open for the "escort" task
-    public int escortChair;
+    static public int escortChair;
 
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
@@ -26,6 +26,18 @@ public class ChairManager : MonoBehaviour
         chairs = GameObject.FindGameObjectsWithTag("Chair");
         escortChair = UnityEngine.Random.Range(0, chairs.Length);
         //Hides the ghosts. They will be toggled on when appropriate.
+
+        for (int i = 0; i < chairs.Length; i++)
+        {
+            if (i == escortChair)
+            {
+                chairs[i].GetComponent<ChairScript>().reserved = true;
+            }
+            else
+            {
+                chairs[i].GetComponent<ChairScript>().reserved = false;
+            }
+        }
     }
 
     void Update()

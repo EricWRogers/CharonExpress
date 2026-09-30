@@ -2555,7 +2555,7 @@ Transform:
   m_GameObject: {fileID: 706345594}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.29, y: 0, z: -2.668}
+  m_LocalPosition: {x: -4.31, y: 0, z: -2.668}
   m_LocalScale: {x: 1.9899, y: 1.9899, z: 1.9899}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2593,7 +2593,6 @@ MonoBehaviour:
   testBool: 0
   chairs: []
   ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
-  escortChair: 0
   customerTotal: 0
   tasks:
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}

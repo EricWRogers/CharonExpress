@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.Analytics;
 
 public class GhostScript : MonoBehaviour
 {
@@ -17,6 +18,13 @@ public class GhostScript : MonoBehaviour
     public int chairIndex;
 
     static public bool gamePaused;
+
+
+    //Variables for Escort Mission
+    public bool beingEscorted = false;
+    public bool playerInRange = false;
+    public int direction = 1;  //1 represents target is to the right, -1 represents target is to the left
+    public int movementSpeed = 5;
 
     void Start()
     {
@@ -44,6 +52,47 @@ public class GhostScript : MonoBehaviour
             Debug.Log("I KILLED IT");
             Destroy(gameObject);
         }
+
+        if (beingEscorted)
+        {
+            travelStep();
+        }
     }
 
+    void assignedEscort(Vector3 targetPosition)
+    {
+        beingEscorted = true;
+        if (targetPosition.x < transform.position.x)
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = 1;
+        } 
+        transform.position = new Vector3(transform.position.x, transform.position.y, -2.5f);
+    }
+    void travelStep()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) < 10f)
+        {
+            transform.position += new Vector3(Time.deltaTime * movementSpeed * direction, 0, 0);
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.GetComponent<player>() != null)
+        {
+            playerInRange = true;
+        }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        if (collider.GetComponent<player>() != null)
+        {
+            playerInRange = true;
+        }
+    }
 }

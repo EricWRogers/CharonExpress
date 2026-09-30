@@ -1,4 +1,6 @@
 using System;
+using Mono.Cecil.Cil;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -17,27 +19,20 @@ public class ChairScript : MonoBehaviour
     public GameObject ghostObject;
     public GameObject InteractUI;
     public GameObject meter;
+
+    public bool reserved = false;
+
     void Start()
     {
-        player = GameObject.Find("Player");
-        cooldownTimer = UnityEngine.Random.Range(1, 5);
-        chairManager = GameObject.Find("ChairManager");
-        InteractUI = GameObject.Find("InteractUI");
-        chairManagerScript = chairManager.GetComponent<ChairManager>();
     }
 
-//
-//
-//
-//
-//
-//          NOTICE!!!!
-//          This script serves as a container, processing on instantiation happens in ChairMangerScript.
-//          For the ghost's individual timer, see GhostScript
-//          NOTICE!!!!
-//
-//
-//
-    void FixedUpdate()
-    {}
+    void OnTriggerEnter(Collider collider)
+    {
+        if (reserved && collider?.GetComponent<GhostScript>())
+        {
+            GhostScript ghostScript = collider.GetComponent<GhostScript>();
+            ghostScript.beingEscorted = false;
+            collider.gameObject.transform.position = transform.position + new Vector3(0, 1, 0);
+        }
+    }
 }
