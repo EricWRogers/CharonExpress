@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4589664364383396030}
   - component: {fileID: 4404217824597215102}
   - component: {fileID: 6130685660838775468}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: InteractionSphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5767465654685704947}
   - component: {fileID: 1131761061330806355}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Meter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,8 @@ GameObject:
   - component: {fileID: 4924896364944198213}
   - component: {fileID: 833596100761407672}
   - component: {fileID: 1701167699368655108}
-  m_Layer: 0
+  - component: {fileID: 1737380608902926993}
+  m_Layer: 4
   m_Name: Ghost
   m_TagString: Ghost
   m_Icon: {fileID: 0}
@@ -390,6 +391,7 @@ MonoBehaviour:
   dialogText: []
   questGiver: {fileID: 3578365062610817730}
   conversation: 0
+  escortMission: 0
   ghost: {fileID: 1701167699368655108}
 --- !u!114 &1701167699368655108
 MonoBehaviour:
@@ -419,3 +421,30 @@ MonoBehaviour:
   playerInRange: 0
   direction: 1
   movementSpeed: 5
+--- !u!54 &1737380608902926993
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954517744164338783}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
