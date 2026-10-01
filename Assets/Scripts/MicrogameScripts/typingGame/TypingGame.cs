@@ -32,6 +32,7 @@ public class TypingGame : MonoBehaviour
     public TMP_Text letterText;
     public int letterIndex = 0;
     public int wordIndex = 0;
+    public int loseIndex = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -69,6 +70,10 @@ public class TypingGame : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             CheckSuccess();
+        }
+
+        if(loseIndex >= 3){
+            LoseGame();
         }
     }
 
@@ -120,6 +125,7 @@ public class TypingGame : MonoBehaviour
         else
         {
             Debug.Log("Wrong");
+            loseIndex++;
         }
     }
 
@@ -133,6 +139,9 @@ public class TypingGame : MonoBehaviour
             {
                 WinGame();
             }
+        }
+        else{
+            loseIndex++;
         }
     }
 
@@ -198,5 +207,10 @@ public class TypingGame : MonoBehaviour
             tempwords.Add(temp[index]);
             temp.RemoveAt(index);
         }
+    }
+    public void LoseGame(){
+        typingPanel.SetActive(false);
+        playerController.freeze = false;
+        GhostScript.gamePaused = false;
     }
 }
