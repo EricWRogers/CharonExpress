@@ -10,7 +10,6 @@ public class QuestLogController : MonoBehaviour
     public GameObject questEntryPrefab;
 
     [Header("Quest Log Key")]
-    public Key keyToOpen = Key.Tab;
 
     [Header("Text Colors")]
     public Color textColor = Color.white;
@@ -20,31 +19,8 @@ public class QuestLogController : MonoBehaviour
 
     private void Start()
     {
-        //questLogUI.SetActive(false);
+        questLogUI.SetActive(true);
     }
-
-    private void Update()
-    {
-        if (Keyboard.current != null &&
-            Keyboard.current[keyToOpen].wasPressedThisFrame)
-        {
-            ToggleQuestLog();
-        }
-    }
-
-    public void ToggleQuestLog()
-    {
-        if (questLogUI.activeSelf)
-        {
-            questLogUI.SetActive(false);
-        }
-        else
-        {
-            UpdateQuestLog();
-            questLogUI.SetActive(true);
-        }
-    }
-
     public void UpdateQuestLog()
     {
         foreach (Transform child in questList)

@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38926ca443661ed44b9a091920199761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
-  gameID: TypingGame
+  gameID: FallingCatchGame
   ButtonGame1UI: {fileID: 0}
   ButtonGame2UI: {fileID: 0}
   ButtonGame3UI: {fileID: 0}
@@ -3969,7 +3969,6 @@ MonoBehaviour:
   questLogUI: {fileID: 455029628}
   questList: {fileID: 124500132}
   questEntryPrefab: {fileID: 541704645749718964, guid: 54828a5e895758a4ca469c278b534481, type: 3}
-  keyToOpen: 3
   textColor: {r: 1, g: 0.93092, b: 0.8066038, a: 1}
   currentTextColor: {r: 0.12187014, g: 0.5660378, b: 0, a: 1}
   completedTextColor: {r: 0.4245283, g: 0.0740922, b: 0.0740922, a: 1}
