@@ -38,9 +38,6 @@ public class QuestGiver : MonoBehaviour, IInteractable
             return;
         }
 
-        // Choose the book HERE.
-        // This happens before the quest log updates
-        // and before the dialogue moves to the next node.
         foreach (Quest.QuestObjective objective in quest.objectives)
         {
             if (objective.gameID == "BookRequestGame")
