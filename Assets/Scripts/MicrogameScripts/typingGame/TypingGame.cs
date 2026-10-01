@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TypingGame : MonoBehaviour
 {
@@ -14,9 +15,10 @@ public class TypingGame : MonoBehaviour
     public string gameID = "TypingGame";
 
     private string remainingWord = string.Empty;
-    private string currentWord = "testing a sentence in the typing game";
-    private WordObject currentWordObject = null;
+    public string currentWord = "testing a sentence in the typing game";
+    public WordObject currentWordObject = null;
     public List<string> letters = null;
+    public List<string> copiedLetters;
     public GhostScript ghost;
 
     [Header("quick time event stuff")]
@@ -27,6 +29,9 @@ public class TypingGame : MonoBehaviour
     public float moveSpeed = 100f; 
     public Transform pointA; // Reference to the starting point
     public Transform pointB;
+    public TMP_Text letterText;
+    public int letterIndex = 0;
+    public int wordIndex = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -36,7 +41,9 @@ public class TypingGame : MonoBehaviour
     void Start()
     {
         targetPosition = pointB.position;
-        
+        SetCurrentWord();
+        letterText.text = copiedLetters[letterIndex];
+        letterIndex++;
     }
     private void SetCurrentWord()
     {
@@ -44,6 +51,7 @@ public class TypingGame : MonoBehaviour
         currentWordObject = wordBank.GetWord();
         currentWord = currentWordObject.word;
         letters = currentWordObject.letters;
+        Shuffle(letters, copiedLetters);
         SetRemainingWord(currentWord);
     }
 
@@ -74,11 +82,29 @@ public class TypingGame : MonoBehaviour
         {
             targetPosition = pointB.position;
             direction = 1f;
+            if (letterIndex < copiedLetters.Count())
+            {
+                letterText.text = copiedLetters[letterIndex];
+                letterIndex++;
+                if (letterIndex >= copiedLetters.Count())
+                {
+                    letterIndex = 0;
+                }
+            }
         }
         else if (Vector3.Distance(pointerTransform.position, pointB.position) < 0.1f)
         {
             targetPosition = pointA.position;
             direction = -1f;
+            if (letterIndex < copiedLetters.Count())
+            {
+                letterText.text = copiedLetters[letterIndex];
+                letterIndex++;
+                if (letterIndex >= copiedLetters.Count())
+                {
+                    letterIndex = 0;
+                }
+            }
         }
     }
 
@@ -88,7 +114,8 @@ public class TypingGame : MonoBehaviour
         if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
         {
             Debug.Log("Success!");
-            
+            Debug.Log(copiedLetters[letterIndex-1]);
+            EnterLetter(copiedLetters[letterIndex-1]);
         }
         else
         {
@@ -111,12 +138,20 @@ public class TypingGame : MonoBehaviour
 
     private bool IsCorrectLeetter(string letter)
     {
-        return remainingWord.IndexOf(letter) == 0;
+        for (int i = 0; i <= remainingWord.Length; i++)
+        {
+            if (remainingWord[i] == letter[0])
+            {
+                wordIndex = i;
+                return true;
+            }
+        }
+        return false;
     }
 
     private void RenoveLetter()
     {
-        string newWord = remainingWord.Remove(0, 1);
+        string newWord = remainingWord.Remove(wordIndex, 1);
         SetRemainingWord(newWord);
     }
 
@@ -150,5 +185,18 @@ public class TypingGame : MonoBehaviour
         playerController.freeze = true;
         ghost = ghosts;
         GhostScript.gamePaused = true;
+    }
+
+    private void Shuffle(List<string> strings, List<string> tempwords)
+    {
+        List<string> temp = new List<string>();
+        temp.AddRange(strings);
+
+        for (int i = 0; i < strings.Count; i++)
+        {
+            int index = Random.Range(0, temp.Count - 1);
+            tempwords.Add(temp[index]);
+            temp.RemoveAt(index);
+        }
     }
 }
