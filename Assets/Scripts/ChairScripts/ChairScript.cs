@@ -31,9 +31,10 @@ public class ChairScript : MonoBehaviour
     }
     void Update()
     {
-        GetGhosty();
+        //GetGhosty();
     }
 
+/*
     void GetGhosty()
     {
         Physics.SphereCast(rayed, radius);
@@ -53,6 +54,7 @@ public class ChairScript : MonoBehaviour
             }
         }
     }
+    */
 
     private void OnDrawGizmos()
     {

@@ -25,6 +25,7 @@ public class GhostScript : MonoBehaviour
     public bool playerInRange = false;
     public int direction = 1;  //1 represents target is to the right, -1 represents target is to the left
     public int movementSpeed = 5;
+    public Vector3 targetPosition;
 
     void Start()
     {
@@ -59,8 +60,9 @@ public class GhostScript : MonoBehaviour
         }
     }
 
-    public void assignedEscort(Vector3 targetPosition)
+    public void assignedEscort(Vector3 inputTargetPosition)
     {
+        targetPosition = inputTargetPosition;   
         beingEscorted = true;
         if (targetPosition.x < transform.position.x)
         {
@@ -77,6 +79,17 @@ public class GhostScript : MonoBehaviour
         if (Vector3.Distance(transform.position, player.transform.position) < 10f)
         {
             transform.position += new Vector3(Time.deltaTime * movementSpeed * direction, 0, 0);
+        }
+
+        if (direction == 1 && transform.position.x > targetPosition.x)
+        {
+            Debug.Log("Made it to the target right");
+            beingEscorted = false;
+        }
+        else if (direction == -1 && transform.position.x < targetPosition.x)
+        {
+            Debug.Log("Made it to the target left");
+            beingEscorted = false;
         }
     }
 

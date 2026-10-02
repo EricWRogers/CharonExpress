@@ -573,7 +573,7 @@ Transform:
   m_GameObject: {fileID: 88323387}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31715953, y: 2.3, z: -12.5}
+  m_LocalPosition: {x: 0.31715977, y: 2.3, z: -9.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2651,6 +2651,7 @@ MonoBehaviour:
   testBool: 0
   chairs: []
   ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
+  escortChair: 0
   customerTotal: 0
   tasks:
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
@@ -3841,6 +3842,7 @@ MonoBehaviour:
   dialogText: []
   questGiver: {fileID: 0}
   conversation: 0
+  escortMission: 0
   ghost: {fileID: 0}
 --- !u!114 &1191076299
 MonoBehaviour:
@@ -4790,7 +4792,7 @@ Transform:
   m_GameObject: {fileID: 1525742269}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31715953, y: 2.3, z: -12.5}
+  m_LocalPosition: {x: 0.31715977, y: 2.3, z: -9.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5613,7 +5615,7 @@ Transform:
   m_GameObject: {fileID: 2078152463}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31716, y: 0.3, z: -2.5}
+  m_LocalPosition: {x: 0.31716, y: 0.3, z: 0.05}
   m_LocalScale: {x: 0.48328, y: 1.3257, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
