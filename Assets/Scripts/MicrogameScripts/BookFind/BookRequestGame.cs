@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -5,19 +6,28 @@ using TMPro;
 public class BookRequestGame : MonoBehaviour
 {
     [System.Serializable]
+    public class ColorData
+    {
+        public string colorName;
+        public Color actualColor;
+    }
+
+    [System.Serializable]
     public class Book
     {
-        public string title;
         public string subject;
         public string color;
-        public Sprite sprite;
+        public Color actualColor;
     }
 
     [Header("Quest")]
     public string gameID = "BookRequestGame";
 
-    [Header("Books")]
-    public Book[] books;
+    [Header("Subjects")]
+    public string[] subjects;
+
+    [Header("Colors")]
+    public ColorData[] colors;
 
     [Header("Dialogue")]
     public DialogSegment requestDialogue;
@@ -35,6 +45,8 @@ public class BookRequestGame : MonoBehaviour
     public TMP_Text requestDescriptionText;
     public Transform gridParent;
     public Button bookButtonPrefab;
+    public int amountOfSameColorBooks = 3;
+    public int amountOfSameSubjectBooks = 3;
 
     [Header("Grid")]
     public int columns = 5;
@@ -43,24 +55,23 @@ public class BookRequestGame : MonoBehaviour
     [Header("Player")]
     public GameObject player;
 
+    private List<Book> books = new List<Book>();
     private Book requestedBook;
     private bool gameRunning;
 
     public void PrepareRequest()
     {
-        if (books == null || books.Length < 2)
-        {
-            Debug.LogError(
-                "BookRequestGame needs at least 2 books."
-            );
+        GenerateBooks();
 
+        if (books.Count < 2)
+        {
+            Debug.LogError("BookRequestGame needs at least 2 possible book combinations.");
             return;
         }
 
         requestedBook =
-            books[Random.Range(0, books.Length)];
+            books[Random.Range(0, books.Count)];
 
-        // Update the dialogue request.
         if (requestDialogue != null &&
             requestDialogue.DialogText != null &&
             requestDialogue.DialogText.Length > 0)
@@ -71,9 +82,28 @@ public class BookRequestGame : MonoBehaviour
 
         Debug.Log(
             "Requested book: " +
-            requestedBook.title
+            requestedBook.color + " " + requestedBook.subject
         );
     }
+
+    private void GenerateBooks()
+    {
+        books.Clear();
+
+        foreach (string subject in subjects)
+        {
+            foreach (ColorData color in colors)
+            {
+                books.Add(new Book
+                {
+                    subject = subject,
+                    color = color.colorName,
+                    actualColor = color.actualColor
+                });
+            }
+        }
+    }
+
     public string GetRequestDescription()
     {
         if (requestedBook == null)
@@ -107,49 +137,89 @@ public class BookRequestGame : MonoBehaviour
 
         CreateBooks();
     }
+
     public void CreateBooks()
     {
         ClearBooks();
 
         int totalBooks = columns * rows;
-        int correctPosition =
-            Random.Range(0, totalBooks);
+        List<Book> gridBooks = new List<Book>();
 
-        for (int i = 0; i < totalBooks; i++)
+        // Correct book
+        gridBooks.Add(requestedBook);
+
+        // Same color
+        for (int i = 0; i < amountOfSameColorBooks; i++)
         {
-            Button button =
-                Instantiate(
-                    bookButtonPrefab,
-                    gridParent
-                );
+            List<Book> choices = books.FindAll(book =>
+                book.color == requestedBook.color &&
+                book != requestedBook &&
+                !gridBooks.Contains(book)
+            );
 
-            Book book;
+            if (choices.Count == 0)
+                break;
 
-            if (i == correctPosition)
-            {
-                book = requestedBook;
-            }
+            Book book = choices[Random.Range(0, choices.Count)];
+            gridBooks.Add(book);
+        }
+
+        // Same subject
+        for (int i = 0; i < amountOfSameSubjectBooks; i++)
+        {
+            List<Book> choices = books.FindAll(book =>
+                book.subject == requestedBook.subject &&
+                book != requestedBook &&
+                !gridBooks.Contains(book)
+            );
+
+            if (choices.Count == 0)
+                break;
+
+            Book book = choices[Random.Range(0, choices.Count)];
+            gridBooks.Add(book);
+        }
+
+        // Fill the rest randomly
+        while (gridBooks.Count < totalBooks)
+        {
+            Book book = books[Random.Range(0, books.Count)];
+
+            if (!gridBooks.Contains(book))
+                gridBooks.Add(book);
+            else if (gridBooks.Count < books.Count)
+                continue;
             else
-            {
-                book =
-                    books[Random.Range(0, books.Length)];
+                gridBooks.Add(book);
+        }
 
-                while (book == requestedBook)
-                {
-                    book =
-                        books[Random.Range(0, books.Length)];
-                }
-            }
+        // Shuffle
+        for (int i = 0; i < gridBooks.Count; i++)
+        {
+            int randomIndex = Random.Range(i, gridBooks.Count);
 
-            button.image.sprite = book.sprite;
+            Book temp = gridBooks[i];
+            gridBooks[i] = gridBooks[randomIndex];
+            gridBooks[randomIndex] = temp;
+        }
+
+        // Create books
+        foreach (Book book in gridBooks)
+        {
+            Button button = Instantiate(
+                bookButtonPrefab,
+                gridParent
+            );
+
+            button.GetComponent<Image>().color = book.actualColor;
+
+            button.GetComponentInChildren<TMP_Text>().text =
+                "<rotate=90>" + book.subject;
 
             if (book == requestedBook)
-            {
                 button.onClick.AddListener(WinGame);
-            }
         }
     }
-
     public void ClearBooks()
     {
         for (int i = gridParent.childCount - 1; i >= 0; i--)
@@ -177,7 +247,7 @@ public class BookRequestGame : MonoBehaviour
 
         Debug.Log(
             "Found book: " +
-            requestedBook.title
+            requestedBook.color + " " + requestedBook.subject
         );
 
         MicroGameStart[] gameStarts =
