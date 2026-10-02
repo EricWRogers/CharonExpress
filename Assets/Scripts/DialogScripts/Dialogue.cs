@@ -26,6 +26,7 @@ public class Dialogue : MonoBehaviour
     public string[] dialogText;
     public GameObject questGiver;
     public bool conversation = false;
+    public bool escortMission = false;
     public GhostScript ghost;
 
     //public NPC npc;
@@ -68,7 +69,7 @@ public class Dialogue : MonoBehaviour
 
     public void startDialogue()
     {
-        
+
         Debug.Log("Start Text");
         GhostScript.gamePaused = true;
         foreach (DialogSegment node in lines.nodes)
@@ -84,7 +85,7 @@ public class Dialogue : MonoBehaviour
 
         TextBoxManager.Instance.textComponent.text = string.Empty;
         index = 0;
-        
+
 
         StartCoroutine(TypeLine());
     }
@@ -179,6 +180,10 @@ public class Dialogue : MonoBehaviour
                 {
                     conversation = true;
                 }
+                if ((activeSegment as QuestGiverSegment).escort)
+                {
+                    escortMission = true;
+                }
                 ghost.customerTimer += 3;
             }
 
@@ -243,7 +248,10 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.textComponent.text = string.Empty;
         TextBoxManager.Instance.DialogPanel.SetActive(false);
         TextBoxManager.Instance.NoTalk = false;
-        StartConversation(ghost);
+        if(conversation)
+            StartConversation(ghost);
+        if (escortMission)
+            StartEscort(ghost);
         GhostScript.gamePaused = false;
         EndDialogueEvent.Invoke();
     }
@@ -276,5 +284,9 @@ public class Dialogue : MonoBehaviour
             conversation = false;
             GhostScript.gamePaused = true;
         }
+    }
+    public void StartEscort(GhostScript ghost)
+    {
+        ghost.assignedEscort(ChairManager.Instance.chairs[ChairManager.Instance.escortChair].gameObject.transform.position);
     }
 }

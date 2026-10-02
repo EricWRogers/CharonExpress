@@ -4,11 +4,17 @@ using UnityEngine.LowLevelPhysics2D;
 
 public class ChairManager : MonoBehaviour
 {
+    public static ChairManager Instance;
+
+    public static ChairManager GetInstance()
+    {
+        return Instance;
+    }
     public bool testBool;
     public GameObject[] chairs;
     public GameObject ghostPrefab;
     //escortChair marks which chair object will be left open for the "escort" task
-    static public int escortChair;
+    public int escortChair;
 
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
@@ -20,6 +26,19 @@ public class ChairManager : MonoBehaviour
     String[] names = {"Sawyer", "Zek", "Cooper", "John", "Joe"};
     public DialogGraph[] tasks = {};
 
+    public void Awake()
+    {
+        if (ChairManager.Instance != this && ChairManager.Instance != null)
+        {
+            Destroy(ChairManager.Instance);
+            Instance = this;
+        }
+        else
+        {
+            Instance = this;
+        }
+
+    }
 
     void Start()
     {

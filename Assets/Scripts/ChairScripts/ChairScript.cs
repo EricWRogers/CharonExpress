@@ -21,18 +21,41 @@ public class ChairScript : MonoBehaviour
     public GameObject meter;
 
     public bool reserved = false;
+    Collider[] hitColliders;
+    public float radius = 1f;
+    public Ray rayed;
+    public bool hit;
 
     void Start()
     {
     }
-
-    void OnTriggerEnter(Collider collider)
+    void Update()
     {
-        if (reserved && collider?.GetComponent<GhostScript>())
+        GetGhosty();
+    }
+
+    void GetGhosty()
+    {
+        Physics.SphereCast(rayed, radius);
+        foreach (var collider in hitColliders)
         {
-            GhostScript ghostScript = collider.GetComponent<GhostScript>();
-            ghostScript.beingEscorted = false;
-            collider.gameObject.transform.position = transform.position + new Vector3(0, 1, 0);
+            Debug.Log(collider.gameObject.tag);
+            if (reserved && collider.CompareTag("Ghost"))
+            {
+                Debug.Log("ghost is here");
+                GhostScript ghostScript = collider.GetComponent<GhostScript>();
+                ghostScript.beingEscorted = false;
+                collider.gameObject.transform.position = transform.position + new Vector3(0, 1, 0);
+            }
+            else
+            {
+                return;
+            }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, radius);       
     }
 }

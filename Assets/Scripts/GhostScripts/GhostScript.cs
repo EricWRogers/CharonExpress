@@ -53,13 +53,13 @@ public class GhostScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (beingEscorted)
+        if (beingEscorted && playerInRange)
         {
             travelStep();
         }
     }
 
-    void assignedEscort(Vector3 targetPosition)
+    public void assignedEscort(Vector3 targetPosition)
     {
         beingEscorted = true;
         if (targetPosition.x < transform.position.x)
@@ -92,7 +92,7 @@ public class GhostScript : MonoBehaviour
     {
         if (collider.GetComponent<player>() != null)
         {
-            playerInRange = true;
+            playerInRange = false;
         }
     }
 }
