@@ -37,11 +37,14 @@ public class Quest : ScriptableObject
         public QuestGiver questGiver;
         public int currentObjectiveIndex;
 
+        public bool IsFailed { get; private set; }
+
         public QuestProgress(Quest quest, QuestGiver questGiver)
         {
             this.quest = quest;
             this.questGiver = questGiver;
             currentObjectiveIndex = 0;
+            IsFailed = false;
         }
 
         public QuestObjective CurrentObjective
@@ -57,7 +60,16 @@ public class Quest : ScriptableObject
 
         public bool IsCompleted
         {
-            get { return currentObjectiveIndex >= quest.objectives.Count; }
+            get
+            {
+                return !IsFailed &&
+                    currentObjectiveIndex >= quest.objectives.Count;
+            }
+        }
+
+        public void Fail()
+        {
+            IsFailed = true;
         }
     }
 }
