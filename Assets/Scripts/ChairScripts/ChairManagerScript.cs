@@ -55,6 +55,7 @@ public class ChairManager : MonoBehaviour
             else
             {
                 chairs[i].GetComponent<ChairScript>().reserved = false;
+                chairs[i].GetComponent<ChairScript>().cooldownTimer = UnityEngine.Random.Range(3,40);
             }
         }
     }
