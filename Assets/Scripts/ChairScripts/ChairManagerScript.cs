@@ -83,7 +83,7 @@ public class ChairManager : MonoBehaviour
                     Debug.Log(chairScript.ghostObject.GetComponent<GhostScript>());
                     GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
                     ghostScript.chairScript = chairScript;
-                    ghostScript.customerTimer = UnityEngine.Random.Range(15,20);
+                    ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
                     Debug.Log("I GAVE IT LIFE");
                     AssignGhost(chairScript.ghostObject);
                 }
