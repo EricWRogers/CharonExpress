@@ -85,11 +85,18 @@ public class GhostScript : MonoBehaviour
         {
             Debug.Log("Made it to the target right");
             beingEscorted = false;
+            transform.position = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].transform.position + new Vector3(0, 1, 0); 
+            ChairManager.Instance.FindNewEscortChair();
         }
         else if (direction == -1 && transform.position.x < targetPosition.x)
         {
             Debug.Log("Made it to the target left");
             beingEscorted = false;
+            transform.position = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].transform.position + new Vector3(0, 1, 0); 
+        }
+
+        else {
+            return;
         }
     }
 

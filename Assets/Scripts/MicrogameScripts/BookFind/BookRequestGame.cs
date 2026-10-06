@@ -218,6 +218,8 @@ public class BookRequestGame : MonoBehaviour
 
             if (book == requestedBook)
                 button.onClick.AddListener(WinGame);
+            if (book != requestedBook)
+                button.onClick.AddListener(LoseGame);
         }
     }
     public void ClearBooks()
@@ -265,5 +267,17 @@ public class BookRequestGame : MonoBehaviour
         }
 
         requestedBook = null;
+    }
+    public void LoseGame() {
+        if (!gameRunning)
+            return;
+
+        gameRunning = false;
+
+        ClearBooks();
+        gameUI.SetActive(false);
+
+        player.freeze = false;
+        GhostScript.gamePaused = false;
     }
 }
