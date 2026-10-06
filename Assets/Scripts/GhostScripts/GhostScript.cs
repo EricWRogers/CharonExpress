@@ -16,6 +16,7 @@ public class GhostScript : MonoBehaviour
     public GameObject InteractUI;
     public GameObject meter;
     public int chairIndex;
+    public string gameID = "escort";
 
     static public bool gamePaused;
 
@@ -50,6 +51,7 @@ public class GhostScript : MonoBehaviour
         {
             chairScript.cooldownTimer = UnityEngine.Random.Range(5,10);
             chairScript.ghostActive = false;
+            ChairManager.Instance.deathTotal++;
             Debug.Log("I KILLED IT");
             Destroy(gameObject);
         }
@@ -87,6 +89,16 @@ public class GhostScript : MonoBehaviour
             beingEscorted = false;
             transform.position = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].transform.position + new Vector3(0, 1, 0); 
             ChairManager.Instance.FindNewEscortChair();
+            QuestController.Instance.CompleteMicrogame(gameID);
+            foreach (MicroGameStart gameStart in
+                FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
+            {
+                if (gameStart.gameID == gameID)
+                {
+                    gameStart.ResetInteraction();
+                    break;
+                }
+            }
         }
         else if (direction == -1 && transform.position.x < targetPosition.x)
         {

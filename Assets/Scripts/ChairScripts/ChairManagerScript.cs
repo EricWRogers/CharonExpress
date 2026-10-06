@@ -18,9 +18,8 @@ public class ChairManager : MonoBehaviour
 
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
-    //public int chair
+    public int deathTotal = 0;
     //customerTotal modulo by the length of chairs
-    int customerModulo;
 
     //Sample list of names that is assigned to the chair/ghost
     String[] names = {"Sawyer", "Zek", "Cooper", "John", "Joe"};
