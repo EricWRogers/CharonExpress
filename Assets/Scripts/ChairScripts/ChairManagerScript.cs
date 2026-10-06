@@ -99,4 +99,18 @@ public class ChairManager : MonoBehaviour
         chairScript.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
     }
+
+    public void FindNewEscortChair()
+    {
+        chairs[escortChair].GetComponent<ChairScript>().reserved = false;
+        for (int i = 0; i < chairs.Length; i++)
+        {
+            ChairScript tempChairScript = chairs[i].GetComponent<ChairScript>();
+            if ( !tempChairScript.ghostActive )
+            {
+                escortChair = i;
+                tempChairScript.reserved = true;
+            }
+        }
+    }
 }
