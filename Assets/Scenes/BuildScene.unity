@@ -3569,6 +3569,7 @@ MonoBehaviour:
   ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
   escortChair: 0
   customerTotal: 0
+  deathTotal: 0
   tasks:
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
   - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
@@ -7927,7 +7928,7 @@ PrefabInstance:
       objectReference: {fileID: 1210820271}
     - target: {fileID: 1864889401362429604, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
       propertyPath: moveSpeed
-      value: 900
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 1864889401362429604, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
       propertyPath: letterText

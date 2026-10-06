@@ -284,7 +284,7 @@ public class Dialogue : MonoBehaviour
         {
             Debug.Log("conversation is true");
             typingUI.SetActive(true);
-            typingUI.GetComponent<TypingGame>().StartGame();
+            typingUI.GetComponent<TypingGame>().StartGame(ghost);
             conversation = false;
             GhostScript.gamePaused = true;
         }

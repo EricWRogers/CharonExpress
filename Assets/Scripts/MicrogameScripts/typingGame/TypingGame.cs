@@ -33,6 +33,7 @@ public class TypingGame : MonoBehaviour
     public int letterIndex = 0;
     public int wordIndex = 0;
     public int loseIndex = 0;
+    public GhostScript ghosty;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -176,8 +177,8 @@ public class TypingGame : MonoBehaviour
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
-        ghost.customerTimer += 10;
-        ghost.maxCustomerTimer = ghost.customerTimer;
+        ghosty.customerTimer += 10;
+        ghosty.maxCustomerTimer = ghosty.customerTimer;
 
         QuestController.Instance.CompleteMicrogame(gameID);
         foreach (MicroGameStart gameStart in
@@ -190,10 +191,11 @@ public class TypingGame : MonoBehaviour
             }
         }
     }
-    public void StartGame()
+    public void StartGame(GhostScript ghost)
     {
         SetCurrentWord();
         player.freeze= true;
+        ghosty = ghost;
         GhostScript.gamePaused = true;
     }
 
@@ -210,7 +212,8 @@ public class TypingGame : MonoBehaviour
             temp.RemoveAt(index);
         }
     }
-    public void LoseGame(){
+    public void LoseGame()
+    {
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
