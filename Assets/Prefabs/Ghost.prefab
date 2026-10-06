@@ -393,6 +393,7 @@ MonoBehaviour:
   conversation: 0
   escortMission: 0
   ghost: {fileID: 1701167699368655108}
+  playerController: {fileID: 8602806083266435235, guid: d3318e63cc7a8664db56fd80666a4176, type: 3}
 --- !u!114 &1701167699368655108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +422,7 @@ MonoBehaviour:
   playerInRange: 0
   direction: 1
   movementSpeed: 5
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!54 &1737380608902926993
 Rigidbody:
   m_ObjectHideFlags: 0

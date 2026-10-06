@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Chair
   - Ghost
+  - chairback
   layers:
   - Default
   - TransparentFX

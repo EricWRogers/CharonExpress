@@ -9,7 +9,7 @@ public class player : MonoBehaviour
     public LayerMask ground;
     public Rigidbody rb;
     public SpriteRenderer sr;
-    public bool freeze = false;
+    static public bool freeze = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();

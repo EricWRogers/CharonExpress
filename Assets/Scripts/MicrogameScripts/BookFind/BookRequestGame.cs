@@ -53,7 +53,7 @@ public class BookRequestGame : MonoBehaviour
     public int rows = 4;
 
     [Header("Player")]
-    public GameObject player;
+    public GameObject playerObj;
 
     private List<Book> books = new List<Book>();
     private Book requestedBook;
@@ -132,7 +132,7 @@ public class BookRequestGame : MonoBehaviour
 
         gameUI.SetActive(true);
 
-        player.GetComponent<player>().freeze = true;
+        player.freeze = true;
         GhostScript.gamePaused = true;
 
         CreateBooks();
@@ -240,7 +240,7 @@ public class BookRequestGame : MonoBehaviour
         ClearBooks();
         gameUI.SetActive(false);
 
-        player.GetComponent<player>().freeze = false;
+        player.freeze = false;
         GhostScript.gamePaused = false;
 
         QuestController.Instance.CompleteMicrogame(gameID);

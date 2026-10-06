@@ -10,8 +10,8 @@ public class TypingGame : MonoBehaviour
     public GameObject typingPanel;
     public TMP_Text wordOutput;
     public WordBank wordBank;
-    public GameObject player;
-    player playerController;
+    
+    
     public string gameID = "TypingGame";
 
     private string remainingWord = string.Empty;
@@ -37,7 +37,7 @@ public class TypingGame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        playerController = player.GetComponent<player>();
+        
     }
     void Start()
     {
@@ -52,6 +52,8 @@ public class TypingGame : MonoBehaviour
         currentWordObject = wordBank.GetWord();
         currentWord = currentWordObject.word;
         letters = currentWordObject.letters;
+        Debug.Log(copiedLetters);
+        copiedLetters = new List<string>();
         Shuffle(letters, copiedLetters);
         SetRemainingWord(currentWord);
     }
@@ -172,7 +174,7 @@ public class TypingGame : MonoBehaviour
     void WinGame()
     {
         typingPanel.SetActive(false);
-        playerController.freeze = false;
+        player.freeze = false;
         GhostScript.gamePaused = false;
         ghost.customerTimer += 10;
         ghost.maxCustomerTimer = ghost.customerTimer;
@@ -188,16 +190,16 @@ public class TypingGame : MonoBehaviour
             }
         }
     }
-    public void StartGame(GhostScript ghosts)
+    public void StartGame()
     {
         SetCurrentWord();
-        playerController.freeze = true;
-        ghost = ghosts;
+        player.freeze= true;
         GhostScript.gamePaused = true;
     }
 
     private void Shuffle(List<string> strings, List<string> tempwords)
     {
+        Debug.Log(tempwords);
         List<string> temp = new List<string>();
         temp.AddRange(strings);
 
@@ -210,7 +212,7 @@ public class TypingGame : MonoBehaviour
     }
     public void LoseGame(){
         typingPanel.SetActive(false);
-        playerController.freeze = false;
+        player.freeze = false;
         GhostScript.gamePaused = false;
     }
 }

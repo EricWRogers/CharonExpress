@@ -28,6 +28,7 @@ public class Dialogue : MonoBehaviour
     public bool conversation = false;
     public bool escortMission = false;
     public GhostScript ghost;
+    public player playerController;
 
     //public NPC npc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -72,6 +73,7 @@ public class Dialogue : MonoBehaviour
 
         Debug.Log("Start Text");
         GhostScript.gamePaused = true;
+        player.freeze = true;
         foreach (DialogSegment node in lines.nodes)
         {
             if (!node.GetInputPort("input").IsConnected)
@@ -248,11 +250,13 @@ public class Dialogue : MonoBehaviour
         TextBoxManager.Instance.textComponent.text = string.Empty;
         TextBoxManager.Instance.DialogPanel.SetActive(false);
         TextBoxManager.Instance.NoTalk = false;
+        player.freeze = false;
+        GhostScript.gamePaused = false;
         if(conversation)
             StartConversation(ghost);
         if (escortMission)
             StartEscort(ghost);
-        GhostScript.gamePaused = false;
+        
         EndDialogueEvent.Invoke();
     }
 
@@ -280,7 +284,7 @@ public class Dialogue : MonoBehaviour
         {
             Debug.Log("conversation is true");
             typingUI.SetActive(true);
-            typingUI.GetComponent<TypingGame>().StartGame(ghost);
+            typingUI.GetComponent<TypingGame>().StartGame();
             conversation = false;
             GhostScript.gamePaused = true;
         }

@@ -5,7 +5,6 @@ public class ButtonGame : MonoBehaviour
     public bool gameRunning = false;
     public GameObject gameUI;
     public GameObject timer;
-    public GameObject player;
     public float TimerTime = 10f;
     public GameTimer timerscript;
     public string gameID = "ButtonGame1";
@@ -16,7 +15,7 @@ public class ButtonGame : MonoBehaviour
         timerscript.StartGameTimer();
 
         gameRunning = true;
-        player.GetComponent<player>().freeze = true;
+        player.freeze = true;
     }
 
     public void ButtonPress()
@@ -28,7 +27,7 @@ public class ButtonGame : MonoBehaviour
             timer.SetActive(false);
 
             WinGame();
-            player.GetComponent<player>().freeze = false;
+            player.freeze = false;
         }
     }
 

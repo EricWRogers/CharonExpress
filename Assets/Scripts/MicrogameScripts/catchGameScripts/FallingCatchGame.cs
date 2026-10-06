@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class FallingCatchGame : MonoBehaviour
 {
     public GameObject gameUI;
-    public GameObject player;
+    
 
     public RectTransform playArea;
     public RectTransform basket;
@@ -25,7 +25,7 @@ public class FallingCatchGame : MonoBehaviour
 
     void Awake()
     {
-        playerController = player.GetComponent<player>();
+        
 
         Collider2D collider = basket.GetComponent<Collider2D>();
 
@@ -49,7 +49,7 @@ public class FallingCatchGame : MonoBehaviour
         
         gameUI.SetActive(true);
 
-        playerController.freeze = true;
+        player.freeze = true;
         GhostScript.gamePaused = true;
 
         spawner.StartSpawning(this);
@@ -120,7 +120,7 @@ public class FallingCatchGame : MonoBehaviour
 
         gameUI.SetActive(false);
 
-        playerController.freeze = false;
+        player.freeze = false;
         GhostScript.gamePaused = false;
         
 

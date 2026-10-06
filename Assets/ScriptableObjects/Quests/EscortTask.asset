@@ -16,8 +16,8 @@ MonoBehaviour:
   description: 'Escort NPC to the designated chair.
 
 '
-  taskID: 3
+  taskID: 4
   objectives:
-  - gameID: TypingGame
-    description: type word
+  - gameID: Escort
+    description: Escort Npc
     type: 1

@@ -9,6 +9,7 @@ public class HideTrainWall : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("entered car");
             foreach (GameObject wall in wallsToDelete)
             {
                 if (wall != null)
@@ -23,6 +24,7 @@ public class HideTrainWall : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("exited car");
             foreach (GameObject wall in wallsToDelete)
             {
                 if (wall != null)

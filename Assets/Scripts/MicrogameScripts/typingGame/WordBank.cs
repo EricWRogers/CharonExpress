@@ -27,10 +27,22 @@ public class WordBank : MonoBehaviour
             temp.RemoveAt(index);
         }
     }
+    private void Shuffle(List<string> strings, List<string> tempwords)
+    {
+        List<string> temp = new List<string>();
+        temp.AddRange(strings);
+
+        for (int i = 0; i < strings.Count; i++)
+        {
+            int index = Random.Range(0, temp.Count - 1);
+            tempwords.Add(temp[index]);
+            temp.RemoveAt(index);
+        }
+    }
 
     public WordObject GetWord()
     {
-        WordObject newWord=null;
+        WordObject newWord = null;
 
         if (copiedWords.Count != 0)
         {
