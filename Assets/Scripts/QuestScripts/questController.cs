@@ -111,6 +111,14 @@ public class QuestController : MonoBehaviour
 
                 progress.currentObjectiveIndex++;
 
+                if (progress.currentObjectiveIndex >= progress.quest.objectives.Count)
+                {
+                    for (int i = 0; i < activeQuests.Count; i++)
+                    {
+                        activeQuests.RemoveAt(i);
+                    }
+                }
+
                 UpdateQuestLog();
 
                 return;
@@ -144,6 +152,34 @@ public class QuestController : MonoBehaviour
 
                 return true;
             }
+        }
+
+        return false;
+    }
+    public bool FailQuest(Quest quest)
+    {
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            Quest.QuestProgress progress = activeQuests[i];
+
+            if (progress.quest != quest)
+                continue;
+
+            if (progress.IsCompleted || progress.IsFailed)
+                continue;
+
+            progress.Fail();
+
+            Debug.Log(
+                "Failed quest: " +
+                progress.quest.questName
+            );
+
+            activeQuests.RemoveAt(i);
+
+            UpdateQuestLog();
+
+            return true;
         }
 
         return false;

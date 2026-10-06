@@ -60,8 +60,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         if (interacted)
             return;
 
-        interacted = true;
-
         StartMinigame();
     }
 
