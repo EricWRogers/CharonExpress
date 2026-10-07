@@ -140,6 +140,10 @@ public class FallingCatchGame : MonoBehaviour
         {
             QuestController.Instance.CompleteMicrogame(gameID);
         }
+        else
+        {
+            QuestController.Instance.FailQuest(gameID);
+        }
 
         spawner.ClearObjects();
 

@@ -126,6 +126,37 @@ public class QuestController : MonoBehaviour
         }
     }
 
+    public bool FailQuest(string gameID)
+    {
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            Quest.QuestProgress progress = activeQuests[i];
+
+            if (progress.IsCompleted)
+                continue;
+
+            Quest.QuestObjective objective =
+                progress.CurrentObjective;
+
+            if (objective.type == Quest.objectiveType.Microgame &&
+                objective.gameID == gameID)
+            {
+                Debug.Log(
+                    "Failed quest: " +
+                    progress.quest.questName
+                );
+
+                activeQuests.RemoveAt(i);
+
+                UpdateQuestLog();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool ReturnToNPC(QuestGiver questGiver)
     {
         for (int i = 0; i < activeQuests.Count; i++)
@@ -156,35 +187,6 @@ public class QuestController : MonoBehaviour
 
         return false;
     }
-    public bool FailQuest(Quest quest)
-    {
-        for (int i = 0; i < activeQuests.Count; i++)
-        {
-            Quest.QuestProgress progress = activeQuests[i];
-
-            if (progress.quest != quest)
-                continue;
-
-            if (progress.IsCompleted || progress.IsFailed)
-                continue;
-
-            progress.Fail();
-
-            Debug.Log(
-                "Failed quest: " +
-                progress.quest.questName
-            );
-
-            activeQuests.RemoveAt(i);
-
-            UpdateQuestLog();
-
-            return true;
-        }
-
-        return false;
-    }
-
     private void UpdateQuestLog()
     {
         if (questLogUI != null)
