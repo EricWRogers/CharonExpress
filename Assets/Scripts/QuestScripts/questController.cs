@@ -95,12 +95,16 @@ public class QuestController : MonoBehaviour
     {
         foreach (Quest.QuestProgress progress in activeQuests)
         {
+            Debug.Log("QuestsControllerDebugStatement");
             if (progress.IsCompleted)
                 continue;
+
+            Debug.Log("It continued");
 
             Quest.QuestObjective objective =
                 progress.CurrentObjective;
 
+            Debug.Log(objective.type + "" + Quest.objectiveType.Microgame +""+ objective.gameID + "" + gameID);
             if (objective.type == Quest.objectiveType.Microgame &&
                 objective.gameID == gameID)
             {

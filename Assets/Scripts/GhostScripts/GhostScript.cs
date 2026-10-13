@@ -94,6 +94,7 @@ public class GhostScript : MonoBehaviour
 
             transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
             ChairManager.Instance.FindNewEscortChair();
+            Debug.Log("GhostScriptDebugStatement");
             QuestController.Instance.CompleteMicrogame(gameID);
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
@@ -116,6 +117,7 @@ public class GhostScript : MonoBehaviour
 
             transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
             ChairManager.Instance.FindNewEscortChair();
+            Debug.Log("GhostScriptDebugStatement");
             QuestController.Instance.CompleteMicrogame(gameID);
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
