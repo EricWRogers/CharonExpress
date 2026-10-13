@@ -52,9 +52,8 @@ public class FallingObjectSpawner : MonoBehaviour
 
         RectTransform prefab = good ? goodPrefab : badPrefab;
 
-        FallingObject obj =
-            Instantiate(prefab, playArea)
-            .GetComponent<FallingObject>();
+        RectTransform objRect = Instantiate(prefab, playArea);
+        FallingObject obj = objRect.GetComponent<FallingObject>();
 
         obj.Setup(
             good,
@@ -63,14 +62,21 @@ public class FallingObjectSpawner : MonoBehaviour
             fallSpeed
         );
 
-        obj.GetComponent<RectTransform>().anchoredPosition =
-            new Vector2(
-                Random.Range(
-                    -playArea.rect.width / 2,
-                    playArea.rect.width / 2
-                ),
-                playArea.rect.height / 2
-            );
+        Vector2 size = new Vector2(
+            objRect.rect.width * Mathf.Abs(objRect.localScale.x),
+            objRect.rect.height * Mathf.Abs(objRect.localScale.y)
+        );
+
+        float minX = playArea.rect.xMin + size.x * objRect.pivot.x;
+        float maxX = playArea.rect.xMax - size.x * (1f - objRect.pivot.x);
+
+        float spawnY = playArea.rect.yMax + size.y * (1f - objRect.pivot.y);
+
+        objRect.localPosition = new Vector3(
+            Random.Range(minX, maxX),
+            spawnY,
+            objRect.localPosition.z
+        );
 
         Physics2D.SyncTransforms();
     }
