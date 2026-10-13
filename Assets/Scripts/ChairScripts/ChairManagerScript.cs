@@ -77,13 +77,10 @@ public class ChairManager : MonoBehaviour
                 else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false)
                 {
                     chairScript.ghostObject = Instantiate(chairScript.ghostPrefab, chairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-                    Debug.Log(chairScript.ghostObject.name);
                     chairScript.ghostActive = true;
-                    Debug.Log(chairScript.ghostObject.GetComponent<GhostScript>());
                     GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
                     ghostScript.chairScript = chairScript;
                     ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
-                    Debug.Log("I GAVE IT LIFE");
                     AssignGhost(chairScript.ghostObject);
                 }
             }
@@ -105,7 +102,7 @@ public class ChairManager : MonoBehaviour
         for (int i = 0; i < chairs.Length; i++)
         {
             ChairScript tempChairScript = chairs[i].GetComponent<ChairScript>();
-            if ( !tempChairScript.ghostActive )
+            if ( tempChairScript.ghostActive != true)
             {
                 escortChair = i;
                 tempChairScript.reserved = true;

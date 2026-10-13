@@ -25,7 +25,7 @@ public class GhostScript : MonoBehaviour
     public bool beingEscorted = false;
     public bool playerInRange = false;
     public int direction = 1;  //1 represents target is to the right, -1 represents target is to the left
-    public int movementSpeed = 5;
+    public int movementSpeed = 10;
     public Vector3 targetPosition;
 
     void Start()
@@ -55,8 +55,7 @@ public class GhostScript : MonoBehaviour
             Debug.Log("I KILLED IT");
             Destroy(gameObject);
         }
-
-        if (beingEscorted && playerInRange)
+        if (beingEscorted)
         {
             travelStep();
         }
@@ -74,11 +73,11 @@ public class GhostScript : MonoBehaviour
         {
             direction = 1;
         } 
-        transform.position = new Vector3(transform.position.x, transform.position.y, -2.5f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
     }
     void travelStep()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < 10f)
+        if (Vector3.Distance(transform.position, player.transform.position) < 2f)
         {
             transform.position += new Vector3(Time.deltaTime * movementSpeed * direction, 0, 0);
         }
@@ -86,8 +85,14 @@ public class GhostScript : MonoBehaviour
         if (direction == 1 && transform.position.x > targetPosition.x)
         {
             Debug.Log("Made it to the target right");
+
             beingEscorted = false;
-            transform.position = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].transform.position + new Vector3(0, 1, 0); 
+            chairScript.ghostActive = false;
+            chairScript = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].GetComponent<ChairScript>();
+            chairScript.ghostActive = true;
+            
+
+            transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
             ChairManager.Instance.FindNewEscortChair();
             QuestController.Instance.CompleteMicrogame(gameID);
             foreach (MicroGameStart gameStart in
@@ -104,7 +109,23 @@ public class GhostScript : MonoBehaviour
         {
             Debug.Log("Made it to the target left");
             beingEscorted = false;
-            transform.position = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].transform.position + new Vector3(0, 1, 0); 
+            chairScript.ghostActive = false;
+            chairScript = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].GetComponent<ChairScript>();
+            chairScript.ghostActive = true;
+            
+
+            transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
+            ChairManager.Instance.FindNewEscortChair();
+            QuestController.Instance.CompleteMicrogame(gameID);
+            foreach (MicroGameStart gameStart in
+                FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
+            {
+                if (gameStart.gameID == gameID)
+                {
+                    gameStart.ResetInteraction();
+                    break;
+                }
+            }
         }
 
         else {

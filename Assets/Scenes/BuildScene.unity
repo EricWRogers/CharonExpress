@@ -3571,9 +3571,7 @@ MonoBehaviour:
   customerTotal: 0
   deathTotal: 0
   tasks:
-  - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
-  - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
-  - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
+  - {fileID: 11400000, guid: 5bdcbdfb3395640669900d6738b5f5d2, type: 2}
 --- !u!4 &737890844
 Transform:
   m_ObjectHideFlags: 0
@@ -6973,9 +6971,6 @@ MonoBehaviour:
   activeQuests: []
   quests:
   - {fileID: 11400000, guid: 43ca6319cd4c7454b8e5368400e65fcc, type: 2}
-  - {fileID: 11400000, guid: bafd251e45c3d5f40a8653236a3fe3cc, type: 2}
-  - {fileID: 11400000, guid: 0b97bb7cefb494b4fae406626bf130cf, type: 2}
-  - {fileID: 11400000, guid: e8b940aebc3c0ce4facad10a684b44fe, type: 2}
   questLogUI: {fileID: 1979473972}
 --- !u!4 &1979473971
 Transform:

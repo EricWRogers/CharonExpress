@@ -18,6 +18,12 @@ MonoBehaviour:
 '
   taskID: 4
   objectives:
+  - gameID: 
+    description: talk to npc
+    type: 0
   - gameID: Escort
-    description: Escort Npc
+    description: Escort NPC to their chair
     type: 1
+  - gameID: 
+    description: return
+    type: 2
