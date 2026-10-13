@@ -43,11 +43,12 @@ public class WordBank : MonoBehaviour
     public WordObject GetWord()
     {
         WordObject newWord = null;
-
+        copiedWords = new List<WordObject>();
+        Shuffle(words, copiedWords);
         if (copiedWords.Count != 0)
         {
             newWord = copiedWords[copiedWords.Count - 1];
-            copiedWords.Remove(copiedWords.Last());
+
         }
         return newWord;
     }

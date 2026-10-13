@@ -268,7 +268,8 @@ public class BookRequestGame : MonoBehaviour
 
         requestedBook = null;
     }
-    public void LoseGame() {
+    public void LoseGame()
+    {
         if (!gameRunning)
             return;
 
@@ -279,5 +280,6 @@ public class BookRequestGame : MonoBehaviour
 
         player.freeze = false;
         GhostScript.gamePaused = false;
+        QuestController.Instance.FailQuest(gameID);
     }
 }
