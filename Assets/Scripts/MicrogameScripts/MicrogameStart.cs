@@ -9,9 +9,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
     [Header("Minigame")]
     [Tooltip("The UI's for each game.")]
 
-    public GameObject ButtonGame1UI;
-    public GameObject ButtonGame2UI;
-    public GameObject ButtonGame3UI;
     public GameObject FallingCatchUI;
     public GameObject TypingUI;
     public GameObject BookRequestUI;
@@ -24,9 +21,6 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
     void Start()
     {
-        ButtonGame1UI = FindInactiveObject("ButtonGame1UI");
-        ButtonGame2UI = FindInactiveObject("ButtonGame2UI");
-        ButtonGame3UI = FindInactiveObject("ButtonGame3UI");
         FallingCatchUI = FindInactiveObject("FallingCatchUI");
         TypingUI = FindInactiveObject("TypingUI");
         BookRequestUI = FindInactiveObject("BookRequestUI");
