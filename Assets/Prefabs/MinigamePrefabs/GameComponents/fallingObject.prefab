@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8675840158646903180}
   - component: {fileID: 1770514958422787229}
   - component: {fileID: 2323767414371567583}
-  - component: {fileID: 8840483296895343010}
+  - component: {fileID: 5277100166367865355}
   m_Layer: 5
   m_Name: fallingObject
   m_TagString: Untagged
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231cd95b51b82d940ab33b2bb5f8128d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingObject
---- !u!70 &8840483296895343010
-CapsuleCollider2D:
+--- !u!58 &5277100166367865355
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,10 +119,9 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 102.87696, y: 97.12818}
-  m_Direction: 1
+  m_Radius: 42

@@ -52,6 +52,8 @@ public class FallingCatchGame : MonoBehaviour
         player.freeze = true;
         GhostScript.gamePaused = true;
 
+        basket.anchoredPosition = new Vector2(0, basket.anchoredPosition.y);
+
         spawner.StartSpawning(this);
     }
 
@@ -74,7 +76,7 @@ public class FallingCatchGame : MonoBehaviour
             move = 1;
 
         basket.anchoredPosition +=
-            Vector2.right * move * basketSpeed;
+            Vector2.right * move * basketSpeed * Time.deltaTime;
 
         float minX = -playArea.rect.width / 2 + basket.rect.width / 2;
         float maxX = playArea.rect.width / 2 - basket.rect.width / 2;

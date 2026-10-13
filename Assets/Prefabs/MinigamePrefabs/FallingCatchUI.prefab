@@ -91,14 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingCatchGame
   gameUI: {fileID: 5548939266185031898}
-  timer: {fileID: 0}
-  player: {fileID: 0}
   playArea: {fileID: 9092426596618444987}
   basket: {fileID: 4112100734824668417}
-  gameTimer: {fileID: 0}
   spawner: {fileID: 2579086163826468047}
-  basketSpeed: 7
-  timerTime: 10
+  basketSpeed: 700
   winAmount: 5
   gameID: FallingCatchGame
 --- !u!114 &2579086163826468047
@@ -118,7 +114,7 @@ MonoBehaviour:
   badPrefab: {fileID: 6544927775780678794, guid: 39c2d9af4cc4edf4a9ca7232a9f271cd, type: 3}
   spawnRate: 0.5
   goodSpawnPercentage: 50.6
-  fallSpeed: 5
+  fallSpeed: 500
 --- !u!1 &7504658535434262449
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,10 +148,10 @@ RectTransform:
   - {fileID: 4112100734824668417}
   m_Father: {fileID: 8153476089286738874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 615.43, y: 1159.2}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1880860468012621900
 CanvasRenderer:
@@ -228,10 +224,10 @@ RectTransform:
   - {fileID: 9092426596618444987}
   m_Father: {fileID: 3349705267291792607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0077152}
-  m_SizeDelta: {x: 685, y: 1159.2}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 700, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6794453670368943140
 CanvasRenderer:
@@ -300,15 +296,15 @@ RectTransform:
   m_GameObject: {fileID: 8079278423835699044}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9092426596618444987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257.715, y: -417}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 75}
+  m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5884580276292057219
 CanvasRenderer:
@@ -378,7 +374,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -392,7 +388,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 115, y: 115}
+  m_Size: {x: 200, y: 150}
   m_EdgeRadius: 0
 --- !u!50 &3708591914981418170
 Rigidbody2D:

@@ -696,9 +696,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
   gameID: BookRequestGame
-  ButtonGame1UI: {fileID: 0}
-  ButtonGame2UI: {fileID: 0}
-  ButtonGame3UI: {fileID: 0}
   FallingCatchUI: {fileID: 0}
   TypingUI: {fileID: 0}
   BookRequestUI: {fileID: 0}
@@ -974,7 +971,6 @@ MonoBehaviour:
     m_Bits: 8
   rb: {fileID: 120738313}
   sr: {fileID: 120738310}
-  freeze: 0
 --- !u!212 &120738310
 SpriteRenderer:
   serializedVersion: 2
@@ -1407,9 +1403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
   gameID: FallingCatchGame
-  ButtonGame1UI: {fileID: 0}
-  ButtonGame2UI: {fileID: 0}
-  ButtonGame3UI: {fileID: 0}
   FallingCatchUI: {fileID: 0}
   TypingUI: {fileID: 0}
   BookRequestUI: {fileID: 0}
@@ -2798,6 +2791,8 @@ MonoBehaviour:
   InteractUI: {fileID: 0}
   meter: {fileID: 0}
   reserved: 0
+  radius: 1
+  hit: 0
 --- !u!65 &920676268
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3530,6 +3525,8 @@ MonoBehaviour:
   InteractUI: {fileID: 655806832}
   meter: {fileID: 79308102}
   reserved: 0
+  radius: 1
+  hit: 0
 --- !u!65 &1334924837
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3790,6 +3787,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TypingUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6786480015035864388, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3832,9 +3833,11 @@ MonoBehaviour:
   testBool: 0
   chairs: []
   ghostPrefab: {fileID: 0}
+  escortChair: 0
   customerTotal: 0
+  deathTotal: 0
   tasks:
-  - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
+  - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
 --- !u!4 &1426898067
 Transform:
   m_ObjectHideFlags: 0
@@ -4464,7 +4467,6 @@ MonoBehaviour:
   gameRunning: 0
   gameUI: {fileID: 0}
   timer: {fileID: 0}
-  player: {fileID: 0}
   TimerTime: 10
   timerscript: {fileID: 0}
   gameID: ButtonGame1
@@ -5559,18 +5561,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1774424542}
     m_Modifications:
-    - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: timer
-      value: 
-      objectReference: {fileID: 95840085}
-    - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 120738306}
-    - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: gameTimer
-      value: 
-      objectReference: {fileID: 95840087}
     - target: {fileID: 3349705267291792607, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5654,6 +5644,14 @@ PrefabInstance:
     - target: {fileID: 5548939266185031898, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_Name
       value: FallingCatchUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548939266185031898, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8079278423835699044, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
