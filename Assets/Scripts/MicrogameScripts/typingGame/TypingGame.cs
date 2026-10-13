@@ -217,5 +217,6 @@ public class TypingGame : MonoBehaviour
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
+        QuestController.Instance.FailQuest(gameID);
     }
 }
