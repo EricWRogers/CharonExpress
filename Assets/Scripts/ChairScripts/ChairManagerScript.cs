@@ -97,7 +97,8 @@ public class ChairManager : MonoBehaviour
         if (taskToAssign.name == "thisEscortGraph" && !escortAssigned)
         {
             escortAssigned = true;
-        } else if (taskToAssign.name == "thisEscortGraph" && escortAssigned)
+        }
+        else if (taskToAssign.name == "thisEscortGraph" && escortAssigned)
         {
             while (taskToAssign.name == "thisEscortGraph")
             {
@@ -106,6 +107,7 @@ public class ChairManager : MonoBehaviour
         }
         chairScript.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
+        GameManager.Instance.ghosts.Add(chair);
     }
 
     public void FindNewEscortChair()

@@ -3565,6 +3565,7 @@ MonoBehaviour:
   chairs: []
   ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
   escortChair: 0
+  escortAssigned: 0
   customerTotal: 0
   deathTotal: 0
   tasks:
@@ -6999,6 +7000,24 @@ MonoBehaviour:
   textColor: {r: 0.8352941, g: 0.7019608, b: 0.27058825, a: 1}
   currentTextColor: {r: 0, g: 1, b: 0, a: 1}
   completedTextColor: {r: 0.13152163, g: 0.44025147, b: 0.13152163, a: 1}
+--- !u!1 &1980614281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4558094946630911351, guid: a89be1fc2494ef541b265f8be1e1fa2c, type: 3}
+  m_PrefabInstance: {fileID: 5687689531218670080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1980614284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980614281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbeb623e7202b29439018a213edb7551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  ghosts: []
 --- !u!1 &1997414250 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3106729033900907582, guid: f3ee3ef1dcf771240b056fd8f391194f, type: 3}
@@ -8237,7 +8256,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4558094946630911351, guid: a89be1fc2494ef541b265f8be1e1fa2c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1980614284}
   m_SourcePrefab: {fileID: 100100000, guid: a89be1fc2494ef541b265f8be1e1fa2c, type: 3}
 --- !u!1001 &6413929698625763609
 PrefabInstance:
