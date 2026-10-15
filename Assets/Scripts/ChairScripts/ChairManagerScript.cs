@@ -15,6 +15,7 @@ public class ChairManager : MonoBehaviour
     public GameObject ghostPrefab;
     //escortChair marks which chair object will be left open for the "escort" task
     public int escortChair;
+    public bool escortAssigned = false;
 
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
@@ -92,6 +93,17 @@ public class ChairManager : MonoBehaviour
         customerTotal++;
         Dialogue chairScript = chair.GetComponent<Dialogue>();
         DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
+        Debug.Log("To the task assigned was this" + taskToAssign.name);
+        if (taskToAssign.name == "thisEscortGraph" && !escortAssigned)
+        {
+            escortAssigned = true;
+        } else if (taskToAssign.name == "thisEscortGraph" && escortAssigned)
+        {
+            while (taskToAssign.name == "thisEscortGraph")
+            {
+                taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
+            }
+        }
         chairScript.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
     }
