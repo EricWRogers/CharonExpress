@@ -1,15 +1,39 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class player : MonoBehaviour
 {
     public float speed;
     public float groundDist;
+    public float x = 0;
+    public float y = 0;
+
 
     public LayerMask ground;
     public Rigidbody rb;
     public SpriteRenderer sr;
     static public bool freeze = false;
+    public InputSystem_Actions inputActions;
+
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+
+        inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -31,22 +55,6 @@ public class player : MonoBehaviour
                     transform.position = movePos;
                 }
             }
-        
-
-            float x = 0;
-            float y = 0;
-
-            if (Keyboard.current != null)
-            {
-                if (Keyboard.current.aKey.isPressed)
-                    x = -1;
-                if (Keyboard.current.dKey.isPressed)
-                    x = 1;
-                if (Keyboard.current.sKey.isPressed)
-                    y = 0;
-                if (Keyboard.current.wKey.isPressed)
-                    y = 0;
-            }
 
             Vector3 moveDir = new Vector3(x, 0, y);
             rb.linearVelocity = moveDir * speed;
@@ -60,5 +68,10 @@ public class player : MonoBehaviour
                 sr.flipX = false;
             }
         }
+    }
+    public void OnMove(CallbackContext ctx){
+        Vector2 input = ctx.ReadValue<Vector2>();
+
+        x = input.x;
     }
 }
