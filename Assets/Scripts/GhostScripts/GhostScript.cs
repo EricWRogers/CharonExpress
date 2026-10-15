@@ -5,7 +5,7 @@ using UnityEngine.Analytics;
 public class GhostScript : MonoBehaviour
 {
     public GameObject ghostObject;
-    public GameObject chairManager;
+    public ChairManager chairManager;
     public GameObject player;
     public ChairScript chairScript;
     public String ghostName = "";
@@ -32,7 +32,7 @@ public class GhostScript : MonoBehaviour
     {
         player = GameObject.Find("Player");
         ghostObject = transform.GetChild(1).gameObject;
-        chairManager = GameObject.Find("ChairManager");
+        chairManager = ChairManager.Instance;
         InteractUI = GameObject.Find("InteractUI");
         meter = transform.GetChild(1).gameObject;
         maxCustomerTimer = customerTimer;
