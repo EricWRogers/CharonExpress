@@ -27,6 +27,8 @@ public class GhostScript : MonoBehaviour
     public int direction = 1;  //1 represents target is to the right, -1 represents target is to the left
     public int movementSpeed = 10;
     public Vector3 targetPosition;
+    public int maxScore = 10;
+    public int score = 5;
 
     void Start()
     {

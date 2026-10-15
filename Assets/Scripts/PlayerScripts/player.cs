@@ -15,14 +15,16 @@ public class player : MonoBehaviour
     public Rigidbody rb;
     public SpriteRenderer sr;
     static public bool freeze = false;
-    public InputSystem_Actions inputActions;
+    public PlayerThings inputActions;
+    public GameObject playerObj;
 
     private void Awake()
     {
-        inputActions = new InputSystem_Actions();
+        inputActions = new PlayerThings();
 
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
+        inputActions.Player.Interact.performed += OnInteract;
     }
 
     private void OnEnable()
@@ -37,6 +39,7 @@ public class player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerObj = gameObject;
     }
 
     void Update()
@@ -69,9 +72,15 @@ public class player : MonoBehaviour
             }
         }
     }
-    public void OnMove(CallbackContext ctx){
+    public void OnMove(CallbackContext ctx)
+    {
         Vector2 input = ctx.ReadValue<Vector2>();
 
         x = input.x;
+    }
+    public void OnInteract(CallbackContext ctx)
+    {
+        Debug.Log("interact clicked");
+        playerObj.GetComponent<Interact>().OnInteract();
     }
 }

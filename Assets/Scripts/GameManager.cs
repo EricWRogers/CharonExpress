@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     {
         return Instance;
     }
-    float maxScore = 0;
+    public float maxScore = 0;
     public List<GameObject> ghosts = new List<GameObject>();
 
     public void Awake()
@@ -34,5 +34,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        maxScore = ghosts.Count * 10;
     }
 }

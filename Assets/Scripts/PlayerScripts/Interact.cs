@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 
 public interface IInteractable
@@ -12,6 +13,7 @@ public interface IInteractable
 }
 public class Interact : MonoBehaviour
 {
+
     private IInteractable currentInteractable;
     public GameObject interactionUI;
     public TextMeshProUGUI interactionText;
@@ -22,7 +24,14 @@ public class Interact : MonoBehaviour
     }
     void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame && currentInteractable != null)
+        //if (Keyboard.current.eKey.wasPressedThisFrame && currentInteractable != null)
+        //{
+            
+        //}
+    }
+    public void OnInteract()
+    {
+        if (currentInteractable != null)
         {
             currentInteractable.Interact();
             currentInteractable = null;
