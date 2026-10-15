@@ -96,6 +96,8 @@ public class GhostScript : MonoBehaviour
             ChairManager.Instance.FindNewEscortChair();
             Debug.Log("GhostScriptDebugStatement");
             QuestController.Instance.CompleteMicrogame(gameID);
+            customerTimer += maxCustomerTimer / 3;
+            maxCustomerTimer = customerTimer;
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
             {
@@ -119,6 +121,8 @@ public class GhostScript : MonoBehaviour
             ChairManager.Instance.FindNewEscortChair();
             Debug.Log("GhostScriptDebugStatement");
             QuestController.Instance.CompleteMicrogame(gameID);
+            customerTimer += maxCustomerTimer / 3;
+            maxCustomerTimer = customerTimer;
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
             {
