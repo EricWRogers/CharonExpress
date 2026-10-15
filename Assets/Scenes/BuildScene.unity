@@ -819,7 +819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &169614190
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3434,9 +3434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
   gameID: FallingCatchGame
-  ButtonGame1UI: {fileID: 668979142}
-  ButtonGame2UI: {fileID: 223731170}
-  ButtonGame3UI: {fileID: 500571888}
   FallingCatchUI: {fileID: 0}
   TypingUI: {fileID: 331707915}
   BookRequestUI: {fileID: 0}
@@ -3620,9 +3617,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
   gameID: BookRequestGame
-  ButtonGame1UI: {fileID: 668979142}
-  ButtonGame2UI: {fileID: 223731170}
-  ButtonGame3UI: {fileID: 500571888}
   FallingCatchUI: {fileID: 0}
   TypingUI: {fileID: 331707915}
   BookRequestUI: {fileID: 0}
