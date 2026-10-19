@@ -5645,14 +5645,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FallingCatchUI
       objectReference: {fileID: 0}
-    - target: {fileID: 5548939266185031898, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8079278423835699044, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

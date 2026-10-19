@@ -1,6 +1,6 @@
+using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class QuestLogController : MonoBehaviour
 {
@@ -9,86 +9,118 @@ public class QuestLogController : MonoBehaviour
     public Transform questList;
     public GameObject questEntryPrefab;
 
-    [Header("Quest Log Key")]
-
     [Header("Text Colors")]
     public Color textColor = Color.white;
-
     public Color currentTextColor = Color.green;
     public Color completedTextColor = Color.gray;
 
     private void Start()
     {
-        questLogUI.SetActive(true);
+        if (questLogUI != null)
+            questLogUI.SetActive(true);
+
+        UpdateQuestLog();
     }
+
     public void UpdateQuestLog()
     {
-        foreach (Transform child in questList)
+        if (questList == null)
         {
-            Destroy(child.gameObject);
+            Debug.LogWarning("QuestLogController is missing its Quest List reference.", this);
+            return;
         }
 
-        foreach (Quest.QuestProgress progress in QuestController.Instance.activeQuests)
+        ClearQuestEntries();
+
+        QuestController controller = QuestController.Instance;
+        if (controller == null || controller.activeQuests == null)
+            return;
+
+        if (questEntryPrefab == null)
         {
-            if (progress.IsCompleted)
+            Debug.LogWarning("QuestLogController is missing its Quest Entry Prefab.", this);
+            return;
+        }
+
+        foreach (Quest.QuestProgress progress in controller.activeQuests)
+        {
+            if (progress == null || progress.IsCompleted || progress.quest == null)
                 continue;
 
-            GameObject entry = Instantiate(
-                questEntryPrefab,
-                questList
-            );
+            CreateQuestEntry(progress);
+        }
+    }
 
-            TextMeshProUGUI text =
-                entry.GetComponent<TextMeshProUGUI>();
+    private void ClearQuestEntries()
+    {
+        for (int i = questList.childCount - 1; i >= 0; i--)
+            Destroy(questList.GetChild(i).gameObject);
+    }
 
-            if (text == null)
+    private void CreateQuestEntry(Quest.QuestProgress progress)
+    {
+        GameObject entry = Instantiate(questEntryPrefab, questList);
+        TextMeshProUGUI text = entry.GetComponent<TextMeshProUGUI>();
+
+        if (text == null)
+            text = entry.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (text == null)
+        {
+            Debug.LogError("The Quest Entry Prefab needs a TextMeshProUGUI component.", entry);
+            Destroy(entry);
+            return;
+        }
+
+        text.text = BuildQuestText(progress);
+    }
+
+    private string BuildQuestText(Quest.QuestProgress progress)
+    {
+        Quest quest = progress.quest;
+        StringBuilder builder = new StringBuilder();
+
+        builder.Append("<b><color=#")
+            .Append(ColorUtility.ToHtmlStringRGBA(textColor))
+            .Append(">")
+            .Append(quest.questName)
+            .Append(":</color></b>\n");
+
+        if (quest.objectives == null)
+            return builder.ToString();
+
+        for (int i = 0; i < quest.objectives.Count; i++)
+        {
+            Quest.QuestObjective objective = quest.objectives[i];
+            if (objective == null)
                 continue;
 
-            Quest quest = progress.quest;
-
-            string normalColor = ColorUtility.ToHtmlStringRGBA(textColor);
-            string completedColor = ColorUtility.ToHtmlStringRGBA(completedTextColor);
-
-            string questText =
-                "<b><color=#" + normalColor + ">" +
-                quest.questName + ":" +
-                "</color></b>\n";
-            for (int i = 0; i < quest.objectives.Count; i++)
+            if (i < progress.currentObjectiveIndex)
             {
-                Quest.QuestObjective objective = quest.objectives[i];
-
-                if (i < progress.currentObjectiveIndex)
-                {
-                    // Completed objective.
-                    questText +=
-                        "<color=#" +
-                        ColorUtility.ToHtmlStringRGBA(completedTextColor) +
-                        ">[Done] " +
-                        objective.description +
-                        "</color>\n";
-                }
-                else if (i == progress.currentObjectiveIndex)
-                {
-                    // Current objective.
-                    questText +=
-                        "<b><color=#" +
-                        ColorUtility.ToHtmlStringRGBA(currentTextColor) +
-                        ">→ " +
-                        objective.description +
-                        "</color></b>\n";
-                }
-                else
-                {
-                    // Future objective.
-                    questText +=
-                        "<color=#" +
-                        ColorUtility.ToHtmlStringRGBA(textColor) +
-                        ">" +
-                        objective.description +
-                        "</color>\n";
-                }
+                builder.Append("<color=#")
+                    .Append(ColorUtility.ToHtmlStringRGBA(completedTextColor))
+                    .Append(">[Done] ")
+                    .Append(objective.description)
+                    .Append("</color>\n");
             }
-            text.text = questText;
+            else if (i == progress.currentObjectiveIndex)
+            {
+                builder.Append("<b><color=#")
+                    .Append(ColorUtility.ToHtmlStringRGBA(currentTextColor))
+                    .Append(">→ ")
+                    .Append(objective.description)
+                    .Append("</color></b>\n");
+            }
+            else
+            {
+                builder.Append("<color=#")
+                    .Append(ColorUtility.ToHtmlStringRGBA(textColor))
+                    .Append(">")
+                    .Append(objective.description)
+                    .Append("</color>\n");
+            }
         }
+
+        return builder.ToString();
     }
 }
