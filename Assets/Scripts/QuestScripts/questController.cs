@@ -231,7 +231,7 @@ public class QuestController : MonoBehaviour
         Debug.Log("Completed quest: " + completedQuest.questName, this);
 
         // test for adding points
-        dayCycle.AddPoints(10);
+        dayCycle.AddPoints(1);
 
 
         if (onAnyQuestCompleted != null)

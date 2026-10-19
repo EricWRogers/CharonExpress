@@ -83,19 +83,6 @@ public class DayCycle : MonoBehaviour
 
     public void AddPoints(int amount)
     {
-        if (amount <= 0)
-        {
-            if (amount < 0)
-            {
-                Debug.LogWarning(
-                    "Cannot add negative points.",
-                    this
-                );
-            }
-
-            return;
-        }
-
         totalPoints += amount;
         pointsEarnedToday += amount;
     }
