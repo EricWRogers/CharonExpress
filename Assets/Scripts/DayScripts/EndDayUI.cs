@@ -3,10 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DaySystemUI : MonoBehaviour
+public class EndDayUI : MonoBehaviour
 {
-    [Header("Day System")]
+    [Header("Systems")]
     public DayCycle daySystem;
+    public StationArrivalController stationArrivalController;
 
     [Header("Travel HUD")]
     public TMP_Text dayLabel;
@@ -21,10 +22,11 @@ public class DaySystemUI : MonoBehaviour
 
     private void Awake()
     {
-        if (daySystem == null)
+        if (daySystem == null ||
+            stationArrivalController == null)
         {
             Debug.LogError(
-                "DaySystemUI needs a DaySystem reference.",
+                "DaySystemUI is missing required references.",
                 this
             );
 
@@ -33,23 +35,25 @@ public class DaySystemUI : MonoBehaviour
         }
 
         if (stationSummaryPanel != null)
-        {
             stationSummaryPanel.SetActive(false);
-        }
     }
 
     private void OnEnable()
     {
         if (daySystem != null)
-        {
-            daySystem.StationReached += ShowStationSummary;
             daySystem.TravelStarted += ShowTravelHUD;
+
+        if (stationArrivalController != null)
+        {
+            stationArrivalController.PresentationReady +=
+                ShowStationSummary;
+
+            if (stationArrivalController.IsReadyForContinue)
+                ShowStationSummary();
         }
 
         if (continueButton != null)
-        {
             continueButton.onClick.AddListener(OnContinuePressed);
-        }
     }
 
     private void Start()
@@ -59,52 +63,39 @@ public class DaySystemUI : MonoBehaviour
 
         UpdateDayLabel();
         UpdateCountdown(true);
-
-        if (stationSummaryPanel != null)
-        {
-            stationSummaryPanel.SetActive(daySystem.IsAtStation);
-        }
-
-        if (daySystem.IsAtStation)
-        {
-            ShowStationSummary();
-        }
     }
 
     private void Update()
     {
-        if (daySystem == null)
-            return;
-
-        UpdateCountdown();
+        if (daySystem != null)
+            UpdateCountdown();
     }
 
     private void OnDisable()
     {
         if (daySystem != null)
-        {
-            daySystem.StationReached -= ShowStationSummary;
             daySystem.TravelStarted -= ShowTravelHUD;
+
+        if (stationArrivalController != null)
+        {
+            stationArrivalController.PresentationReady -=
+                ShowStationSummary;
         }
 
         if (continueButton != null)
-        {
             continueButton.onClick.RemoveListener(OnContinuePressed);
-        }
     }
 
     private void UpdateDayLabel()
     {
         if (dayLabel != null)
-        {
-            dayLabel.text = $"Day {daySystem.CurrentDay}";
-        }
+            dayLabel.text = $"Day {daySystem.currentDay}";
     }
 
     private void UpdateCountdown(bool forceRefresh = false)
     {
         int totalSeconds = Mathf.CeilToInt(
-            daySystem.SecondsRemaining
+            daySystem.secondsRemaining
         );
 
         if (!forceRefresh && totalSeconds == lastDisplayedSecond)
@@ -115,7 +106,7 @@ public class DaySystemUI : MonoBehaviour
         if (countdownLabel == null)
             return;
 
-        if (daySystem.IsAtStation)
+        if (daySystem.state == DayCycle.TravelState.AtStation)
         {
             countdownLabel.text = "Station reached";
         }
@@ -132,16 +123,14 @@ public class DaySystemUI : MonoBehaviour
     private void ShowStationSummary()
     {
         if (stationSummaryPanel != null)
-        {
             stationSummaryPanel.SetActive(true);
-        }
 
         if (stationSummaryLabel != null)
         {
             stationSummaryLabel.text =
-                $"Day {daySystem.CurrentDay} Complete!\n\n" +
-                $"Points earned today: {daySystem.PointsEarnedToday}\n" +
-                $"Total points: {daySystem.TotalPoints}";
+                $"Day {daySystem.currentDay} Complete!\n\n" +
+                $"Points earned today: {daySystem.pointsEarnedToday}\n" +
+                $"Total points: {daySystem.totalPoints}";
         }
 
         UpdateCountdown(true);
@@ -150,9 +139,7 @@ public class DaySystemUI : MonoBehaviour
     private void ShowTravelHUD()
     {
         if (stationSummaryPanel != null)
-        {
             stationSummaryPanel.SetActive(false);
-        }
 
         UpdateDayLabel();
         UpdateCountdown(true);
@@ -160,6 +147,15 @@ public class DaySystemUI : MonoBehaviour
 
     private void OnContinuePressed()
     {
-        daySystem.DepartStation();
+        if (stationArrivalController == null)
+            return;
+
+        if (!stationArrivalController.IsReadyForContinue)
+            return;
+
+        if (stationSummaryPanel != null)
+            stationSummaryPanel.SetActive(false);
+
+        stationArrivalController.ContinueJourney();
     }
 }

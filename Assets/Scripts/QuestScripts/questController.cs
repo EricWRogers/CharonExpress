@@ -253,6 +253,16 @@ public class QuestController : MonoBehaviour
                objective.gameID == gameID;
     }
 
+
+    public void ClearAllQuests()
+    {
+        activeQuests.Clear();
+
+        UpdateQuestLog();
+
+        Debug.Log("All active quests cleared at station arrival.");
+    }
+
     private void UpdateQuestLog()
     {
         if (questLogUI != null)

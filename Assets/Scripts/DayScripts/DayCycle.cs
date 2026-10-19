@@ -1,6 +1,6 @@
-using UnityEngine;
+
 using System;
-using NUnit.Framework;
+using UnityEngine;
 
 public class DayCycle : MonoBehaviour
 {
@@ -10,35 +10,37 @@ public class DayCycle : MonoBehaviour
         AtStation
     }
 
+    [Header("Schedule")]
+    [Min(1f)]
     public float SecondsBetweenStations = 180f;
+
+    [Min(1)]
     public int firstDay = 1;
+
     public bool pauseGameAtStation = true;
 
-    private int currentDay;
-    private float secondsRemaining;
-    private int totalPoints;
-    private int pointsEarnedToday;
+    [Header("Current State")]
+    [HideInInspector] public int currentDay;
+    [HideInInspector] public float secondsRemaining;
+    [HideInInspector] public int totalPoints;
+    [HideInInspector] public int pointsEarnedToday;
+    [HideInInspector] public TravelState state;
 
-    private TravelState state;
-
-    private float PreviousTimeScale;
-    private bool IsPaused;
-
-    // Read-only information that other scripts can access.
-    public int CurrentDay => currentDay;
-    public float SecondsRemaining => secondsRemaining;
-    public int TotalPoints => totalPoints;
-    public int PointsEarnedToday => pointsEarnedToday;
-    public bool IsAtStation => state == TravelState.AtStation;
+    private float previousTimeScale = 1f;
+    private bool isPaused;
 
     public event Action StationReached;
     public event Action TravelStarted;
 
     private void Awake()
     {
-        if (SecondsBetweenStations <= 1f)
+        if (SecondsBetweenStations < 1f)
         {
-            Debug.LogWarning("SecondsBetweenStations must be greater than 1 second. Setting to 1 second.", this);
+            Debug.LogWarning(
+                "Station duration must be at least one second.",
+                this
+            );
+
             SecondsBetweenStations = 1f;
         }
 
@@ -51,14 +53,16 @@ public class DayCycle : MonoBehaviour
     {
         if (state != TravelState.Traveling)
             return;
-        
-        secondsRemaining = Mathf.Max(0f, secondsRemaining - Time.deltaTime);
+
+        secondsRemaining = Mathf.Max(
+            0f,
+            secondsRemaining - Time.deltaTime
+        );
 
         if (secondsRemaining <= 0f)
-        {
             ReachStation();
-        }
     }
+
     private void ReachStation()
     {
         if (state != TravelState.Traveling)
@@ -69,9 +73,9 @@ public class DayCycle : MonoBehaviour
 
         if (pauseGameAtStation && Time.timeScale > 0f)
         {
-            PreviousTimeScale = Time.timeScale;
+            previousTimeScale = Time.timeScale;
             Time.timeScale = 0f;
-            IsPaused = true;
+            isPaused = true;
         }
 
         StationReached?.Invoke();
@@ -83,10 +87,15 @@ public class DayCycle : MonoBehaviour
         {
             if (amount < 0)
             {
-                Debug.LogWarning("AddPoints called with a negative amount. Ignoring.", this);
+                Debug.LogWarning(
+                    "Cannot add negative points.",
+                    this
+                );
             }
+
             return;
         }
+
         totalPoints += amount;
         pointsEarnedToday += amount;
     }
@@ -105,11 +114,18 @@ public class DayCycle : MonoBehaviour
 
         TravelStarted?.Invoke();
     }
+
     private void RestoreTimeScale()
     {
-        if (!IsPaused)
+        if (!isPaused)
             return;
-        Time.timeScale = PreviousTimeScale;
-        IsPaused = false;
+
+        Time.timeScale = previousTimeScale;
+        isPaused = false;
+    }
+
+    private void OnDisable()
+    {
+        RestoreTimeScale();
     }
 }
