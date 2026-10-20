@@ -231,7 +231,10 @@ public class QuestController : MonoBehaviour
         QuestGiver questGiver = progress.questGiver;
 
         Debug.Log("Completed quest: " + completedQuest.questName, this);
-        questGiver.transform.parent.GetComponent<GhostScript>().DisableHighlight();
+        GhostScript tempGhostScript = questGiver.transform.parent.GetComponent<GhostScript>();
+        tempGhostScript.DisableHighlight();
+        tempGhostScript.customerTimer += tempGhostScript.maxCustomerTimer / 2; 
+        tempGhostScript.maxCustomerTimer = tempGhostScript.customerTimer;
 
         // test for adding points
         dayCycle.AddPoints(1);
