@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Analytics;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine.Rendering;
 
 public class GhostScript : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class GhostScript : MonoBehaviour
     public GameObject meter;
     public int chairIndex;
     public string gameID = "escort";
+
+    public Material normalMaterial;
+    public Material highlightMaterial;
+    Renderer rend;
 
     static public bool gamePaused;
 
@@ -39,6 +44,7 @@ public class GhostScript : MonoBehaviour
         InteractUI = GameObject.Find("InteractUI");
         meter = transform.GetChild(1).gameObject;
         maxCustomerTimer = customerTimer;
+        rend = GetComponent<Renderer>();
     }
 
     void FixedUpdate()
@@ -119,6 +125,17 @@ public class GhostScript : MonoBehaviour
         else {
             return;
         }
+    }
+
+    public void EnableHighlight()
+    {
+        rend.material = highlightMaterial;
+        return;
+    }
+
+    public void DisableHighlight()
+    {
+        rend.material = normalMaterial;
     }
 
 }

@@ -96,6 +96,8 @@ public class QuestController : MonoBehaviour
         Quest.QuestProgress progress = new Quest.QuestProgress(quest, questGiver);
         activeQuests.Add(progress);
 
+        questGiver.transform.parent.GetComponent<GhostScript>().EnableHighlight();
+
         string giverName = questGiver != null ? questGiver.name : "Unknown NPC";
         Debug.Log("Started quest: " + quest.questName + " from " + giverName);
 
@@ -229,6 +231,7 @@ public class QuestController : MonoBehaviour
         QuestGiver questGiver = progress.questGiver;
 
         Debug.Log("Completed quest: " + completedQuest.questName, this);
+        questGiver.transform.parent.GetComponent<GhostScript>().DisableHighlight();
 
         // test for adding points
         dayCycle.AddPoints(1);
