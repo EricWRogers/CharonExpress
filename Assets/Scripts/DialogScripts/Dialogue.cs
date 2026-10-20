@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class Dialogue : MonoBehaviour
 {
@@ -29,6 +31,26 @@ public class Dialogue : MonoBehaviour
     public bool escortMission = false;
     public GhostScript ghost;
     public player playerController;
+
+    public PlayerThings inputActions;
+
+    private void Awake()
+    {
+        inputActions = new PlayerThings();
+
+        inputActions.UI.LineSkip.performed += OnSkip;
+
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
 
     //public NPC npc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -60,11 +82,6 @@ public class Dialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && textActive == true)
-        {
-            Debug.Log("should skip line");
-            LineSkip();
-        }
 
     }
 
@@ -122,6 +139,14 @@ public class Dialogue : MonoBehaviour
         }
     }
 
+    public void OnSkip(CallbackContext ctx)
+    {
+        if (textActive == true)
+        {
+            Debug.Log("should skip line");
+            LineSkip();
+        }
+    }
 
     public void NextLine()
     {
@@ -150,6 +175,10 @@ public class Dialogue : MonoBehaviour
                     btn.GetComponentInChildren<TMP_Text>().text = answer;
 
                     int index = answerIndex;
+                    if (index == 0)
+                    {
+                        EventSystem.current.SetSelectedGameObject(btn);
+                    }
 
                     btn.GetComponentInChildren<Button>().onClick.AddListener((() => { AnswerClicked(index); }));
 

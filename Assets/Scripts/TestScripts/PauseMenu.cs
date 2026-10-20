@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using static UnityEngine.InputSystem.InputAction;
 
 public class pauseMenu : MonoBehaviour
@@ -7,6 +8,7 @@ public class pauseMenu : MonoBehaviour
     public bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
+    public GameObject pausebutton;
 
     public string sceneName;
     public PlayerThings inputActions;
@@ -61,7 +63,7 @@ public class pauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-
+        EventSystem.current.SetSelectedGameObject(pausebutton);
     }
 
     public void LoadMenu()
