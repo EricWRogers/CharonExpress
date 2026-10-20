@@ -42,10 +42,12 @@ public class ChairManager : MonoBehaviour
 
     void Start()
     {
+        //Grab list of all chairs
         chairs = GameObject.FindGameObjectsWithTag("Chair");
+        //Determine one chair to be the "reserved" chair for the escort task
         escortChair = UnityEngine.Random.Range(0, chairs.Length);
-        //Hides the ghosts. They will be toggled on when appropriate.
 
+        //For all unreserved chairs, assign a delay for the ghosts to show up
         for (int i = 0; i < chairs.Length; i++)
         {
             if (i == escortChair)
@@ -67,7 +69,10 @@ public class ChairManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Iterate through each chair by index
         for (int i = 0; i < chairs.Length; i++) {
+
+            //If the chair is not reserved for escort, decrement cooldown. If cooldown below zero, instantiate a ghost and assign it a task
             if (i != escortChair)
             {     
                 ChairScript chairScript = chairs[i].GetComponent<ChairScript>();
@@ -88,10 +93,11 @@ public class ChairManager : MonoBehaviour
         }
     }
 
-    public void AssignGhost(GameObject chair)
+    //Assign a task to the ghost passed in
+    public void AssignGhost(GameObject ghost)
     {
         customerTotal++;
-        Dialogue chairScript = chair.GetComponent<Dialogue>();
+        Dialogue chairScript = ghost.GetComponent<Dialogue>();
         DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
         Debug.Log("To the task assigned was this" + taskToAssign.name);
         if (taskToAssign.name == "thisEscortGraph" && !escortAssigned)
@@ -107,9 +113,10 @@ public class ChairManager : MonoBehaviour
         }
         chairScript.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
-        GameManager.Instance.ghosts.Add(chair);
+        GameManager.Instance.ghosts.Add(ghost);
     }
 
+    //Called when an escort task is completed. Determines a new, empty chair to be reserved.
     public void FindNewEscortChair()
     {
         chairs[escortChair].GetComponent<ChairScript>().reserved = false;
