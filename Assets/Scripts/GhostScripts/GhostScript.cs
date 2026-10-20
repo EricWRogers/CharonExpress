@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.Analytics;
+using System.Diagnostics.CodeAnalysis;
 
 public class GhostScript : MonoBehaviour
 {
@@ -40,9 +41,9 @@ public class GhostScript : MonoBehaviour
         maxCustomerTimer = customerTimer;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
+        //Decrement the ghost's lifespan. If lifespan is elapsed, kill the ghost and set a new cooldown timer for it
         if (customerTimer > 0 && !gamePaused)
         {
             customerTimer-= Time.deltaTime;
@@ -57,12 +58,14 @@ public class GhostScript : MonoBehaviour
             Debug.Log("I KILLED IT");
             Destroy(gameObject);
         }
+
         if (beingEscorted)
         {
             travelStep();
         }
     }
 
+    //When the escort task is assigned, determine the position and direction needed to go, then move the ghost to the aisle.
     public void assignedEscort(Vector3 inputTargetPosition)
     {
         targetPosition = inputTargetPosition;   
@@ -77,16 +80,19 @@ public class GhostScript : MonoBehaviour
         } 
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
     }
+
+    //Called every FixedUpdate during escort mission
     void travelStep()
     {
+        //If player is in-range, move the ghost toward its destination
         if (Vector3.Distance(transform.position, player.transform.position) < 2f)
         {
             transform.position += new Vector3(Time.deltaTime * movementSpeed * direction, 0, 0);
         }
 
-        if (direction == 1 && transform.position.x > targetPosition.x)
+        //If the ghost has reached its destination, reset variables, move the ghost to its proper spot, and end the task
+        if ((direction == 1 && transform.position.x > targetPosition.x) || (direction == -1 && transform.position.x < targetPosition.x))
         {
-            Debug.Log("Made it to the target right");
 
             beingEscorted = false;
             chairScript.ghostActive = false;
@@ -110,50 +116,9 @@ public class GhostScript : MonoBehaviour
                 }
             }
         }
-        else if (direction == -1 && transform.position.x < targetPosition.x)
-        {
-            Debug.Log("Made it to the target left");
-            beingEscorted = false;
-            chairScript.ghostActive = false;
-            chairScript = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].GetComponent<ChairScript>();
-            chairScript.ghostActive = true;
-            
-
-            transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
-            ChairManager.Instance.FindNewEscortChair();
-            Debug.Log("GhostScriptDebugStatement");
-            QuestController.Instance.CompleteMicrogame(gameID);
-            customerTimer += maxCustomerTimer / 3;
-            maxCustomerTimer = customerTimer;
-            foreach (MicroGameStart gameStart in
-                FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
-            {
-                if (gameStart.gameID == gameID)
-                {
-                    gameStart.ResetInteraction();
-                    break;
-                }
-            }
-        }
-
         else {
             return;
         }
     }
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.GetComponent<player>() != null)
-        {
-            playerInRange = true;
-        }
-    }
-
-    void OnTriggerExit(Collider collider)
-    {
-        if (collider.GetComponent<player>() != null)
-        {
-            playerInRange = false;
-        }
-    }
 }
