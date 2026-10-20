@@ -6,74 +6,78 @@ public class QuestGiver : MonoBehaviour, IInteractable
     public DialogInteraction text;
     public string questid;
 
-    void Start()
+    private void Awake()
     {
-        chair = GetComponentInParent<ChairScript>();
+        if (chair == null)
+            chair = GetComponentInParent<ChairScript>();
     }
 
     public void Interact()
     {
-        // Try to turn in the quest first.
-        if (QuestController.Instance.ReturnToNPC(this))
+        QuestController controller = QuestController.Instance;
+
+        if (controller != null && controller.ReturnToNPC(this))
+            return;
+
+        if (text == null)
         {
+            Debug.LogWarning("QuestGiver is missing its DialogInteraction reference.", this);
             return;
         }
 
-        // Start the dialogue.
         text.StartDiologue();
     }
 
     public void GiveQuest(string questid)
     {
-        Quest quest =
-            QuestController.Instance.GetQuestFromTask(questid);
-
-        if (quest == null)
+        QuestController controller = QuestController.Instance;
+        if (controller == null)
         {
-            Debug.Log(
-                "No quest found for task: " +
-                questid
-            );
-
+            Debug.LogError("Cannot give a quest because no QuestController exists.", this);
             return;
         }
 
-        foreach (Quest.QuestObjective objective in quest.objectives)
+        Quest quest = controller.GetQuestFromTask(questid);
+        if (quest == null)
         {
-            if (objective.gameID == "BookRequestGame")
-            {
-                BookRequestGame bookGame =
-                    FindFirstObjectByType<BookRequestGame>(
-                        FindObjectsInactive.Include
-                    );
-
-                if (bookGame != null)
-                {
-                    bookGame.PrepareRequest();
-                }
-                else
-                {
-                    Debug.LogError(
-                        "BookRequestGame not found."
-                    );
-                }
-
-                break;
-            }
+            Debug.LogWarning("No quest found for task: " + questid, this);
+            return;
         }
 
-        // Now give the quest.
-        QuestController.Instance.StartQuest(
-            quest,
-            this
-        );
+        if (controller.IsQuestActive(quest, this))
+        {
+            controller.StartQuest(quest, this);
+            return;
+        }
+
+        PrepareSpecialObjective(quest);
+        controller.StartQuest(quest, this);
     }
 
-    public void OnTouchingPlayer()
+    private void PrepareSpecialObjective(Quest quest)
     {
+        if (quest.objectives == null)
+            return;
+
+        foreach (Quest.QuestObjective objective in quest.objectives)
+        {
+            if (objective == null || objective.gameID != "BookRequestGame")
+                continue;
+
+            BookRequestGame bookGame = FindFirstObjectByType<BookRequestGame>(FindObjectsInactive.Include);
+            if (bookGame != null)
+            {
+                bookGame.PrepareRequest();
+            }
+            else
+            {
+                Debug.LogError("BookRequestGame not found.", this);
+            }
+
+            return;
+        }
     }
 
-    public void OnNotTouchingPlayer()
-    {
-    }
+    public void OnTouchingPlayer() { }
+    public void OnNotTouchingPlayer() { }
 }

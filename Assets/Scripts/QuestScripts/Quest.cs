@@ -5,15 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Quests/Quest")]
 public class Quest : ScriptableObject
 {
+    [Header("Quest")]
     public string questName;
 
     [TextArea]
     public string description;
 
-    [Tooltip("Must match the task value from ChairScript.")]
+    [Tooltip("Must match the task value used by the gameplay system, such as ChairScript.")]
     public string taskID;
 
-    public List<QuestObjective> objectives;
+    [Header("Objectives")]
+    public List<QuestObjective> objectives = new List<QuestObjective>();
 
     public enum objectiveType
     {
@@ -25,9 +27,16 @@ public class Quest : ScriptableObject
     [Serializable]
     public class QuestObjective
     {
+        [Tooltip("Identifier used by the gameplay system for this objective.")]
         public string gameID;
+
+        [TextArea]
         public string description;
+
         public objectiveType type;
+
+        [Tooltip("End the quest immediately after this objective is completed, even if more objectives follow.")]
+        public bool completeQuestAfterThis;
     }
 
     [Serializable]
@@ -35,7 +44,7 @@ public class Quest : ScriptableObject
     {
         public Quest quest;
         public QuestGiver questGiver;
-        public int currentObjectiveIndex;
+        [Min(0)] public int currentObjectiveIndex;
 
         public QuestProgress(Quest quest, QuestGiver questGiver)
         {
@@ -48,7 +57,10 @@ public class Quest : ScriptableObject
         {
             get
             {
-                if (currentObjectiveIndex >= quest.objectives.Count)
+                if (quest == null || quest.objectives == null)
+                    return null;
+
+                if (currentObjectiveIndex < 0 || currentObjectiveIndex >= quest.objectives.Count)
                     return null;
 
                 return quest.objectives[currentObjectiveIndex];
@@ -57,10 +69,7 @@ public class Quest : ScriptableObject
 
         public bool IsCompleted
         {
-            get
-            {
-                return currentObjectiveIndex >= quest.objectives.Count;
-            }
+            get { return CurrentObjective == null; }
         }
     }
 }

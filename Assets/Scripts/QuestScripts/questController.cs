@@ -1,91 +1,129 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class QuestController : MonoBehaviour
 {
     public static QuestController Instance;
 
-    public List<Quest.QuestProgress> activeQuests =
-        new List<Quest.QuestProgress>();
+    [Header("Quest State")]
+    public List<Quest.QuestProgress> activeQuests = new List<Quest.QuestProgress>();
 
     [Header("All Quests")]
     public Quest[] quests;
 
     public QuestLogController questLogUI;
 
+    [Header("Quest Completion")]
+    [Tooltip("Invoked whenever any quest is completed, regardless of which objective path completed it.")]
+    public UnityEvent onAnyQuestCompleted = new UnityEvent();
+
+    public event Action<Quest, QuestGiver> QuestCompleted;
+    
+    public DayCycle dayCycle;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("More than one QuestController exists. The duplicate will be removed.", this);
+            Destroy(this);
+            return;
+        }
+
         Instance = this;
+
+        if (activeQuests == null)
+            activeQuests = new List<Quest.QuestProgress>();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     public Quest GetQuestFromTask(string taskID)
     {
+        if (string.IsNullOrWhiteSpace(taskID) || quests == null)
+            return null;
+
         foreach (Quest quest in quests)
         {
-            if (quest.taskID == taskID)
-            {
+            if (quest != null && quest.taskID == taskID)
                 return quest;
-            }
         }
 
         return null;
     }
 
-    public void StartQuest(Quest quest, QuestGiver questGiver)
+    public bool IsQuestActive(Quest quest, QuestGiver questGiver)
     {
-        // Check if this NPC already gave the player this quest.
+        if (quest == null || activeQuests == null)
+            return false;
+
         foreach (Quest.QuestProgress progress in activeQuests)
         {
-            if (progress.questGiver == questGiver &&
-                progress.quest == quest)
-            {
-                Debug.Log(
-                    "This NPC already gave you this quest."
-                );
-
-                return;
-            }
-        }
-
-        Quest.QuestProgress newProgress =
-            new Quest.QuestProgress(quest, questGiver);
-
-        activeQuests.Add(newProgress);
-
-        Debug.Log(
-            "Started quest: " +
-            quest.questName +
-            " from " +
-            questGiver.name
-        );
-
-        if (!newProgress.IsCompleted &&
-            newProgress.CurrentObjective.type ==
-            Quest.objectiveType.FirstTalk)
-        {
-            newProgress.currentObjectiveIndex++;
-        }
-
-        UpdateQuestLog();
-    }
-
-    public bool CanCompleteObjective(
-        Quest.objectiveType type,
-        string gameID)
-    {
-        foreach (Quest.QuestProgress progress in activeQuests)
-        {
-            if (progress.IsCompleted)
-                continue;
-
-            Quest.QuestObjective objective =
-                progress.CurrentObjective;
-
-            if (objective.type == type &&
-                objective.gameID == gameID)
+            if (progress != null &&
+                progress.quest == quest &&
+                progress.questGiver == questGiver)
             {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    public void StartQuest(Quest quest, QuestGiver questGiver)
+    {
+        if (quest == null)
+        {
+            Debug.LogWarning("Cannot start a quest because the quest reference is missing.", this);
+            return;
+        }
+
+        if (activeQuests == null)
+            activeQuests = new List<Quest.QuestProgress>();
+
+        if (IsQuestActive(quest, questGiver))
+        {
+            Debug.Log("This NPC already gave you this quest.");
+            return;
+        }
+
+        Quest.QuestProgress progress = new Quest.QuestProgress(quest, questGiver);
+        activeQuests.Add(progress);
+
+        string giverName = questGiver != null ? questGiver.name : "Unknown NPC";
+        Debug.Log("Started quest: " + quest.questName + " from " + giverName);
+
+        Quest.QuestObjective objective = progress.CurrentObjective;
+        if (objective != null && objective.type == Quest.objectiveType.FirstTalk)
+        {
+            CompleteCurrentObjective(progress);
+            return;
+        }
+
+        if (progress.IsCompleted)
+            CompleteQuest(progress);
+        else
+            UpdateQuestLog();
+    }
+
+    public bool CanCompleteObjective(Quest.objectiveType type, string gameID)
+    {
+        if (activeQuests == null)
+            return false;
+
+        foreach (Quest.QuestProgress progress in activeQuests)
+        {
+            if (progress == null || progress.IsCompleted)
+                continue;
+
+            if (MatchesCurrentObjective(progress, type, gameID))
+                return true;
         }
 
         return false;
@@ -93,69 +131,43 @@ public class QuestController : MonoBehaviour
 
     public void CompleteMicrogame(string gameID)
     {
-        foreach (Quest.QuestProgress progress in activeQuests)
+        if (activeQuests == null)
+            return;
+
+        for (int i = 0; i < activeQuests.Count; i++)
         {
-            Debug.Log("QuestsControllerDebugStatement");
-            if (progress.IsCompleted)
+            Quest.QuestProgress progress = activeQuests[i];
+            if (progress == null || progress.IsCompleted)
                 continue;
 
-            Debug.Log("It continued");
+            if (!MatchesCurrentObjective(progress, Quest.objectiveType.Microgame, gameID))
+                continue;
 
-            Quest.QuestObjective objective =
-                progress.CurrentObjective;
-
-            Debug.Log(objective.type + "" + Quest.objectiveType.Microgame +""+ objective.gameID + "" + gameID);
-            if (objective.type == Quest.objectiveType.Microgame &&
-                objective.gameID == gameID)
-            {
-                Debug.Log(
-                    "Completed microgame objective: " +
-                    objective.description
-                );
-
-                progress.currentObjectiveIndex++;
-
-                if (progress.currentObjectiveIndex >= progress.quest.objectives.Count)
-                {
-                    for (int i = 0; i < activeQuests.Count; i++)
-                    {
-                        activeQuests.RemoveAt(i);
-                    }
-                }
-
-                UpdateQuestLog();
-
-                return;
-            }
+            Quest.QuestObjective objective = progress.CurrentObjective;
+            Debug.Log("Completed microgame objective: " + objective.description);
+            CompleteCurrentObjective(progress);
+            return;
         }
     }
 
     public bool FailQuest(string gameID)
     {
+        if (activeQuests == null)
+            return false;
+
         for (int i = 0; i < activeQuests.Count; i++)
         {
             Quest.QuestProgress progress = activeQuests[i];
-
-            if (progress.IsCompleted)
+            if (progress == null || progress.IsCompleted)
                 continue;
 
-            Quest.QuestObjective objective =
-                progress.CurrentObjective;
+            if (!MatchesCurrentObjective(progress, Quest.objectiveType.Microgame, gameID))
+                continue;
 
-            if (objective.type == Quest.objectiveType.Microgame &&
-                objective.gameID == gameID)
-            {
-                Debug.Log(
-                    "Failed quest: " +
-                    progress.quest.questName
-                );
-
-                activeQuests.RemoveAt(i);
-
-                UpdateQuestLog();
-
-                return true;
-            }
+            Debug.Log("Failed quest: " + progress.quest.questName);
+            activeQuests.RemoveAt(i);
+            UpdateQuestLog();
+            return true;
         }
 
         return false;
@@ -163,39 +175,97 @@ public class QuestController : MonoBehaviour
 
     public bool ReturnToNPC(QuestGiver questGiver)
     {
+        if (activeQuests == null)
+            return false;
+
         for (int i = 0; i < activeQuests.Count; i++)
         {
             Quest.QuestProgress progress = activeQuests[i];
-
-            if (progress.IsCompleted)
+            if (progress == null || progress.IsCompleted)
                 continue;
 
             if (progress.questGiver != questGiver)
                 continue;
 
-            if (progress.CurrentObjective.type ==
-                Quest.objectiveType.ReturnToNPC)
-            {
-                Debug.Log(
-                    "Completed quest: " +
-                    progress.quest.questName
-                );
+            Quest.QuestObjective objective = progress.CurrentObjective;
+            if (objective == null || objective.type != Quest.objectiveType.ReturnToNPC)
+                continue;
 
-                activeQuests.RemoveAt(i);
-
-                UpdateQuestLog();
-
-                return true;
-            }
+            Debug.Log("Completed return-to-NPC objective: " + objective.description);
+            CompleteCurrentObjective(progress);
+            return true;
         }
 
         return false;
     }
+
+    private void CompleteCurrentObjective(Quest.QuestProgress progress)
+    {
+        if (progress == null || progress.IsCompleted)
+            return;
+
+        Quest.QuestObjective completedObjective = progress.CurrentObjective;
+        if (completedObjective == null)
+            return;
+
+        progress.currentObjectiveIndex++;
+
+        // An objective can end the quest early, or the quest ends when its final objective is done.
+        if (completedObjective.completeQuestAfterThis || progress.IsCompleted)
+            CompleteQuest(progress);
+        else
+            UpdateQuestLog();
+    }
+
+    private void CompleteQuest(Quest.QuestProgress progress)
+    {
+        if (progress == null || progress.quest == null || activeQuests == null)
+            return;
+
+        if (!activeQuests.Remove(progress))
+            return;
+
+        Quest completedQuest = progress.quest;
+        QuestGiver questGiver = progress.questGiver;
+
+        Debug.Log("Completed quest: " + completedQuest.questName, this);
+
+        // test for adding points
+        dayCycle.AddPoints(1);
+
+
+        if (onAnyQuestCompleted != null)
+            onAnyQuestCompleted.Invoke();
+
+        QuestCompleted?.Invoke(completedQuest, questGiver);
+        UpdateQuestLog();
+    }
+
+    private bool MatchesCurrentObjective(
+        Quest.QuestProgress progress,
+        Quest.objectiveType type,
+        string gameID)
+    {
+        Quest.QuestObjective objective = progress.CurrentObjective;
+
+        return objective != null &&
+               objective.type == type &&
+               objective.gameID == gameID;
+    }
+
+
+    public void ClearAllQuests()
+    {
+        activeQuests.Clear();
+
+        UpdateQuestLog();
+
+        Debug.Log("All active quests cleared at station arrival.");
+    }
+
     private void UpdateQuestLog()
     {
         if (questLogUI != null)
-        {
             questLogUI.UpdateQuestLog();
-        }
     }
 }

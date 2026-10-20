@@ -18,7 +18,6 @@ public class FallingCatchGame : MonoBehaviour
     public string gameID = "FallingCatchGame";
 
     int goodCaught;
-    int badCaught;
     bool playing;
 
     player playerController;
@@ -45,7 +44,7 @@ public class FallingCatchGame : MonoBehaviour
     {
         playing = true;
         goodCaught = 0;
-        badCaught = 0;
+        //badCaught = 0;
         
         gameUI.SetActive(true);
 
