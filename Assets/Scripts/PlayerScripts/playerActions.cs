@@ -269,6 +269,26 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""leftMouseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""f420c874-9ce2-41b7-8feb-1266f986e2f2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""423c32fc-a923-483b-83bf-256b672e6e3d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -276,6 +296,17 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""91fb1e53-f16f-4513-9d72-464f1c0a0eb0"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LineSkip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3dfecbc-b97c-416f-8c90-fad56fd99eed"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -560,8 +591,8 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ac59dbba-28b1-472a-8df4-5da80e16888d"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""908628b3-c0a7-4ad3-9816-4f56e8fd5c5d"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -571,12 +602,23 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""908628b3-c0a7-4ad3-9816-4f56e8fd5c5d"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""id"": ""f1e6216c-00c4-4e08-ac18-a3d3d36fcb83"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Submit"",
+                    ""groups"": """",
+                    ""action"": ""leftMouseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8d92b42-f323-4c87-a462-e2104a46d265"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -595,6 +637,8 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         m_UI_LineSkip = m_UI.FindAction("LineSkip", throwIfNotFound: true);
+        m_UI_leftMouseButton = m_UI.FindAction("leftMouseButton", throwIfNotFound: true);
+        m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
     }
 
     ~@PlayerThings()
@@ -797,6 +841,8 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_Submit;
     private readonly InputAction m_UI_LineSkip;
+    private readonly InputAction m_UI_leftMouseButton;
+    private readonly InputAction m_UI_Point;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -820,6 +866,14 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/LineSkip".
         /// </summary>
         public InputAction @LineSkip => m_Wrapper.m_UI_LineSkip;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/leftMouseButton".
+        /// </summary>
+        public InputAction @leftMouseButton => m_Wrapper.m_UI_leftMouseButton;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Point".
+        /// </summary>
+        public InputAction @Point => m_Wrapper.m_UI_Point;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -855,6 +909,12 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
             @LineSkip.started += instance.OnLineSkip;
             @LineSkip.performed += instance.OnLineSkip;
             @LineSkip.canceled += instance.OnLineSkip;
+            @leftMouseButton.started += instance.OnLeftMouseButton;
+            @leftMouseButton.performed += instance.OnLeftMouseButton;
+            @leftMouseButton.canceled += instance.OnLeftMouseButton;
+            @Point.started += instance.OnPoint;
+            @Point.performed += instance.OnPoint;
+            @Point.canceled += instance.OnPoint;
         }
 
         /// <summary>
@@ -875,6 +935,12 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
             @LineSkip.started -= instance.OnLineSkip;
             @LineSkip.performed -= instance.OnLineSkip;
             @LineSkip.canceled -= instance.OnLineSkip;
+            @leftMouseButton.started -= instance.OnLeftMouseButton;
+            @leftMouseButton.performed -= instance.OnLeftMouseButton;
+            @leftMouseButton.canceled -= instance.OnLeftMouseButton;
+            @Point.started -= instance.OnPoint;
+            @Point.performed -= instance.OnPoint;
+            @Point.canceled -= instance.OnPoint;
         }
 
         /// <summary>
@@ -965,5 +1031,19 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLineSkip(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "leftMouseButton" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftMouseButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPoint(InputAction.CallbackContext context);
     }
 }

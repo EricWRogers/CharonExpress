@@ -9,7 +9,11 @@ public class GameManager : MonoBehaviour
     {
         return Instance;
     }
-    public float maxScore = 0;
+    public float maxScore = 5;
+    public float avgScore = 1;
+    public float ghostsScore = 0;
+    public int index;
+    public string letterGrade = "";
     public List<GameObject> ghosts = new List<GameObject>();
 
     public void Awake()
@@ -28,12 +32,51 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        maxScore = ghosts.Count * 10;
+        
+        
+    }
+    public void SetGrade()
+    {
+        ghostsScore = 0;
+        index = 0;
+        if (ghosts != null)
+        {
+            for (int i = 0; i <= ghosts.Count; i++)
+            {
+                if (i != 0)
+                {
+                    Debug.Log(ghosts.Count);
+                    ghostsScore += ghosts[index].GetComponent<GhostScript>().score;
+                    index++;
+                }
+            }
+            avgScore = ghostsScore / maxScore;
+            if (avgScore <= 1)
+            {
+                letterGrade = "F";
+            }
+            else if (avgScore > 1 && avgScore <= 2)
+            {
+                letterGrade = "D";
+            }
+            else if (avgScore > 2 && avgScore <= 3)
+            {
+                letterGrade = "C";
+            }
+            else if (avgScore > 3 && avgScore <= 4)
+            {
+                letterGrade = "B";
+            }
+            else if (avgScore > 4 && avgScore <= 5)
+            {
+                letterGrade = "A";
+            }
+        }
     }
 }

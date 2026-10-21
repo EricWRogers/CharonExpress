@@ -78,6 +78,7 @@ public class DayCycle : MonoBehaviour
             isPaused = true;
         }
 
+        GameManager.Instance.SetGrade();
         StationReached?.Invoke();
     }
 

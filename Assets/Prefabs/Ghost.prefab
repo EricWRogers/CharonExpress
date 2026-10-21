@@ -421,13 +421,12 @@ MonoBehaviour:
   gameID: escort
   normalMaterial: {fileID: 2100000, guid: 2bc40c531f917462bb87d8641258df5e, type: 2}
   highlightMaterial: {fileID: 2100000, guid: d70f01f6acb5c49bb82c0fbf6792db99, type: 2}
+  score: 2
   beingEscorted: 0
   playerInRange: 0
   direction: 1
   movementSpeed: 2
   targetPosition: {x: 0, y: 0, z: 0}
-  maxScore: 10
-  score: 5
 --- !u!54 &1737380608902926993
 Rigidbody:
   m_ObjectHideFlags: 0

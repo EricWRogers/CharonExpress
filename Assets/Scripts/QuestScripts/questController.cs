@@ -167,6 +167,7 @@ public class QuestController : MonoBehaviour
                 continue;
 
             Debug.Log("Failed quest: " + progress.quest.questName);
+            progress.questGiver.transform.parent.GetComponent<GhostScript>().score--;
             activeQuests.RemoveAt(i);
             UpdateQuestLog();
             return true;
@@ -195,6 +196,7 @@ public class QuestController : MonoBehaviour
 
             Debug.Log("Completed return-to-NPC objective: " + objective.description);
             CompleteCurrentObjective(progress);
+            
             return true;
         }
 
@@ -238,7 +240,7 @@ public class QuestController : MonoBehaviour
 
         // test for adding points
         dayCycle.AddPoints(1);
-
+        questGiver.transform.parent.GetComponent<GhostScript>().score++;
 
         if (onAnyQuestCompleted != null)
             onAnyQuestCompleted.Invoke();

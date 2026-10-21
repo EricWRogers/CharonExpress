@@ -183,6 +183,26 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "leftMouseButton",
+                    "type": "Button",
+                    "id": "f420c874-9ce2-41b7-8feb-1266f986e2f2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Point",
+                    "type": "PassThrough",
+                    "id": "423c32fc-a923-483b-83bf-256b672e6e3d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -190,6 +210,17 @@
                     "name": "",
                     "id": "91fb1e53-f16f-4513-9d72-464f1c0a0eb0",
                     "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LineSkip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3dfecbc-b97c-416f-8c90-fad56fd99eed",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -474,8 +505,8 @@
                 },
                 {
                     "name": "",
-                    "id": "ac59dbba-28b1-472a-8df4-5da80e16888d",
-                    "path": "<Mouse>/leftButton",
+                    "id": "908628b3-c0a7-4ad3-9816-4f56e8fd5c5d",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -485,12 +516,23 @@
                 },
                 {
                     "name": "",
-                    "id": "908628b3-c0a7-4ad3-9816-4f56e8fd5c5d",
-                    "path": "<Keyboard>/enter",
+                    "id": "f1e6216c-00c4-4e08-ac18-a3d3d36fcb83",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Submit",
+                    "groups": "",
+                    "action": "leftMouseButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8d92b42-f323-4c87-a462-e2104a46d265",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

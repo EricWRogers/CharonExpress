@@ -5154,11 +5154,11 @@ MonoBehaviour:
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: 45a45466d24dbc14695e19558d517d88, type: 3}
-  m_PointAction: {fileID: 0}
+  m_PointAction: {fileID: -2387929838039878559, guid: 45a45466d24dbc14695e19558d517d88, type: 3}
   m_MoveAction: {fileID: -9168528956319533598, guid: 45a45466d24dbc14695e19558d517d88, type: 3}
   m_SubmitAction: {fileID: 6037828296754727358, guid: 45a45466d24dbc14695e19558d517d88, type: 3}
   m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 2444258833258315846, guid: 45a45466d24dbc14695e19558d517d88, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
@@ -6927,7 +6927,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbeb623e7202b29439018a213edb7551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  maxScore: 0
+  maxScore: 5
+  avgScore: 1
+  ghostsScore: 0
+  index: 0
+  letterGrade: 
   ghosts: []
 --- !u!4 &1980614286 stripped
 Transform:
