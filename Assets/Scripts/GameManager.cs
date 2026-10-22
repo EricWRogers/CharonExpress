@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour
             {
                 letterGrade = "A";
             }
+            else if (avgScore > 5)
+            {
+                letterGrade = "S";
+            }
         }
     }
 }
