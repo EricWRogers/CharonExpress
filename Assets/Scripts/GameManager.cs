@@ -52,11 +52,20 @@ public class GameManager : MonoBehaviour
                 if (i != 0)
                 {
                     Debug.Log(ghosts.Count);
-                    ghostsScore += ghosts[index].GetComponent<GhostScript>().score;
-                    index++;
+                    if (ghosts[index] != null)
+                    {
+                        ghostsScore += ghosts[index].GetComponent<GhostScript>().score;
+                        index++;
+                    }
+                    else if (ghosts[index] == null)
+                    {
+                        index++;
+                    }
+                    
+                    
                 }
             }
-            avgScore = ghostsScore / maxScore;
+            avgScore = ghostsScore / ghosts.Count;
             if (avgScore <= 1)
             {
                 letterGrade = "F";

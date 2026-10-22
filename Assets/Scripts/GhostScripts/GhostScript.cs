@@ -61,6 +61,7 @@ public class GhostScript : MonoBehaviour
             chairScript.cooldownTimer = UnityEngine.Random.Range(5,10);
             chairScript.ghostActive = false;
             ChairManager.Instance.deathTotal++;
+            score = 0;
             Debug.Log("I KILLED IT");
             Destroy(gameObject);
         }

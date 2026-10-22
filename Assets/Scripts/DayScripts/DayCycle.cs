@@ -31,6 +31,9 @@ public class DayCycle : MonoBehaviour
 
     public event Action StationReached;
     public event Action TravelStarted;
+    public GameObject catchUI;
+    public GameObject bookUI;
+    public GameObject typingUI;
 
     private void Awake()
     {
@@ -78,6 +81,9 @@ public class DayCycle : MonoBehaviour
             isPaused = true;
         }
 
+        catchUI.SetActive(false);
+        bookUI.SetActive(false);
+        typingUI.SetActive(false);
         GameManager.Instance.SetGrade();
         StationReached?.Invoke();
     }

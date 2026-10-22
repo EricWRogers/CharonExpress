@@ -1878,6 +1878,9 @@ MonoBehaviour:
   totalPoints: 0
   pointsEarnedToday: 0
   state: 0
+  catchUI: {fileID: 1447147270}
+  bookUI: {fileID: 867792219}
+  typingUI: {fileID: 331707915}
 --- !u!1 &401802961
 GameObject:
   m_ObjectHideFlags: 0
@@ -8649,6 +8652,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 355164666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &867792219 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5843360299204319995, guid: 195592f1244ae07419716b2fff6347c6, type: 3}
+  m_PrefabInstance: {fileID: 2022715252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &879260256
 GameObject:
   m_ObjectHideFlags: 0
@@ -15634,6 +15642,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1447147270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5548939266185031898, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+  m_PrefabInstance: {fileID: 691469023}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1458893576
 GameObject:
   m_ObjectHideFlags: 0
