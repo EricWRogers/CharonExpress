@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ public class TypingGame : MonoBehaviour
     public GameObject typingPanel;
     public TMP_Text wordOutput;
     public WordBank wordBank;
-    
-    
+
+
     public string gameID = "TypingGame";
 
     private string remainingWord = string.Empty;
@@ -26,7 +27,7 @@ public class TypingGame : MonoBehaviour
     public RectTransform pointerTransform;
     private Vector3 targetPosition;
     public RectTransform safeZone; // Reference to the safe zone RectTransform
-    public float moveSpeed = 100f; 
+    public float moveSpeed = 100f;
     public Transform pointA; // Reference to the starting point
     public Transform pointB;
     public TMP_Text letterText;
@@ -34,11 +35,22 @@ public class TypingGame : MonoBehaviour
     public int wordIndex = 0;
     public int loseIndex = 0;
     public GhostScript ghosty;
+    public PlayerThings inputActions;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        
+        inputActions = new PlayerThings();
+
+        inputActions.UI.Submit.performed += OnClick;
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
     void Start()
     {
@@ -70,12 +82,8 @@ public class TypingGame : MonoBehaviour
     {
         pointerMovement();
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (loseIndex >= 3)
         {
-            CheckSuccess();
-        }
-
-        if(loseIndex >= 3){
             LoseGame();
         }
     }
@@ -122,8 +130,8 @@ public class TypingGame : MonoBehaviour
         if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
         {
             Debug.Log("Success!");
-            Debug.Log(copiedLetters[letterIndex-1]);
-            EnterLetter(copiedLetters[letterIndex-1]);
+            Debug.Log(copiedLetters[letterIndex - 1]);
+            EnterLetter(copiedLetters[letterIndex - 1]);
         }
         else
         {
@@ -143,7 +151,8 @@ public class TypingGame : MonoBehaviour
                 WinGame();
             }
         }
-        else{
+        else
+        {
             loseIndex++;
         }
     }
@@ -194,7 +203,7 @@ public class TypingGame : MonoBehaviour
     public void StartGame(GhostScript ghost)
     {
         SetCurrentWord();
-        player.freeze= true;
+        player.freeze = true;
         ghosty = ghost;
         GhostScript.gamePaused = true;
     }
@@ -218,5 +227,9 @@ public class TypingGame : MonoBehaviour
         player.freeze = false;
         GhostScript.gamePaused = false;
         QuestController.Instance.FailQuest(gameID);
+    }
+    void OnClick(CallbackContext ctx)
+    {
+        CheckSuccess();
     }
 }

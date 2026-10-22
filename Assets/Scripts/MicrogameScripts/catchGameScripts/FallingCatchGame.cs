@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class FallingCatchGame : MonoBehaviour
 {
     public GameObject gameUI;
-    
+
 
     public RectTransform playArea;
     public RectTransform basket;
@@ -19,12 +20,17 @@ public class FallingCatchGame : MonoBehaviour
 
     int goodCaught;
     bool playing;
+    public PlayerThings inputActions;
+    public float x;
 
     player playerController;
 
     void Awake()
     {
-        
+        inputActions = new PlayerThings();
+
+        inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
 
         Collider2D collider = basket.GetComponent<Collider2D>();
 
@@ -40,12 +46,22 @@ public class FallingCatchGame : MonoBehaviour
         body.gravityScale = 0;
     }
 
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     public void StartGame()
     {
         playing = true;
         goodCaught = 0;
         //badCaught = 0;
-        
+
         gameUI.SetActive(true);
 
         player.freeze = true;
@@ -68,11 +84,18 @@ public class FallingCatchGame : MonoBehaviour
     {
         float move = 0;
 
-        if (Keyboard.current.aKey.isPressed)
+        if (x < 0)
+        {
             move = -1;
-
-        if (Keyboard.current.dKey.isPressed)
+        }
+        else if (x > 0)
+        {
             move = 1;
+        }
+        else
+        {
+            move = 0;
+        }
 
         basket.anchoredPosition +=
             Vector2.right * move * basketSpeed * Time.deltaTime;
@@ -123,7 +146,7 @@ public class FallingCatchGame : MonoBehaviour
 
         player.freeze = false;
         GhostScript.gamePaused = false;
-        
+
 
         /*
         if (percentage >= winPercentage)
@@ -157,5 +180,12 @@ public class FallingCatchGame : MonoBehaviour
                 break;
             }
         }
+    }
+    
+    public void OnMove(CallbackContext ctx)
+    {
+        Vector2 input = ctx.ReadValue<Vector2>();
+
+        x = input.x;
     }
 }
