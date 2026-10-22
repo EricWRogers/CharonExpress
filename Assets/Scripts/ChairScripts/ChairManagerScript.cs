@@ -100,13 +100,13 @@ public class ChairManager : MonoBehaviour
         Dialogue chairScript = ghost.GetComponent<Dialogue>();
         DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
         Debug.Log("To the task assigned was this" + taskToAssign.name);
-        if (taskToAssign.name == "thisEscortGraph" && !escortAssigned)
+        if (taskToAssign.name == "EscortGraph" && !escortAssigned)
         {
             escortAssigned = true;
         }
-        else if (taskToAssign.name == "thisEscortGraph" && escortAssigned)
+        else if (taskToAssign.name == "EscortGraph" && escortAssigned)
         {
-            while (taskToAssign.name == "thisEscortGraph")
+            while (taskToAssign.name == "EscortGraph")
             {
                 taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
             }

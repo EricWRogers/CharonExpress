@@ -321,5 +321,6 @@ public class Dialogue : MonoBehaviour
     public void StartEscort(GhostScript ghost)
     {
         ghost.assignedEscort(ChairManager.Instance.chairs[ChairManager.Instance.escortChair].gameObject.transform.position);
+        escortMission = false;
     }
 }

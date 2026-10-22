@@ -188,6 +188,7 @@ public class QuestController : MonoBehaviour
         tempGhostScript.DisableHighlight();
         activeQuests.Remove(progress);
         UpdateQuestLog();
+        ChairManager.Instance.AssignGhost(progress.questGiver.transform.parent.gameObject);
 
         return true;
     }
@@ -264,6 +265,7 @@ public class QuestController : MonoBehaviour
 
         QuestCompleted?.Invoke(completedQuest, questGiver);
         UpdateQuestLog();
+        ChairManager.Instance.AssignGhost(questGiver.transform.parent.gameObject);
     }
 
     private bool MatchesCurrentObjective(

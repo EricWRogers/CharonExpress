@@ -67,6 +67,7 @@ public class GhostScript : MonoBehaviour
 
         if (beingEscorted)
         {
+            Debug.Log(beingEscorted);
             travelStep();
         }
     }
@@ -108,7 +109,7 @@ public class GhostScript : MonoBehaviour
 
             transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
             ChairManager.Instance.FindNewEscortChair();
-            Debug.Log("GhostScriptDebugStatement");
+            Debug.Log(beingEscorted);
             QuestController.Instance.CompleteMicrogame(gameID);
             customerTimer += maxCustomerTimer / 3;
             maxCustomerTimer = customerTimer;
