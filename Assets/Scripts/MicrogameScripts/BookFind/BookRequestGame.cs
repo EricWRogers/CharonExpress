@@ -58,34 +58,27 @@ public class BookRequestGame : MonoBehaviour
     private List<Book> books = new List<Book>();
     private Book requestedBook;
     private bool gameRunning;
+    private Quest.QuestProgress currentProgress;
 
-    public void PrepareRequest()
+    public void PrepareRequest(Quest.QuestProgress progress)
     {
         GenerateBooks();
 
-        if (books.Count < 2)
+        if (books.Count == 0)
         {
-            Debug.LogError("BookRequestGame needs at least 2 possible book combinations.");
+            Debug.LogError("No books available.");
             return;
         }
 
-        requestedBook =
-            books[Random.Range(0, books.Count)];
+        Book requestedBook = books[Random.Range(0, books.Count)];
 
-        if (requestDialogue != null &&
-            requestDialogue.DialogText != null &&
-            requestDialogue.DialogText.Length > 0)
-        {
-            requestDialogue.DialogText[0] =
-                GetRequestDescription();
-        }
+        progress.requestedBookSubject = requestedBook.subject;
+        progress.requestedBookColor = requestedBook.color;
 
         Debug.Log(
             "Requested book: " +
-            requestedBook.color + " " + requestedBook.subject
-        );
+            requestedBook.color + " " + requestedBook.subject);
     }
-
     private void GenerateBooks()
     {
         books.Clear();
@@ -116,20 +109,29 @@ public class BookRequestGame : MonoBehaviour
 
     public void StartGame()
     {
+        currentProgress =
+            QuestController.Instance.GetNextMicrogameProgress(gameID);
+
+        if (currentProgress == null)
+        {
+            Debug.LogWarning("No active book quest is ready to play.");
+            return;
+        }
+
+        requestedBook = books.Find(book =>
+            book.subject == currentProgress.requestedBookSubject &&
+            book.color == currentProgress.requestedBookColor);
+
         if (requestedBook == null)
         {
-            Debug.LogError(
-                "No book has been requested. Call PrepareRequest() first."
-            );
-
+            Debug.LogError("Could not find the requested book.");
+            currentProgress = null;
             return;
         }
 
         gameRunning = true;
 
-        requestDescriptionText.text =
-            GetRequestDescription();
-
+        requestDescriptionText.text = GetRequestDescription();
         gameUI.SetActive(true);
 
         player.freeze = true;
@@ -137,7 +139,6 @@ public class BookRequestGame : MonoBehaviour
 
         CreateBooks();
     }
-
     public void CreateBooks()
     {
         ClearBooks();
@@ -245,12 +246,13 @@ public class BookRequestGame : MonoBehaviour
         player.freeze = false;
         GhostScript.gamePaused = false;
 
-        QuestController.Instance.CompleteMicrogame(gameID);
-
+        QuestController.Instance.CompleteMicrogame(currentProgress);
         Debug.Log(
             "Found book: " +
             requestedBook.color + " " + requestedBook.subject
         );
+        currentProgress = null;
+        requestedBook = null;
 
         MicroGameStart[] gameStarts =
             FindObjectsByType<MicroGameStart>(
@@ -280,6 +282,17 @@ public class BookRequestGame : MonoBehaviour
 
         player.freeze = false;
         GhostScript.gamePaused = false;
-        QuestController.Instance.FailQuest(gameID);
+        QuestController.Instance.FailQuest(currentProgress);
+        currentProgress = null;
+        requestedBook = null;
+    }
+    public string GetRequestDescription(Quest.QuestProgress progress)
+    {
+        if (progress == null)
+            return "";
+
+        return requestText
+            .Replace("{color}", progress.requestedBookColor)
+            .Replace("{subject}", progress.requestedBookSubject);
     }
 }

@@ -48,8 +48,9 @@ MonoBehaviour:
   DialogText:
   - thanks
   textSpeed: 1
-  quest: 3
+  quest: {fileID: 11400000, guid: bafd251e45c3d5f40a8653236a3fe3cc, type: 2}
   conversation: 0
+  escort: 0
 --- !u!114 &-6261530772812368798
 MonoBehaviour:
   m_ObjectHideFlags: 0

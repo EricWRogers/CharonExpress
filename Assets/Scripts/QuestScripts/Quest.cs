@@ -11,8 +11,6 @@ public class Quest : ScriptableObject
     [TextArea]
     public string description;
 
-    [Tooltip("Must match the task value used by the gameplay system, such as ChairScript.")]
-    public string taskID;
 
     [Header("Objectives")]
     public List<QuestObjective> objectives = new List<QuestObjective>();
@@ -44,7 +42,11 @@ public class Quest : ScriptableObject
     {
         public Quest quest;
         public QuestGiver questGiver;
-        [Min(0)] public int currentObjectiveIndex;
+
+        [Min(0)]
+        public int currentObjectiveIndex;
+        public string requestedBookSubject;
+        public string requestedBookColor;
 
         public QuestProgress(Quest quest, QuestGiver questGiver)
         {

@@ -10,8 +10,6 @@ public class QuestController : MonoBehaviour
     [Header("Quest State")]
     public List<Quest.QuestProgress> activeQuests = new List<Quest.QuestProgress>();
 
-    [Header("All Quests")]
-    public Quest[] quests;
 
     public QuestLogController questLogUI;
 
@@ -42,20 +40,6 @@ public class QuestController : MonoBehaviour
     {
         if (Instance == this)
             Instance = null;
-    }
-
-    public Quest GetQuestFromTask(string taskID)
-    {
-        if (string.IsNullOrWhiteSpace(taskID) || quests == null)
-            return null;
-
-        foreach (Quest quest in quests)
-        {
-            if (quest != null && quest.taskID == taskID)
-                return quest;
-        }
-
-        return null;
     }
 
     public bool IsQuestActive(Quest quest, QuestGiver questGiver)
@@ -95,6 +79,7 @@ public class QuestController : MonoBehaviour
 
         Quest.QuestProgress progress = new Quest.QuestProgress(quest, questGiver);
         activeQuests.Add(progress);
+        PrepareBookRequest(progress);
 
         questGiver.transform.parent.GetComponent<GhostScript>().EnableHighlight();
 
@@ -116,6 +101,9 @@ public class QuestController : MonoBehaviour
 
     public bool CanCompleteObjective(Quest.objectiveType type, string gameID)
     {
+        if (type == Quest.objectiveType.Microgame)
+            return GetNextMicrogameProgress(gameID) != null;
+
         if (activeQuests == null)
             return false;
 
@@ -133,49 +121,71 @@ public class QuestController : MonoBehaviour
 
     public void CompleteMicrogame(string gameID)
     {
-        if (activeQuests == null)
-            return;
-
-        for (int i = 0; i < activeQuests.Count; i++)
-        {
-            Quest.QuestProgress progress = activeQuests[i];
-            if (progress == null || progress.IsCompleted)
-                continue;
-
-            if (!MatchesCurrentObjective(progress, Quest.objectiveType.Microgame, gameID))
-                continue;
-
-            Quest.QuestObjective objective = progress.CurrentObjective;
-            Debug.Log("Completed microgame objective: " + objective.description);
-            CompleteCurrentObjective(progress);
-            return;
-        }
+        CompleteMicrogame(GetNextMicrogameProgress(gameID));
     }
 
-    public bool FailQuest(string gameID)
+    public void CompleteMicrogame(Quest.QuestProgress progress)
     {
-        if (activeQuests == null)
-            return false;
-
-        for (int i = 0; i < activeQuests.Count; i++)
+        if (progress == null ||
+            activeQuests == null ||
+            !activeQuests.Contains(progress) ||
+            progress.IsCompleted)
         {
-            Quest.QuestProgress progress = activeQuests[i];
-            if (progress == null || progress.IsCompleted)
-                continue;
-
-            if (!MatchesCurrentObjective(progress, Quest.objectiveType.Microgame, gameID))
-                continue;
-
-            Debug.Log("Failed quest: " + progress.quest.questName);
-            progress.questGiver.transform.parent.GetComponent<GhostScript>().score--;
-            activeQuests.RemoveAt(i);
-            UpdateQuestLog();
-            return true;
+            return;
         }
 
-        return false;
+        Quest.QuestObjective objective = progress.CurrentObjective;
+
+        if (objective == null ||
+            objective.type != Quest.objectiveType.Microgame)
+        {
+            return;
+        }
+
+        Debug.Log("Completed microgame objective: " + objective.description);
+        CompleteCurrentObjective(progress);
     }
 
+public bool FailQuest(string gameID)
+{
+    return FailQuest(GetNextMicrogameProgress(gameID));
+}
+
+    public bool FailQuest(Quest.QuestProgress progress)
+    {
+        if (progress == null ||
+            activeQuests == null ||
+            !activeQuests.Contains(progress) ||
+            progress.IsCompleted)
+        {
+            return false;
+        }
+
+        Quest.QuestObjective objective = progress.CurrentObjective;
+
+        if (objective == null ||
+            objective.type != Quest.objectiveType.Microgame)
+        {
+            return false;
+        }
+
+        Debug.Log("Failed quest: " + progress.quest.questName);
+
+        if (progress.questGiver != null &&
+            progress.questGiver.transform.parent != null)
+        {
+            GhostScript ghost =
+                progress.questGiver.transform.parent.GetComponent<GhostScript>();
+
+            if (ghost != null)
+                ghost.score--;
+        }
+
+        activeQuests.Remove(progress);
+        UpdateQuestLog();
+
+        return true;
+    }
     public bool ReturnToNPC(QuestGiver questGiver)
     {
         if (activeQuests == null)
@@ -261,6 +271,62 @@ public class QuestController : MonoBehaviour
                objective.gameID == gameID;
     }
 
+    public Quest.QuestProgress GetNextMicrogameProgress(string gameID)
+    {
+        if (activeQuests == null)
+            return null;
+
+        foreach (Quest.QuestProgress progress in activeQuests)
+        {
+            if (progress == null || progress.IsCompleted)
+                continue;
+
+            if (MatchesCurrentObjective(
+                progress,
+                Quest.objectiveType.Microgame,
+                gameID))
+            {
+                return progress;
+            }
+        }
+
+        return null;
+    }
+
+    private void PrepareBookRequest(Quest.QuestProgress progress)
+    {
+        foreach (Quest.QuestObjective objective in progress.quest.objectives)
+        {
+            if (objective == null ||
+                objective.type != Quest.objectiveType.Microgame ||
+                objective.gameID != "BookRequestGame")
+            {
+                continue;
+            }
+
+            BookRequestGame bookGame =
+                FindFirstObjectByType<BookRequestGame>(
+                    FindObjectsInactive.Include);
+
+            if (bookGame == null)
+            {
+                Debug.LogError("BookRequestGame not found.", this);
+                return;
+            }
+
+            bookGame.PrepareRequest(progress);
+
+            if (bookGame.requestDialogue != null &&
+                bookGame.requestDialogue.DialogText != null &&
+                bookGame.requestDialogue.DialogText.Length > 0)
+            {
+                bookGame.requestDialogue.DialogText[0] =
+                    bookGame.GetRequestDescription(progress);
+            }
+
+            return;
+        }
+    }
 
     public void ClearAllQuests()
     {

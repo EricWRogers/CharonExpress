@@ -4,8 +4,8 @@ public class QuestGiver : MonoBehaviour, IInteractable
 {
     public ChairScript chair;
     public DialogInteraction text;
-    public string questid;
-
+    [Header("Quest")]
+    public Quest questToGive;
     private void Awake()
     {
         if (chair == null)
@@ -28,56 +28,28 @@ public class QuestGiver : MonoBehaviour, IInteractable
         text.StartDiologue();
     }
 
-    public void GiveQuest(string questid)
+    public void GiveQuest(Quest quest)
     {
         QuestController controller = QuestController.Instance;
+
         if (controller == null)
         {
-            Debug.LogError("Cannot give a quest because no QuestController exists.", this);
+            Debug.LogError(
+                "Cannot give a quest because no QuestController exists.",
+                this);
             return;
         }
 
-        Quest quest = controller.GetQuestFromTask(questid);
         if (quest == null)
         {
-            Debug.LogWarning("No quest found for task: " + questid, this);
+            Debug.LogWarning(
+                "The dialogue has no Quest asset assigned.",
+                this);
             return;
         }
 
-        if (controller.IsQuestActive(quest, this))
-        {
-            controller.StartQuest(quest, this);
-            return;
-        }
-
-        PrepareSpecialObjective(quest);
         controller.StartQuest(quest, this);
     }
-
-    private void PrepareSpecialObjective(Quest quest)
-    {
-        if (quest.objectives == null)
-            return;
-
-        foreach (Quest.QuestObjective objective in quest.objectives)
-        {
-            if (objective == null || objective.gameID != "BookRequestGame")
-                continue;
-
-            BookRequestGame bookGame = FindFirstObjectByType<BookRequestGame>(FindObjectsInactive.Include);
-            if (bookGame != null)
-            {
-                bookGame.PrepareRequest();
-            }
-            else
-            {
-                Debug.LogError("BookRequestGame not found.", this);
-            }
-
-            return;
-        }
-    }
-
     public void OnTouchingPlayer() { }
     public void OnNotTouchingPlayer() { }
 }

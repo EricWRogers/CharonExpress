@@ -138,8 +138,9 @@ MonoBehaviour:
   DialogText:
   - could you have a conversation with me
   textSpeed: 1
-  quest: 2
+  quest: {fileID: 11400000, guid: 0b97bb7cefb494b4fae406626bf130cf, type: 2}
   conversation: 1
+  escort: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

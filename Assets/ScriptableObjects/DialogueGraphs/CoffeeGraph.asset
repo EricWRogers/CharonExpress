@@ -175,8 +175,9 @@ MonoBehaviour:
   DialogText:
   - I would like a cup of coffee please
   textSpeed: 1
-  quest: 1
+  quest: {fileID: 11400000, guid: e8b940aebc3c0ce4facad10a684b44fe, type: 2}
   conversation: 0
+  escort: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

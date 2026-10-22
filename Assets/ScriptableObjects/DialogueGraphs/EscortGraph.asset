@@ -175,7 +175,7 @@ MonoBehaviour:
   DialogText:
   - thank you
   textSpeed: 1
-  quest: 4
+  quest: {fileID: 11400000, guid: 43ca6319cd4c7454b8e5368400e65fcc, type: 2}
   conversation: 0
   escort: 1
 --- !u!114 &11400000
