@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class BookRequestGame : MonoBehaviour
@@ -211,6 +212,10 @@ public class BookRequestGame : MonoBehaviour
                 bookButtonPrefab,
                 gridParent
             );
+            if (book == gridBooks[0])
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+            }
 
             button.GetComponent<Image>().color = book.actualColor;
 
