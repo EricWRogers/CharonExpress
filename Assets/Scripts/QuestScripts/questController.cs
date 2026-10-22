@@ -20,6 +20,7 @@ public class QuestController : MonoBehaviour
     public event Action<Quest, QuestGiver> QuestCompleted;
     
     public DayCycle dayCycle;
+    public EndDayUI endDayUI;
 
     private void Awake()
     {
@@ -146,10 +147,10 @@ public class QuestController : MonoBehaviour
         CompleteCurrentObjective(progress);
     }
 
-public bool FailQuest(string gameID)
-{
-    return FailQuest(GetNextMicrogameProgress(gameID));
-}
+    public bool FailQuest(string gameID)
+    {
+        return FailQuest(GetNextMicrogameProgress(gameID));
+    }
 
     public bool FailQuest(Quest.QuestProgress progress)
     {
@@ -170,6 +171,8 @@ public bool FailQuest(string gameID)
         }
 
         Debug.Log("Failed quest: " + progress.quest.questName);
+
+        endDayUI.failedQuests++;
 
         if (progress.questGiver != null &&
             progress.questGiver.transform.parent != null)
@@ -238,6 +241,8 @@ public bool FailQuest(string gameID)
 
         if (!activeQuests.Remove(progress))
             return;
+
+        endDayUI.completedQuests++;
 
         Quest completedQuest = progress.quest;
         QuestGiver questGiver = progress.questGiver;
