@@ -129,13 +129,13 @@ public class GhostScript : MonoBehaviour
 
     public void EnableHighlight()
     {
-        rend.material = highlightMaterial;
+        transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(0.9648042f, 1f, 0.3349057f, 1f);
         return;
     }
 
     public void DisableHighlight()
     {
-        rend.material = normalMaterial;
+        transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
     }
 
 }

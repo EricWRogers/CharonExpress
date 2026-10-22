@@ -184,6 +184,8 @@ public class QuestController : MonoBehaviour
                 ghost.score--;
         }
 
+        GhostScript tempGhostScript = progress.questGiver.transform.parent.GetComponent<GhostScript>();
+        tempGhostScript.DisableHighlight();
         activeQuests.Remove(progress);
         UpdateQuestLog();
 
