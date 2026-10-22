@@ -8,6 +8,7 @@ public class StationArrivalController : MonoBehaviour
     [Header("Systems")]
     public DayCycle daycycle;
     public CinemachineBrain cameraBrain;
+    public GameObject interactpanel;
 
     [Header("Cameras")]
     public CinemachineCamera playerCamera;
@@ -127,6 +128,10 @@ public class StationArrivalController : MonoBehaviour
         }
 
         activeSequence = StartCoroutine(ArrivalSequence());
+        if (interactpanel != null)
+        {
+            interactpanel.SetActive(false);
+        }
     }
 
     private IEnumerator ArrivalSequence()
