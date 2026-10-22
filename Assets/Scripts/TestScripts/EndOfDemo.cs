@@ -8,7 +8,7 @@ public class EndOfDemo : MonoBehaviour
     public string sceneName;
     public GameObject MainMenuButton;
     
-    public void Awake()
+    public void Start()
     {
         EventSystem.current.SetSelectedGameObject(MainMenuButton);
     }
