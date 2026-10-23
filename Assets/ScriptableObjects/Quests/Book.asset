@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: Book
   description: get book
-  taskID: 3
   objectives:
-  - gameID: 
+  - gameID: 0
     description: talk to npc
     type: 0
-  - gameID: BookRequestGame
+    completeQuestAfterThis: 0
+  - gameID: 4
     description: Find the requested book.
     type: 1
-  - gameID: 
+    completeQuestAfterThis: 0
+  - gameID: 0
     description: return
     type: 2
+    completeQuestAfterThis: 0

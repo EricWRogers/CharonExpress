@@ -8042,6 +8042,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: gameID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197277427576737675, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 2078152463}
@@ -8298,7 +8302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38926ca443661ed44b9a091920199761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
-  gameID: FallingCatchGame
+  gameID: 3
   FallingCatchUI: {fileID: 0}
   TypingUI: {fileID: 331707915}
   BookRequestUI: {fileID: 0}
@@ -8553,7 +8557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38926ca443661ed44b9a091920199761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestTaskStart
-  gameID: BookRequestGame
+  gameID: 4
   FallingCatchUI: {fileID: 0}
   TypingUI: {fileID: 331707915}
   BookRequestUI: {fileID: 0}
@@ -22227,6 +22231,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 138842893440838925, guid: 195592f1244ae07419716b2fff6347c6, type: 3}
+      propertyPath: gameID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 138842893440838925, guid: 195592f1244ae07419716b2fff6347c6, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 2078152463}
@@ -23337,6 +23345,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1017439721}
     m_Modifications:
+    - target: {fileID: 1864889401362429604, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
+      propertyPath: gameID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1864889401362429604, guid: c0bb41e32b47eaf4abdbdaf5a925557e, type: 3}
       propertyPath: player
       value: 

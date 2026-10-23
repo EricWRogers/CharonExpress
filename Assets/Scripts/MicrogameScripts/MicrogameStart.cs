@@ -4,7 +4,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 {
     [Header("Quest ID")]
     [Tooltip("Must match the Microgame game ID in the Quest asset.")]
-    public string gameID;
+    public MicrogameId gameID;
 
     [Header("Minigame")]
     [Tooltip("The UI's for each game.")]
@@ -71,12 +71,12 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
         switch (gameID)
         {
-            case "FallingCatchGame":
+            case MicrogameId.FallingCatchGame:
                 FallingCatchUI.SetActive(true);
                 FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
                 break;
 
-            case "BookRequestGame":
+            case MicrogameId.BookRequestGame:
                 BookRequestUI.SetActive(true);
                 BookRequestUI.GetComponent<BookRequestGame>().StartGame();
                 break;

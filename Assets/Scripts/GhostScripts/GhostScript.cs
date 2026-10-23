@@ -18,14 +18,14 @@ public class GhostScript : MonoBehaviour
     public GameObject InteractUI;
     public GameObject meter;
     public int chairIndex;
-    public string gameID = "escort";
-
+    public MicrogameId gameID = MicrogameId.Escort;
     public Material normalMaterial;
     public Material highlightMaterial;
     Renderer rend;
 
     static public bool gamePaused;
     public float score = 2;
+    public Quest.QuestProgress assignedQuest;
 
     //Variables for Escort Mission
     public bool beingEscorted = false;
@@ -33,8 +33,6 @@ public class GhostScript : MonoBehaviour
     public int direction = 1;  //1 represents target is to the right, -1 represents target is to the left
     public int movementSpeed = 10;
     public Vector3 targetPosition;
-    
-    
 
     void Start()
     {
@@ -62,6 +60,12 @@ public class GhostScript : MonoBehaviour
             chairScript.ghostActive = false;
             ChairManager.Instance.deathTotal++;
             score = 0;
+
+            if (assignedQuest != null)
+            {
+                QuestController.Instance?.FailQuest(assignedQuest, false);
+                assignedQuest = null;
+            }
             Debug.Log("I KILLED IT");
             Destroy(gameObject);
         }
@@ -106,7 +110,6 @@ public class GhostScript : MonoBehaviour
             chairScript.ghostActive = false;
             chairScript = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].GetComponent<ChairScript>();
             chairScript.ghostActive = true;
-            
 
             transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
             ChairManager.Instance.FindNewEscortChair();
@@ -138,6 +141,11 @@ public class GhostScript : MonoBehaviour
     public void DisableHighlight()
     {
         transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+    }
+
+    public void AssignQuest(Quest.QuestProgress progress)
+    {
+    assignedQuest = progress;
     }
 
 }

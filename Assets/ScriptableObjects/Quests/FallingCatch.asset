@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: FallingCatch
   description: 
-  taskID: 1
   objectives:
-  - gameID: 
+  - gameID: 0
     description: talk to that NPCname
     type: 0
-  - gameID: FallingCatchGame
+    completeQuestAfterThis: 0
+  - gameID: 3
     description: go get coffee
     type: 1
-  - gameID: 
+    completeQuestAfterThis: 0
+  - gameID: 0
     description: return to that NPCName
     type: 2
+    completeQuestAfterThis: 0

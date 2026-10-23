@@ -451,7 +451,7 @@ MonoBehaviour:
   InteractUI: {fileID: 0}
   meter: {fileID: 0}
   chairIndex: 0
-  gameID: escort
+  gameID: 1
   normalMaterial: {fileID: 2100000, guid: 2bc40c531f917462bb87d8641258df5e, type: 2}
   highlightMaterial: {fileID: 2100000, guid: d70f01f6acb5c49bb82c0fbf6792db99, type: 2}
   score: 2

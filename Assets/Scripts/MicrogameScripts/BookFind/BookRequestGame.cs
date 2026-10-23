@@ -22,8 +22,7 @@ public class BookRequestGame : MonoBehaviour
     }
 
     [Header("Quest")]
-    public string gameID = "BookRequestGame";
-
+    public MicrogameId gameID = MicrogameId.BookRequestGame;
     [Header("Subjects")]
     public string[] subjects;
 

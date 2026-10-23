@@ -13,8 +13,7 @@ public class TypingGame : MonoBehaviour
     public WordBank wordBank;
 
 
-    public string gameID = "TypingGame";
-
+    public MicrogameId gameID = MicrogameId.TypingGame;
     private string remainingWord = string.Empty;
     public string currentWord = "testing a sentence in the typing game";
     public WordObject currentWordObject = null;

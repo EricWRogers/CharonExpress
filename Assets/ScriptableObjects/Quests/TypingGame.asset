@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: Typing
   description: 
-  taskID: 2
   objectives:
-  - gameID: TypingGame
+  - gameID: 2
     description: type word
     type: 1
+    completeQuestAfterThis: 0

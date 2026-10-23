@@ -16,8 +16,7 @@ public class FallingCatchGame : MonoBehaviour
     //public float winPercentage = 70f;
     public int winAmount = 5;
 
-    public string gameID = "FallingCatchGame";
-
+    public MicrogameId gameID = MicrogameId.FallingCatchGame;
     int goodCaught;
     bool playing;
     public PlayerThings inputActions;

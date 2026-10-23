@@ -80,6 +80,15 @@ public class QuestController : MonoBehaviour
 
         Quest.QuestProgress progress = new Quest.QuestProgress(quest, questGiver);
         activeQuests.Add(progress);
+
+
+        GhostScript ghost = questGiver.GetComponentInParent<GhostScript>();
+
+        if (ghost != null)
+        {
+            ghost.AssignQuest(progress);
+        }
+
         PrepareBookRequest(progress);
 
         questGiver.transform.parent.GetComponent<GhostScript>().EnableHighlight();
@@ -100,7 +109,9 @@ public class QuestController : MonoBehaviour
             UpdateQuestLog();
     }
 
-    public bool CanCompleteObjective(Quest.objectiveType type, string gameID)
+public bool CanCompleteObjective(
+    Quest.objectiveType type,
+    MicrogameId gameID)
     {
         if (type == Quest.objectiveType.Microgame)
             return GetNextMicrogameProgress(gameID) != null;
@@ -120,7 +131,7 @@ public class QuestController : MonoBehaviour
         return false;
     }
 
-    public void CompleteMicrogame(string gameID)
+    public void CompleteMicrogame(MicrogameId gameID)
     {
         CompleteMicrogame(GetNextMicrogameProgress(gameID));
     }
@@ -147,12 +158,15 @@ public class QuestController : MonoBehaviour
         CompleteCurrentObjective(progress);
     }
 
-    public bool FailQuest(string gameID)
+
+    public bool FailQuest(MicrogameId gameID, bool reassignGhost = true)
     {
-        return FailQuest(GetNextMicrogameProgress(gameID));
+        return FailQuest(GetNextMicrogameProgress(gameID), reassignGhost);
     }
 
-    public bool FailQuest(Quest.QuestProgress progress)
+    public bool FailQuest(
+        Quest.QuestProgress progress,
+        bool reassignGhost = true)
     {
         if (progress == null ||
             activeQuests == null ||
@@ -162,33 +176,33 @@ public class QuestController : MonoBehaviour
             return false;
         }
 
-        Quest.QuestObjective objective = progress.CurrentObjective;
-
-        if (objective == null ||
-            objective.type != Quest.objectiveType.Microgame)
-        {
-            return false;
-        }
 
         Debug.Log("Failed quest: " + progress.quest.questName);
 
         endDayUI.failedQuests++;
 
+        GhostScript ghost = null;
+
         if (progress.questGiver != null &&
             progress.questGiver.transform.parent != null)
         {
-            GhostScript ghost =
-                progress.questGiver.transform.parent.GetComponent<GhostScript>();
-
-            if (ghost != null)
-                ghost.score--;
+            ghost = progress.questGiver.transform.parent
+                .GetComponent<GhostScript>();
         }
 
-        GhostScript tempGhostScript = progress.questGiver.transform.parent.GetComponent<GhostScript>();
-        tempGhostScript.DisableHighlight();
+        if (ghost != null)
+        {
+            ghost.score--;
+            ghost.DisableHighlight();
+        }
+
         activeQuests.Remove(progress);
         UpdateQuestLog();
-        ChairManager.Instance.AssignGhost(progress.questGiver.transform.parent.gameObject);
+
+        if (reassignGhost && ghost != null)
+        {
+            ChairManager.Instance.AssignGhost(ghost.gameObject);
+        }
 
         return true;
     }
@@ -271,7 +285,7 @@ public class QuestController : MonoBehaviour
     private bool MatchesCurrentObjective(
         Quest.QuestProgress progress,
         Quest.objectiveType type,
-        string gameID)
+        MicrogameId gameID)
     {
         Quest.QuestObjective objective = progress.CurrentObjective;
 
@@ -280,7 +294,7 @@ public class QuestController : MonoBehaviour
                objective.gameID == gameID;
     }
 
-    public Quest.QuestProgress GetNextMicrogameProgress(string gameID)
+    public Quest.QuestProgress GetNextMicrogameProgress(MicrogameId gameID)
     {
         if (activeQuests == null)
             return null;
@@ -308,7 +322,7 @@ public class QuestController : MonoBehaviour
         {
             if (objective == null ||
                 objective.type != Quest.objectiveType.Microgame ||
-                objective.gameID != "BookRequestGame")
+                objective.gameID != MicrogameId.BookRequestGame)
             {
                 continue;
             }

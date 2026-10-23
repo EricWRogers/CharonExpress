@@ -26,7 +26,7 @@ public class Quest : ScriptableObject
     public class QuestObjective
     {
         [Tooltip("Identifier used by the gameplay system for this objective.")]
-        public string gameID;
+        public MicrogameId gameID;
 
         [TextArea]
         public string description;
