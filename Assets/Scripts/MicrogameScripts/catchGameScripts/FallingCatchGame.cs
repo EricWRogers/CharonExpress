@@ -65,6 +65,7 @@ public class FallingCatchGame : MonoBehaviour
 
         player.freeze = true;
         GhostScript.gamePaused = true;
+        Debug.Log(GhostScript.gamePaused);
 
         basket.anchoredPosition = new Vector2(0, basket.anchoredPosition.y);
 

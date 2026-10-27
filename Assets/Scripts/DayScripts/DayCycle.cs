@@ -57,7 +57,7 @@ public class DayCycle : MonoBehaviour
         if (state != TravelState.Traveling)
             return;
 
-        secondsRemaining = Mathf.Max(
+        if (!GhostScript.gamePaused) secondsRemaining = Mathf.Max(
             0f,
             secondsRemaining - Time.deltaTime
         );

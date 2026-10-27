@@ -67,6 +67,7 @@ public class GhostScript : MonoBehaviour
                 assignedQuest = null;
             }
             Debug.Log("I KILLED IT");
+            ChairManager.Instance.activeGhosts--;
             Destroy(gameObject);
         }
 

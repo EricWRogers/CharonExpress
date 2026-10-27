@@ -1870,7 +1870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677e236fcdcc8f9408caf80c9956068e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayCycle
-  SecondsBetweenStations: 180
+  SecondsBetweenStations: 60
   firstDay: 1
   pauseGameAtStation: 1
   currentDay: 0
@@ -8437,6 +8437,8 @@ MonoBehaviour:
   escortAssigned: 0
   customerTotal: 0
   deathTotal: 0
+  activeGhosts: 0
+  maxGhostCount: 2
   tasks:
   - {fileID: 11400000, guid: 5bdcbdfb3395640669900d6738b5f5d2, type: 2}
   - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
@@ -22099,7 +22101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2019994446
 RectTransform:
   m_ObjectHideFlags: 0
