@@ -225,7 +225,7 @@ public class TypingGame : MonoBehaviour
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
-        QuestController.Instance.FailQuest(gameID);
+        QuestController.Instance.FailQuest(QuestController.Instance.GetNextMicrogameProgress(gameID), false);
     }
     void OnClick(CallbackContext ctx)
     {

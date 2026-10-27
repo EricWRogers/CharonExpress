@@ -2,16 +2,30 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Manages the quest log UI by creating entries for active quests
+/// and displaying their objectives with the appropriate text colors.
+/// </summary>
 public class QuestLogController : MonoBehaviour
 {
     [Header("Quest Log")]
+    [Tooltip("The UI GameObject used to display the quest log.")]
     public GameObject questLogUI;
+
+    [Tooltip("The Transform that holds the instantiated quest entries.")]
     public Transform questList;
+
+    [Tooltip("The prefab instantiated for each active quest in the quest log.")]
     public GameObject questEntryPrefab;
 
     [Header("Text Colors")]
+    [Tooltip("The color used for the quest name and objectives that have not been completed or are not current.")]
     public Color textColor = Color.white;
+
+    [Tooltip("The color used to highlight the current quest objective.")]
     public Color currentTextColor = Color.green;
+
+    [Tooltip("The color used to display completed quest objectives.")]
     public Color completedTextColor = Color.gray;
 
     private void Start()
@@ -22,6 +36,11 @@ public class QuestLogController : MonoBehaviour
         UpdateQuestLog();
     }
 
+    /// <summary>
+    /// Refreshes the quest log by clearing the existing entries and creating
+    /// a new entry for each active, incomplete quest.
+    /// Logs a warning if required UI references are missing.
+    /// </summary>
     public void UpdateQuestLog()
     {
         if (questList == null)

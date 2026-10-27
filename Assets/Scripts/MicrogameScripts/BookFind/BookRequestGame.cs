@@ -286,7 +286,7 @@ public class BookRequestGame : MonoBehaviour
 
         player.freeze = false;
         GhostScript.gamePaused = false;
-        QuestController.Instance.FailQuest(currentProgress);
+        QuestController.Instance.FailQuest(currentProgress, false);
         currentProgress = null;
         requestedBook = null;
     }

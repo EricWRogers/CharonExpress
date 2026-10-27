@@ -3,23 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Manages active quests, objective completion, quest failures,
+/// quest rewards, and quest log updates.
+/// </summary>
 public class QuestController : MonoBehaviour
 {
     public static QuestController Instance;
 
     [Header("Quest State")]
+    [Tooltip("The list of quests currently being tracked.")]
     public List<Quest.QuestProgress> activeQuests = new List<Quest.QuestProgress>();
 
-
+    [Header("Quest Log UI")]
+    [Tooltip("The controller responsible for displaying and updating the quest log.")]
     public QuestLogController questLogUI;
 
     [Header("Quest Completion")]
-    [Tooltip("Invoked whenever any quest is completed, regardless of which objective path completed it.")]
+    [Tooltip("Invoked whenever any quest is completed.")]
     public UnityEvent onAnyQuestCompleted = new UnityEvent();
 
+    /// <summary>
+    /// Event invoked when a quest is completed.
+    /// Provides the completed quest and the NPC that assigned it.
+    /// </summary>
     public event Action<Quest, QuestGiver> QuestCompleted;
-    
+
+    [Header("Day Cycle")]
+    [Tooltip("The day cycle controller script.")]
     public DayCycle dayCycle;
+
+    [Tooltip("The end-of-day UI controller script.")]
     public EndDayUI endDayUI;
 
     private void Awake()
@@ -43,6 +57,12 @@ public class QuestController : MonoBehaviour
             Instance = null;
     }
 
+    /// <summary>
+    /// Checks whether the specified quest is active for the specified quest giver.
+    /// </summary>
+    /// <param name="quest">The quest to check.</param>
+    /// <param name="questGiver">The NPC associated with the quest.</param>
+    /// <returns>True if the quest is active for the specified NPC; otherwise, false.</returns>
     public bool IsQuestActive(Quest quest, QuestGiver questGiver)
     {
         if (quest == null || activeQuests == null)
@@ -61,6 +81,14 @@ public class QuestController : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Starts tracking the specified quest for the given quest giver.
+    /// Prevents duplicate active quests from the same NPC, assigns the quest
+    /// to the associated ghost when available, prepares book request task,
+    /// and processes the initial objective.
+    /// </summary>
+    /// <param name="quest">The quest to start.</param>
+    /// <param name="questGiver">The NPC assigning the quest.</param>
     public void StartQuest(Quest quest, QuestGiver questGiver)
     {
         if (quest == null)
@@ -109,9 +137,16 @@ public class QuestController : MonoBehaviour
             UpdateQuestLog();
     }
 
-public bool CanCompleteObjective(
-    Quest.objectiveType type,
-    MicrogameId gameID)
+    /// <summary>
+    /// Checks whether an objective of the specified type and microgame ID
+    /// can be completed by an active quest.
+    /// </summary>
+    /// <param name="type">The type of objective to check.</param>
+    /// <param name="gameID">The microgame ID associated with the objective.</param>
+    /// <returns>True if a matching objective can be completed; otherwise, false.</returns>
+    public bool CanCompleteObjective(
+        Quest.objectiveType type,
+        MicrogameId gameID)
     {
         if (type == Quest.objectiveType.Microgame)
             return GetNextMicrogameProgress(gameID) != null;
@@ -131,11 +166,22 @@ public bool CanCompleteObjective(
         return false;
     }
 
+    /// <summary>
+    /// Completes the next active quest objective associated with the specified microgame ID,
+    /// if a matching quest objective is available.
+    /// </summary>
+    /// <param name="gameID">The ID of the completed microgame.</param>
     public void CompleteMicrogame(MicrogameId gameID)
     {
         CompleteMicrogame(GetNextMicrogameProgress(gameID));
     }
 
+    /// <summary>
+    /// Completes the current microgame objective for the specified quest progress
+    /// if the progress belongs to an active, incomplete quest
+    /// and its current objective is a microgame objective.
+    /// </summary>
+    /// <param name="progress">The active quest progress whose objective should be completed.</param>
     public void CompleteMicrogame(Quest.QuestProgress progress)
     {
         if (progress == null ||
@@ -158,11 +204,14 @@ public bool CanCompleteObjective(
         CompleteCurrentObjective(progress);
     }
 
-
-    public bool FailQuest(MicrogameId gameID, bool reassignGhost = true)
-    {
-        return FailQuest(GetNextMicrogameProgress(gameID), reassignGhost);
-    }
+    /// <summary>
+    /// Fails the specified active quest, updates failure tracking and the quest log,
+    /// and optionally reassigns the associated ghost.
+    /// </summary>
+    /// <param name="progress">The quest progress to fail.</param>
+    /// <param name="reassignGhost">Whether to reassign the associated ghost after the quest fails.</param>
+    /// <returns>True if the quest was successfully failed; otherwise, false.</returns>
+    /// To use: QuestController.Instance.FailQuest(QuestController.Instance.GetNextMicrogameProgress(gameID), false);
 
     public bool FailQuest(
         Quest.QuestProgress progress,
@@ -206,6 +255,13 @@ public bool CanCompleteObjective(
 
         return true;
     }
+
+    /// <summary>
+    /// Completes the current ReturnToNPC objective for an active quest
+    /// assigned by the specified quest giver.
+    /// </summary>
+    /// <param name="questGiver">The NPC the player has returned to.</param>
+    /// <returns>True if a matching return-to-NPC objective was completed; otherwise, false.</returns>
     public bool ReturnToNPC(QuestGiver questGiver)
     {
         if (activeQuests == null)
@@ -226,7 +282,6 @@ public bool CanCompleteObjective(
 
             Debug.Log("Completed return-to-NPC objective: " + objective.description);
             CompleteCurrentObjective(progress);
-            
             return true;
         }
 
@@ -294,6 +349,12 @@ public bool CanCompleteObjective(
                objective.gameID == gameID;
     }
 
+    /// <summary>
+    /// Finds the first active, incomplete quest whose current objective
+    /// is a microgame objective matching the specified microgame ID.
+    /// </summary>
+    /// <param name="gameID">The microgame ID to search for.</param>
+    /// <returns>The matching quest progress, or null if no matching objective is found.</returns>
     public Quest.QuestProgress GetNextMicrogameProgress(MicrogameId gameID)
     {
         if (activeQuests == null)
@@ -351,6 +412,10 @@ public bool CanCompleteObjective(
         }
     }
 
+    /// <summary>
+    /// Removes all active quests, updates the quest log,
+    /// and logs that the quests have been cleared.
+    /// </summary>
     public void ClearAllQuests()
     {
         activeQuests.Clear();
