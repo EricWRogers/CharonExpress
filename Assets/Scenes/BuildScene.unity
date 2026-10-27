@@ -8443,6 +8443,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5bdcbdfb3395640669900d6738b5f5d2, type: 2}
   - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
   - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
+  - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
 --- !u!4 &737890844
 Transform:
   m_ObjectHideFlags: 0
@@ -22062,7 +22063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbeb623e7202b29439018a213edb7551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  maxScore: 5
+  maxScore: 10
   avgScore: 1
   ghostsScore: 0
   index: 0

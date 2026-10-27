@@ -241,7 +241,10 @@ public class QuestController : MonoBehaviour
 
         if (ghost != null)
         {
-            ghost.score--;
+            if (ghost.score >= 0)
+            {
+                ghost.score--;
+            }
             ghost.DisableHighlight();
         }
 
@@ -327,10 +330,13 @@ public class QuestController : MonoBehaviour
 
         // test for adding points
         dayCycle.AddPoints(1);
-        questGiver.transform.parent.GetComponent<GhostScript>().score++;
+        if (questGiver.transform.parent.GetComponent<GhostScript>().score < 5)
+        {
+            questGiver.transform.parent.GetComponent<GhostScript>().score++;
+        }
 
         if (onAnyQuestCompleted != null)
-            onAnyQuestCompleted.Invoke();
+                onAnyQuestCompleted.Invoke();
 
         QuestCompleted?.Invoke(completedQuest, questGiver);
         UpdateQuestLog();

@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log(ghosts.Count);
                     if (ghosts[index] != null)
                     {
+                        ghosts[index].GetComponent<GhostScript>().Pattience();
                         ghostsScore += ghosts[index].GetComponent<GhostScript>().score;
                         index++;
                     }
@@ -66,30 +67,31 @@ public class GameManager : MonoBehaviour
                 }
             }
             avgScore = ghostsScore / ghosts.Count;
-            if (avgScore <= 1)
+            if (avgScore <= 2)
             {
                 letterGrade = "F";
             }
-            else if (avgScore > 1 && avgScore <= 2)
+            else if (avgScore > 2 && avgScore <= 4)
             {
                 letterGrade = "D";
             }
-            else if (avgScore > 2 && avgScore <= 3)
+            else if (avgScore > 4 && avgScore <= 6)
             {
                 letterGrade = "C";
             }
-            else if (avgScore > 3 && avgScore <= 4)
+            else if (avgScore > 6 && avgScore <= 8)
             {
                 letterGrade = "B";
             }
-            else if (avgScore > 4 && avgScore <= 5)
+            else if (avgScore > 8 && avgScore <= 10)
             {
                 letterGrade = "A";
             }
-            else if (avgScore > 5)
+            else if (avgScore > 10)
             {
                 letterGrade = "S";
             }
+            ghosts = new List<GameObject>();
         }
     }
 }

@@ -24,7 +24,7 @@ public class GhostScript : MonoBehaviour
     Renderer rend;
 
     static public bool gamePaused;
-    public float score = 2;
+    public float score = 5;
     public Quest.QuestProgress assignedQuest;
 
     //Variables for Escort Mission
@@ -50,13 +50,13 @@ public class GhostScript : MonoBehaviour
         //Decrement the ghost's lifespan. If lifespan is elapsed, kill the ghost and set a new cooldown timer for it
         if (customerTimer > 0 && !gamePaused)
         {
-            customerTimer-= Time.deltaTime;
+            customerTimer -= Time.deltaTime;
             ratio = customerTimer / maxCustomerTimer;
             meter.transform.localScale = new Vector3(ratio, 0.2f, 1.0f);
-        } 
-        else if (customerTimer <= 0 && chairScript.ghostActive) 
+        }
+        else if (customerTimer <= 0 && chairScript.ghostActive)
         {
-            chairScript.cooldownTimer = UnityEngine.Random.Range(5,10);
+            chairScript.cooldownTimer = UnityEngine.Random.Range(5, 10);
             chairScript.ghostActive = false;
             ChairManager.Instance.deathTotal++;
             score = 0;
@@ -81,7 +81,7 @@ public class GhostScript : MonoBehaviour
     //When the escort task is assigned, determine the position and direction needed to go, then move the ghost to the aisle.
     public void assignedEscort(Vector3 inputTargetPosition)
     {
-        targetPosition = inputTargetPosition;   
+        targetPosition = inputTargetPosition;
         beingEscorted = true;
         if (targetPosition.x < transform.position.x)
         {
@@ -90,7 +90,7 @@ public class GhostScript : MonoBehaviour
         else
         {
             direction = 1;
-        } 
+        }
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
     }
 
@@ -112,7 +112,7 @@ public class GhostScript : MonoBehaviour
             chairScript = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].GetComponent<ChairScript>();
             chairScript.ghostActive = true;
 
-            transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0); 
+            transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0);
             ChairManager.Instance.FindNewEscortChair();
             Debug.Log(beingEscorted);
             QuestController.Instance.CompleteMicrogame(gameID);
@@ -128,7 +128,8 @@ public class GhostScript : MonoBehaviour
                 }
             }
         }
-        else {
+        else
+        {
             return;
         }
     }
@@ -141,12 +142,40 @@ public class GhostScript : MonoBehaviour
 
     public void DisableHighlight()
     {
-        transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+        transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
     public void AssignQuest(Quest.QuestProgress progress)
     {
-    assignedQuest = progress;
+        assignedQuest = progress;
+    }
+    public void Pattience()
+    {
+        if (customerTimer <= maxCustomerTimer / 5)
+        {
+            Debug.Log("score +1");
+            score += 1;
+        }
+        else if (customerTimer > maxCustomerTimer / 5 && customerTimer <= 2 * maxCustomerTimer / 5)
+        {
+            Debug.Log("score + 2");
+            score += 2;
+        }
+        else if (customerTimer >2 * maxCustomerTimer / 5 && customerTimer <= 3 * maxCustomerTimer / 5)
+        {
+            Debug.Log("score + 3");
+            score += 3;
+        }
+        else if (customerTimer > 3* maxCustomerTimer / 5 && customerTimer  <= 4 * maxCustomerTimer / 5)
+        {
+            Debug.Log("score + 4");
+            score += 4;
+        }
+         else if (customerTimer > 4* maxCustomerTimer / 5 && customerTimer <= maxCustomerTimer)
+        {
+            Debug.Log("score + 5");
+            score += 5;
+        }
     }
 
 }
