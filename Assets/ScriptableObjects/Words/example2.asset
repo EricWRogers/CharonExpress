@@ -22,3 +22,5 @@ MonoBehaviour:
   - n
   - p
   - k
+  goodResult: {fileID: 11400000, guid: c763b413b9b10ab45a14bf3acd61b998, type: 2}
+  badResult: {fileID: 11400000, guid: 798a6f1eb7d616d45b7e3ad18b78ca7f, type: 2}

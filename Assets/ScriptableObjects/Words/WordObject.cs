@@ -6,4 +6,6 @@ public class WordObject : ScriptableObject
 {
     public string word = "";
     public List<string> letters;
+    public DialogGraph goodResult;
+    public DialogGraph badResult;
 }
