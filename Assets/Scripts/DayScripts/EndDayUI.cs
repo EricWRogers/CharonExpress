@@ -167,7 +167,7 @@ public class EndDayUI : MonoBehaviour
             stationSummaryPanel.SetActive(false);
         
         ChairManager.Instance.NewDay(daySystem.currentDay);
-        if (daySystem.currentDay % 2 == 1) daySystem.SecondsBetweenStations -= 10;
+        if (daySystem.currentDay % 2 == 0) daySystem.SecondsBetweenStations -= 10;
         stationArrivalController.ContinueJourney();
     }
 }

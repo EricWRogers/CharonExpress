@@ -138,7 +138,7 @@ public class ChairManager : MonoBehaviour
     public void NewDay(int day)
     {
         activeGhosts = 0;
-        if (day % 2 == 0) maxGhostCount += UnityEngine.Random.Range(1,2);
+        if (day % 2 == 1) maxGhostCount += UnityEngine.Random.Range(1,2);
         //Day Timer is extended within the EndDayUI script on odd days
         GameObject[] ghosts = GameObject.FindGameObjectsWithTag("Ghost");
         foreach (GameObject ghost in ghosts)
