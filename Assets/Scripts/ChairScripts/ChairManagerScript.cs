@@ -20,6 +20,8 @@ public class ChairManager : MonoBehaviour
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
     public int deathTotal = 0;
+    public int activeGhosts = 0;
+    public int maxGhostCount = 2;
     //customerTotal modulo by the length of chairs
 
     //Sample list of names that is assigned to the chair/ghost
@@ -80,8 +82,9 @@ public class ChairManager : MonoBehaviour
                 {
                     chairScript.cooldownTimer-= Time.deltaTime;
                 } 
-                else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false)
+                else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false && activeGhosts < maxGhostCount)
                 {
+                    activeGhosts++;
                     chairScript.ghostObject = Instantiate(chairScript.ghostPrefab, chairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                     chairScript.ghostActive = true;
                     GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
@@ -127,6 +130,35 @@ public class ChairManager : MonoBehaviour
             {
                 escortChair = i;
                 tempChairScript.reserved = true;
+            }
+        }
+    }
+
+
+    public void NewDay(int day)
+    {
+        activeGhosts = 0;
+        if (day % 2 == 1) maxGhostCount += UnityEngine.Random.Range(1,2);
+        //Day Timer is extended within the EndDayUI script on odd days
+        GameObject[] ghosts = GameObject.FindGameObjectsWithTag("Ghost");
+        foreach (GameObject ghost in ghosts)
+        {
+            Destroy(ghost);
+        }
+        for (int i = 0; i < chairs.Length; i++)
+        {
+            ChairScript tempChairScript = chairs[i].GetComponent<ChairScript>();
+            tempChairScript.ghostActive = false;
+            //If the chair is not reserved for escort, decrement cooldown. If cooldown below zero, instantiate a ghost and assign it a task
+            if (i != escortChair && activeGhosts < maxGhostCount)
+            {                         
+                activeGhosts++;
+                tempChairScript.ghostObject = Instantiate(tempChairScript.ghostPrefab, tempChairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                tempChairScript.ghostActive = true;
+                GhostScript ghostScript = tempChairScript.ghostObject.GetComponent<GhostScript>();
+                ghostScript.chairScript = tempChairScript;
+                ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
+                AssignGhost(tempChairScript.ghostObject);                
             }
         }
     }

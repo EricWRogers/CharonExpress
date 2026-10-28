@@ -454,7 +454,13 @@ MonoBehaviour:
   gameID: 1
   normalMaterial: {fileID: 2100000, guid: 2bc40c531f917462bb87d8641258df5e, type: 2}
   highlightMaterial: {fileID: 2100000, guid: d70f01f6acb5c49bb82c0fbf6792db99, type: 2}
-  score: 2
+  score: 5
+  assignedQuest:
+    quest: {fileID: 0}
+    questGiver: {fileID: 0}
+    currentObjectiveIndex: 0
+    requestedBookSubject: 
+    requestedBookColor: 
   beingEscorted: 0
   playerInRange: 0
   direction: 1

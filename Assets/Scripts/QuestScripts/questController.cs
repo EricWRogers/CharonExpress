@@ -28,6 +28,9 @@ public class QuestController : MonoBehaviour
     /// Provides the completed quest and the NPC that assigned it.
     /// </summary>
     public event Action<Quest, QuestGiver> QuestCompleted;
+    
+    public event Action<Quest.QuestProgress, Quest.QuestObjective>
+        ObjectiveCompleted;
 
     [Header("Day Cycle")]
     [Tooltip("The day cycle controller script.")]
@@ -241,7 +244,10 @@ public class QuestController : MonoBehaviour
 
         if (ghost != null)
         {
-            ghost.score--;
+            if (ghost.score >= 0)
+            {
+                ghost.score--;
+            }
             ghost.DisableHighlight();
         }
 
@@ -298,6 +304,7 @@ public class QuestController : MonoBehaviour
             return;
 
         progress.currentObjectiveIndex++;
+        ObjectiveCompleted?.Invoke(progress, completedObjective);
 
         // An objective can end the quest early, or the quest ends when its final objective is done.
         if (completedObjective.completeQuestAfterThis || progress.IsCompleted)
@@ -327,10 +334,13 @@ public class QuestController : MonoBehaviour
 
         // test for adding points
         dayCycle.AddPoints(1);
-        questGiver.transform.parent.GetComponent<GhostScript>().score++;
+        if (questGiver.transform.parent.GetComponent<GhostScript>().score < 5)
+        {
+            questGiver.transform.parent.GetComponent<GhostScript>().score++;
+        }
 
         if (onAnyQuestCompleted != null)
-            onAnyQuestCompleted.Invoke();
+                onAnyQuestCompleted.Invoke();
 
         QuestCompleted?.Invoke(completedQuest, questGiver);
         UpdateQuestLog();

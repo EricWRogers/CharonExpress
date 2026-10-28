@@ -11,7 +11,8 @@ public class TypingGame : MonoBehaviour
     public GameObject typingPanel;
     public TMP_Text wordOutput;
     public WordBank wordBank;
-
+    public Dialogue dialogue;
+    public DialogInteraction text;
 
     public MicrogameId gameID = MicrogameId.TypingGame;
     private string remainingWord = string.Empty;
@@ -182,6 +183,7 @@ public class TypingGame : MonoBehaviour
 
     void WinGame()
     {
+        dialogue.SetDialogGraph(currentWordObject.goodResult);
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
@@ -198,6 +200,7 @@ public class TypingGame : MonoBehaviour
                 break;
             }
         }
+        text.StartDiologue();
     }
     public void StartGame(GhostScript ghost)
     {
@@ -222,10 +225,12 @@ public class TypingGame : MonoBehaviour
     }
     public void LoseGame()
     {
+        dialogue.SetDialogGraph(currentWordObject.badResult);
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
         QuestController.Instance.FailQuest(QuestController.Instance.GetNextMicrogameProgress(gameID), false);
+        text.StartDiologue();
     }
     void OnClick(CallbackContext ctx)
     {

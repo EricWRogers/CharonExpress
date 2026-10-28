@@ -30,16 +30,32 @@ public class QuestGiver : MonoBehaviour, IInteractable
     {
         QuestController controller = QuestController.Instance;
 
+        TutorialManager tutorialManager =
+            FindFirstObjectByType<TutorialManager>();
+
+        bool playTutorialDialogue =
+            text != null &&
+            tutorialManager != null &&
+            tutorialManager.ShouldPlayReturnDialogue(this);
+
+        // Start tutorial dialogue before completing the return objective.
+        if (playTutorialDialogue)
+            text.StartDiologue();
+
         if (controller != null && controller.ReturnToNPC(this))
             return;
 
         if (text == null)
         {
-            Debug.LogWarning("QuestGiver is missing its DialogInteraction reference.", this);
+            Debug.LogWarning(
+                "QuestGiver is missing its DialogInteraction reference.",
+                this);
             return;
         }
 
-        text.StartDiologue();
+        // Preserve normal behavior for non-tutorial interactions.
+        if (!playTutorialDialogue)
+            text.StartDiologue();
     }
 
     /// <summary>

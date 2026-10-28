@@ -7,6 +7,7 @@ using TMPro;
 using System.IO;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using System.Collections.Generic;
 
 public class Dialogue : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class Dialogue : MonoBehaviour
     public player playerController;
 
     public PlayerThings inputActions;
+
+    public TutorialManager tutorialManager;
 
     private void Awake()
     {
@@ -61,6 +64,9 @@ public class Dialogue : MonoBehaviour
             EndDialogueEvent = new UnityEvent();
         }
         typingUI = FindInactiveObject("TypingUI");
+
+        //find the tutorial manager
+        tutorialManager = FindInactiveObject("TutorialManager").GetComponent<TutorialManager>();
     }
 
     GameObject FindInactiveObject(string name)
@@ -215,7 +221,10 @@ public class Dialogue : MonoBehaviour
                 {
                     escortMission = true;
                 }
-                ghost.customerTimer += 3;
+                if (ghost != null)
+                {
+                    ghost.customerTimer += 3;
+                }
             }
 
 
@@ -234,6 +243,13 @@ public class Dialogue : MonoBehaviour
 
 
         }
+
+        else if (activeSegment is DialogFunctionCallSegment functionSegment)
+        {
+            ExecuteAction(functionSegment.action);
+            FollowOutput();
+        }
+
         else
         {
             if (activeSegment.GetPort("output").IsConnected)
@@ -323,4 +339,63 @@ public class Dialogue : MonoBehaviour
         ghost.assignedEscort(ChairManager.Instance.chairs[ChairManager.Instance.escortChair].gameObject.transform.position);
         escortMission = false;
     }
+
+
+    private void ExecuteAction(DialogueAction action)
+    {
+        if (action == null)
+        {
+            Debug.LogWarning("No dialogue action assigned.", this);
+            return;
+        }
+
+        foreach (ActionBinding binding in actions)
+        {
+            if (binding != null && binding.action == action)
+            {
+                binding.onInvoke?.Invoke();
+                return;
+            }
+        }
+
+        Debug.LogWarning(
+            $"No event registered for action '{action.name}'.", this);
+    }
+    private void FollowOutput()
+    {
+        var output = activeSegment.GetPort("output");
+
+        if (output != null && output.IsConnected)
+        {
+            DialogSegment nextSegment =
+                output.Connection.node as DialogSegment;
+
+            if (nextSegment == null)
+            {
+                Debug.LogError("Connected node is not a DialogSegment.");
+                EndDialogue();
+                return;
+            }
+
+            UpdateDialog(nextSegment);
+
+            TextBoxManager.Instance.textComponent.text = string.Empty;
+            StartCoroutine(TypeLine());
+        }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    [System.Serializable]
+    private class ActionBinding
+    {
+        public DialogueAction action;
+        public UnityEvent onInvoke = new UnityEvent();
+    }
+
+    [SerializeField]
+    private List<ActionBinding> actions = new List<ActionBinding>();
+
 }
