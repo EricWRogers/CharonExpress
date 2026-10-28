@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialog Segment
   m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
   graph: {fileID: 11400000}
-  position: {x: 840, y: 424}
+  position: {x: 536, y: 216}
   ports:
     keys:
     - input
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: Dialog Answer Segments
   m_EditorClassIdentifier: Assembly-CSharp::DialogAnswerSegments
   graph: {fileID: 11400000}
-  position: {x: 400.66675, y: 122.33331}
+  position: {x: 248, y: 40}
   ports:
     keys:
     - Answers
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Name: Quest Giver Segment
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiverSegment
   graph: {fileID: 11400000}
-  position: {x: 824, y: 184}
+  position: {x: 536, y: -88}
   ports:
     keys:
     - input

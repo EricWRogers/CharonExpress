@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6fdf8a2ea96ae4449489faeac4db301, type: 3}
+  m_Name: TutorialStart
+  m_EditorClassIdentifier: Assembly-CSharp::DialogGraph
+  nodes:
+  - {fileID: 1929683620193846267}
+  - {fileID: 5022287119846075539}
+  - {fileID: 2841985348639926235}
+  - {fileID: 4270345001262915852}
+--- !u!114 &1929683620193846267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a43c83f183bbc4d90f0b13c01fa475, type: 3}
+  m_Name: Dialog Segment
+  m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
+  graph: {fileID: 11400000}
+  position: {x: -360, y: -200}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 1929683620193846267}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 1929683620193846267}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 5022287119846075539}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  speakerName: Kathegetes
+  DialogText:
+  - Charon said that you're the poor soul taking over for me here
+  textSpeed: 1
+--- !u!114 &2841985348639926235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4d118a98f8a3e439685120a45f9164, type: 3}
+  m_Name: Quest Giver Segment
+  m_EditorClassIdentifier: Assembly-CSharp::QuestGiverSegment
+  graph: {fileID: 11400000}
+  position: {x: 168, y: -152}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 2841985348639926235}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 5022287119846075539}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 2841985348639926235}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 4270345001262915852}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  speakerName: Kathegetes
+  DialogText:
+  - do the quest now
+  textSpeed: 1
+  quest: {fileID: 11400000, guid: 383acb9b506f5db44a5cb15eb6af21d3, type: 2}
+  conversation: 0
+  escort: 0
+--- !u!114 &4270345001262915852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a43c83f183bbc4d90f0b13c01fa475, type: 3}
+  m_Name: Dialog Segment
+  m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
+  graph: {fileID: 11400000}
+  position: {x: 399.5, y: 37}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 4270345001262915852}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 2841985348639926235}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 4270345001262915852}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  speakerName: Kathegetes
+  DialogText:
+  - thanks
+  textSpeed: 1
+--- !u!114 &5022287119846075539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a43c83f183bbc4d90f0b13c01fa475, type: 3}
+  m_Name: Dialog Segment
+  m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
+  graph: {fileID: 11400000}
+  position: {x: -64.5, y: -154}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 5022287119846075539}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 1929683620193846267}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 5022287119846075539}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 2841985348639926235}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  speakerName: Kathegetes
+  DialogText:
+  - If you do well enough, you'll be able to move on too, it only took me 2,172 years.
+  textSpeed: 1

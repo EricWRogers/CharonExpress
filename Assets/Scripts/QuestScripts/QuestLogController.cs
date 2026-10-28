@@ -93,7 +93,6 @@ public class QuestLogController : MonoBehaviour
 
         text.text = BuildQuestText(progress);
     }
-
     private string BuildQuestText(Quest.QuestProgress progress)
     {
         Quest quest = progress.quest;
@@ -111,32 +110,31 @@ public class QuestLogController : MonoBehaviour
         for (int i = 0; i < quest.objectives.Count; i++)
         {
             Quest.QuestObjective objective = quest.objectives[i];
+
             if (objective == null)
+                continue;
+
+            // Hide objectives until they become the current objective.
+            if (i > progress.currentObjectiveIndex)
                 continue;
 
             if (i < progress.currentObjectiveIndex)
             {
+                // Completed objective.
                 builder.Append("<color=#")
                     .Append(ColorUtility.ToHtmlStringRGBA(completedTextColor))
                     .Append(">[Done] ")
                     .Append(objective.description)
                     .Append("</color>\n");
             }
-            else if (i == progress.currentObjectiveIndex)
+            else
             {
+                // Current objective.
                 builder.Append("<b><color=#")
                     .Append(ColorUtility.ToHtmlStringRGBA(currentTextColor))
                     .Append(">→ ")
                     .Append(objective.description)
                     .Append("</color></b>\n");
-            }
-            else
-            {
-                builder.Append("<color=#")
-                    .Append(ColorUtility.ToHtmlStringRGBA(textColor))
-                    .Append(">")
-                    .Append(objective.description)
-                    .Append("</color>\n");
             }
         }
 
