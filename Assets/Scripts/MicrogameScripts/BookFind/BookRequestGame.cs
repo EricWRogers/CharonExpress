@@ -138,6 +138,7 @@ public class BookRequestGame : MonoBehaviour
         GhostScript.gamePaused = true;
 
         CreateBooks();
+        
     }
     public void CreateBooks()
     {
@@ -239,8 +240,11 @@ public class BookRequestGame : MonoBehaviour
 
     public void WinGame()
     {
-        if (!gameRunning)
+        
+        if (playerObj.GetComponent<player>().buttonBuffer)
             return;
+        if (!gameRunning)
+                return;
 
         gameRunning = false;
 
@@ -276,8 +280,10 @@ public class BookRequestGame : MonoBehaviour
     }
     public void LoseGame()
     {
-        if (!gameRunning)
+        if (playerObj.GetComponent<player>().buttonBuffer)
             return;
+        if (!gameRunning)
+                return;
 
         gameRunning = false;
 

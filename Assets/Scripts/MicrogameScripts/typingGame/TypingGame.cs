@@ -36,6 +36,7 @@ public class TypingGame : MonoBehaviour
     public int loseIndex = 0;
     public GhostScript ghosty;
     public PlayerThings inputActions;
+    public player player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -234,6 +235,8 @@ public class TypingGame : MonoBehaviour
     }
     void OnClick(CallbackContext ctx)
     {
-        CheckSuccess();
+        player.buttonBufferPress = true;
+        if(!player.buttonBuffer)
+            CheckSuccess();
     }
 }

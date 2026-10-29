@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,11 @@ public class player : MonoBehaviour
     static public bool freeze = false;
     public PlayerThings inputActions;
     public GameObject playerObj;
+    public  bool buttonBufferPress = false;
+    public  bool buttonBuffer = false;
+    public float buttonBufferTimer = 0.1f;
+    public float nextAllowedClickTime;
+
 
     private void Awake()
     {
@@ -71,6 +77,10 @@ public class player : MonoBehaviour
                 sr.flipX = false;
             }
         }
+        if (buttonBufferPress)
+        {
+            WaitForButtonBuffer();
+        }
     }
     public void OnMove(CallbackContext ctx)
     {
@@ -81,6 +91,33 @@ public class player : MonoBehaviour
     public void OnInteract(CallbackContext ctx)
     {
         Debug.Log("interact clicked");
-        playerObj.GetComponent<Interact>().OnInteract();
+        if (!buttonBuffer)
+        {
+            playerObj.GetComponent<Interact>().OnInteract();
+        }
+        buttonBufferPress = true;
+    }
+
+    public void WaitForButtonBuffer()
+    {
+        if(!buttonBuffer)
+            StartCoroutine(Wait1Sec());
+    }
+    IEnumerator Wait1Sec()
+    {
+        float elapsedTime = 0f;
+        float duration = buttonBufferTimer;
+
+
+
+        while (elapsedTime < duration)
+        {
+            buttonBuffer = true;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        buttonBuffer = false;
+        buttonBufferPress = false;
+        Debug.Log("button should buffer");
     }
 }

@@ -142,9 +142,10 @@ public class Dialogue : MonoBehaviour
 
     public void OnSkip(CallbackContext ctx)
     {
-        if (textActive == true)
+        if (textActive == true && playerController.buttonBuffer)
         {
             Debug.Log("should skip line");
+            playerController.buttonBufferPress = true;
             LineSkip();
         }
     }
@@ -296,6 +297,7 @@ public class Dialogue : MonoBehaviour
             StartConversation(ghost);
         if (escortMission)
             StartEscort(ghost);
+        playerController.buttonBufferPress = true;
         
         EndDialogueEvent.Invoke();
     }
