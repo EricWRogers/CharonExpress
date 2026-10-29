@@ -14,6 +14,8 @@ public class Quest : ScriptableObject
     [TextArea]
     public string description;
 
+    public bool unfailable = false;
+
 
     [Header("Objectives")]
     [Tooltip("The objectives that must be completed to finish this quest.")]

@@ -214,52 +214,60 @@ public class QuestController : MonoBehaviour
     /// <param name="progress">The quest progress to fail.</param>
     /// <param name="reassignGhost">Whether to reassign the associated ghost after the quest fails.</param>
     /// <returns>True if the quest was successfully failed; otherwise, false.</returns>
+    /// <returns>False if the quest is unfailable.</returns>
+
     /// To use: QuestController.Instance.FailQuest(QuestController.Instance.GetNextMicrogameProgress(gameID), false);
 
-    public bool FailQuest(
-        Quest.QuestProgress progress,
-        bool reassignGhost = true)
+    public bool FailQuest(Quest.QuestProgress progress, bool reassignGhost = true)
     {
-        if (progress == null ||
-            activeQuests == null ||
-            !activeQuests.Contains(progress) ||
-            progress.IsCompleted)
+        if (!progress.quest.unfailable)
         {
+            if (progress == null ||
+                activeQuests == null ||
+                !activeQuests.Contains(progress) ||
+                progress.IsCompleted)
+            {
+                return false;
+            }
+
+
+            Debug.Log("Failed quest: " + progress.quest.questName);
+
+            endDayUI.failedQuests++;
+
+            GhostScript ghost = null;
+
+            if (progress.questGiver != null &&
+                progress.questGiver.transform.parent != null)
+            {
+                ghost = progress.questGiver.transform.parent
+                    .GetComponent<GhostScript>();
+            }
+
+            if (ghost != null)
+            {
+                if (ghost.score >= 0)
+                {
+                    ghost.score--;
+                }
+                ghost.DisableHighlight();
+            }
+
+            activeQuests.Remove(progress);
+            UpdateQuestLog();
+
+            if (reassignGhost && ghost != null)
+            {
+                ChairManager.Instance.AssignGhost(ghost.gameObject);
+            }
+
+            return true;
+        }
+        else
+        {
+            Debug.Log("Quest is unfailable: " + progress.quest.questName);
             return false;
         }
-
-
-        Debug.Log("Failed quest: " + progress.quest.questName);
-
-        endDayUI.failedQuests++;
-
-        GhostScript ghost = null;
-
-        if (progress.questGiver != null &&
-            progress.questGiver.transform.parent != null)
-        {
-            ghost = progress.questGiver.transform.parent
-                .GetComponent<GhostScript>();
-        }
-
-        if (ghost != null)
-        {
-            if (ghost.score >= 0)
-            {
-                ghost.score--;
-            }
-            ghost.DisableHighlight();
-        }
-
-        activeQuests.Remove(progress);
-        UpdateQuestLog();
-
-        if (reassignGhost && ghost != null)
-        {
-            ChairManager.Instance.AssignGhost(ghost.gameObject);
-        }
-
-        return true;
     }
 
     /// <summary>
