@@ -60,7 +60,7 @@ public class player : MonoBehaviour
             }
 
             Vector3 moveDir = new Vector3(x, 0, y);
-            rb.linearVelocity = moveDir * speed;
+            rb.linearVelocity = moveDir * (inputActions.Player.Sprint.IsPressed() ? speed * 1.5f : speed);
 
             if (x != 0 && x < 0)
             {
