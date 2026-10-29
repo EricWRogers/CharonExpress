@@ -22,6 +22,7 @@ public class EndDayUI : MonoBehaviour
     public int completedQuests = 0;
 
     private int lastDisplayedSecond = -1;
+    public int timeDecraseAmountPerDay;
 
     private void Awake()
     {
@@ -167,7 +168,7 @@ public class EndDayUI : MonoBehaviour
             stationSummaryPanel.SetActive(false);
         
         ChairManager.Instance.NewDay(daySystem.currentDay);
-        if (daySystem.currentDay % 2 == 0) daySystem.SecondsBetweenStations -= 10;
+        if (daySystem.currentDay % 2 == 0) daySystem.SecondsBetweenStations -= timeDecraseAmountPerDay;
         stationArrivalController.ContinueJourney();
     }
 }
