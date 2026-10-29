@@ -35,8 +35,6 @@ public class Dialogue : MonoBehaviour
 
     public PlayerThings inputActions;
 
-    public TutorialManager tutorialManager;
-
     private void Awake()
     {
         inputActions = new PlayerThings();
@@ -64,9 +62,6 @@ public class Dialogue : MonoBehaviour
             EndDialogueEvent = new UnityEvent();
         }
         typingUI = FindInactiveObject("TypingUI");
-
-        //find the tutorial manager
-        tutorialManager = FindInactiveObject("TutorialManager").GetComponent<TutorialManager>();
     }
 
     GameObject FindInactiveObject(string name)
