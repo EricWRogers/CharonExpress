@@ -1302,6 +1302,10 @@ PrefabInstance:
       propertyPath: meter
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
     - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -797.21423
@@ -8300,7 +8304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   testBool: 0
   chairs: []
-  ghostPrefab: {fileID: 6967874296576640729, guid: 29426c44a193e8d499203faccb3e73d4, type: 3}
+  ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
   escortChair: 0
   escortAssigned: 0
   customerTotal: 0
@@ -9522,6 +9526,10 @@ PrefabInstance:
       propertyPath: meter
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
     - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -803.26324
@@ -9639,7 +9647,6 @@ MonoBehaviour:
   escortMission: 0
   ghost: {fileID: 0}
   playerController: {fileID: 0}
-  tutorialManager: {fileID: 0}
   actions: []
 --- !u!114 &1191076299
 MonoBehaviour:
@@ -10320,12 +10327,6 @@ MonoBehaviour:
   steps:
   - task: 3
     dialogueAfterCompletion: {fileID: 11400000, guid: 2908841e528c1394693b4eb03e83fdb6, type: 2}
-    startEscortAfterDialogue: 0
-  - task: 4
-    dialogueAfterCompletion: {fileID: 11400000, guid: 2908841e528c1394693b4eb03e83fdb6, type: 2}
-    startEscortAfterDialogue: 1
-  - task: 1
-    dialogueAfterCompletion: {fileID: 11400000, guid: 25b4aaa186ba1fd4c9b7d2dc4c4a257e, type: 2}
     startEscortAfterDialogue: 0
 --- !u!1 &1264933088
 GameObject:
@@ -16107,6 +16108,10 @@ PrefabInstance:
       propertyPath: meter
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3745415525123190167, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
     - target: {fileID: 8210122421423809818, guid: 061376ca4614649a0a18e09ccb319f3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -800.22424
@@ -23564,6 +23569,10 @@ PrefabInstance:
     - target: {fileID: 5819796756388515865, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
       propertyPath: m_fontSize
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819796756388515865, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
+      propertyPath: m_margin.z
+      value: -124.32764
       objectReference: {fileID: 0}
     - target: {fileID: 5819796756388515865, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
       propertyPath: m_fontSizeBase

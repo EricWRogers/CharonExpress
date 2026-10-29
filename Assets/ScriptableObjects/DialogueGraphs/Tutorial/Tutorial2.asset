@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6fdf8a2ea96ae4449489faeac4db301, type: 3}
-  m_Name: Twotorial
+  m_Name: Tutorial2
   m_EditorClassIdentifier: Assembly-CSharp::DialogGraph
   nodes:
   - {fileID: 1929683620193846267}
@@ -54,5 +54,6 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
   speakerName: Kathegetes
   DialogText:
-  - Nexttttt
+  - If you do well enough, you'll be able to move on too, it only took the last guy
+    2,172 years.
   textSpeed: 1

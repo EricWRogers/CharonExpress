@@ -40,7 +40,6 @@ public class Dialogue : MonoBehaviour
         inputActions = new PlayerThings();
 
         inputActions.UI.LineSkip.performed += OnSkip;
-
     }
 
     private void OnEnable()
