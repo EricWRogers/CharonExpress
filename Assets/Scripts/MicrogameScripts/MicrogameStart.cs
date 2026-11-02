@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MicroGameStart : MonoBehaviour, IInteractable
@@ -72,11 +74,13 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         switch (gameID)
         {
             case MicrogameId.FallingCatchGame:
+                StartCoroutine(RunFunctionForFiveSeconds());
                 FallingCatchUI.SetActive(true);
                 FallingCatchUI.GetComponent<FallingCatchGame>().StartGame();
                 break;
 
             case MicrogameId.BookRequestGame:
+                StartCoroutine(RunFunctionForFiveSeconds());
                 BookRequestUI.SetActive(true);
                 BookRequestUI.GetComponent<BookRequestGame>().StartGame();
                 break;
@@ -94,6 +98,17 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         interacted = false;
     }
 
-    public void OnTouchingPlayer() {}
+    IEnumerator RunFunctionForFiveSeconds()
+    {
+        float elapsedTime = 0f;
+        float duration = 0.1f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public void OnTouchingPlayer() { }
     public void OnNotTouchingPlayer() {}
 }

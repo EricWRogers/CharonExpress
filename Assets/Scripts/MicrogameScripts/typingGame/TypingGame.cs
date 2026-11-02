@@ -236,7 +236,7 @@ public class TypingGame : MonoBehaviour
     void OnClick(CallbackContext ctx)
     {
         player.buttonBufferPress = true;
-        if(!player.buttonBuffer)
-            CheckSuccess();
+        
+        CheckSuccess();
     }
 }

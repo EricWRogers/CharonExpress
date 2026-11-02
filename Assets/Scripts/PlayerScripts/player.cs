@@ -91,10 +91,10 @@ public class player : MonoBehaviour
     public void OnInteract(CallbackContext ctx)
     {
         Debug.Log("interact clicked");
-        if (!buttonBuffer)
-        {
-            playerObj.GetComponent<Interact>().OnInteract();
-        }
+        
+        
+        playerObj.GetComponent<Interact>().OnInteract();
+        
         buttonBufferPress = true;
     }
 
