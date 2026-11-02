@@ -36,6 +36,7 @@ public class GhostScript : MonoBehaviour
 
     void Start()
     {
+        transform.localScale = new Vector3(0,0,0);
         player = GameObject.Find("Player");
         ghostObject = transform.GetChild(1).gameObject;
         chairManager = ChairManager.Instance;
@@ -43,6 +44,8 @@ public class GhostScript : MonoBehaviour
         meter = transform.GetChild(1).gameObject;
         maxCustomerTimer = customerTimer;
         rend = GetComponent<Renderer>();
+
+        HappyGhost();
     }
 
     void FixedUpdate()
@@ -145,11 +148,16 @@ public class GhostScript : MonoBehaviour
         transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
+    public void HappyGhost()
+    {
+        TweenHelper.HappyGhost(transform);
+    }
+
     public void AssignQuest(Quest.QuestProgress progress)
     {
         assignedQuest = progress;
     }
-    public void Pattience()
+    public void Patience()
     {
         if (customerTimer <= maxCustomerTimer / 5)
         {

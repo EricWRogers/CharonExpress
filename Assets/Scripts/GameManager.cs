@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log(ghosts.Count);
                     if (ghosts[index] != null)
                     {
-                        ghosts[index].GetComponent<GhostScript>().Pattience();
+                        ghosts[index].GetComponent<GhostScript>().Patience();
                         ghostsScore += ghosts[index].GetComponent<GhostScript>().score;
                         index++;
                     }

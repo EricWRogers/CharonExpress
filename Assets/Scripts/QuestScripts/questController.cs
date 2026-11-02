@@ -337,6 +337,7 @@ public class QuestController : MonoBehaviour
         Debug.Log("Completed quest: " + completedQuest.questName, this);
         GhostScript tempGhostScript = questGiver.transform.parent.GetComponent<GhostScript>();
         tempGhostScript.DisableHighlight();
+        tempGhostScript.HappyGhost();
         tempGhostScript.customerTimer += tempGhostScript.maxCustomerTimer / 2; 
         tempGhostScript.maxCustomerTimer = tempGhostScript.customerTimer;
 
