@@ -1,4 +1,3 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,11 +92,22 @@ public class EndDayUI : MonoBehaviour
     private void UpdateDayLabel()
     {
         if (dayLabel != null)
-            dayLabel.text = $"Day {daySystem.currentDay}";
+            dayLabel.text = daySystem.tutorialMode? "Tutorial" : $"Day {daySystem.currentDay}";
     }
 
     private void UpdateCountdown(bool forceRefresh = false)
     {
+        if (countdownLabel == null)
+            return;
+
+        if (daySystem.tutorialMode)
+        {
+            countdownLabel.enabled = false;
+            return;
+        }
+
+        countdownLabel.enabled = true;
+
         int totalSeconds = Mathf.CeilToInt(
             daySystem.secondsRemaining
         );

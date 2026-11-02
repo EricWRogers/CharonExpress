@@ -1,4 +1,3 @@
-
 using System;
 using UnityEngine;
 
@@ -18,6 +17,8 @@ public class DayCycle : MonoBehaviour
     public int firstDay = 1;
 
     public bool pauseGameAtStation = true;
+
+    public bool tutorialMode;
 
     [Header("Current State")]
     [HideInInspector] public int currentDay;
@@ -54,7 +55,7 @@ public class DayCycle : MonoBehaviour
 
     private void Update()
     {
-        if (state != TravelState.Traveling)
+        if (tutorialMode || state != TravelState.Traveling)
             return;
 
         if (!GhostScript.gamePaused) secondsRemaining = Mathf.Max(

@@ -1741,6 +1741,7 @@ MonoBehaviour:
   SecondsBetweenStations: 1000
   firstDay: 1
   pauseGameAtStation: 1
+  tutorialMode: 1
   currentDay: 0
   secondsRemaining: 0
   totalPoints: 0
@@ -23550,85 +23551,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1017439721}
     m_Modifications:
-    - target: {fileID: 2525696005921224304, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_fontSize
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 2525696005921224304, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 2684521296125747737, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 270.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2684521296125747737, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 219
-      objectReference: {fileID: 0}
-    - target: {fileID: 2684521296125747737, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 239
-      objectReference: {fileID: 0}
     - target: {fileID: 2946246305587061521, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
       propertyPath: m_Name
       value: textBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 2946246305587061521, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4768939997178240918, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 228.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4768939997178240918, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 146
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819796756388515865, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819796756388515865, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_margin.z
-      value: 5.3425293
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819796756388515865, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6394274486044163774, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -174
-      objectReference: {fileID: 0}
-    - target: {fileID: 6538822433583219149, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -234.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 6538822433583219149, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 67
-      objectReference: {fileID: 0}
-    - target: {fileID: 7809259841907349027, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8615330075391080713, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1650
-      objectReference: {fileID: 0}
-    - target: {fileID: 8615330075391080713, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 8615330075391080713, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -51
-      objectReference: {fileID: 0}
-    - target: {fileID: 8615330075391080713, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 9135363092113529060, guid: 04c0f1f060c26be458acd84f8b77801e, type: 3}
       propertyPath: m_Pivot.x
