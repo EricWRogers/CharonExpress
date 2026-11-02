@@ -1189,7 +1189,7 @@ MonoBehaviour:
   GameIsPaused: 0
   pauseMenuUI: {fileID: 516762198}
   pausebutton: {fileID: 0}
-  sceneName: BuildScene
+  sceneName: TutorialScene
 --- !u!114 &1165293321
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -394,4 +394,20 @@ public class Dialogue : MonoBehaviour
     [SerializeField]
     private List<ActionBinding> actions = new List<ActionBinding>();
 
+    public void RegisterAction(DialogueAction action, UnityAction callback)
+    {
+        if (action == null || callback == null)
+            return;
+
+        ActionBinding binding = actions.Find(x => x != null && x.action == action);
+
+        if (binding == null)
+        {
+            binding = new ActionBinding { action = action };
+            actions.Add(binding);
+        }
+
+        binding.onInvoke.AddListener(callback);
+    }
+
 }

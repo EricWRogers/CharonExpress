@@ -31,7 +31,7 @@ public class QuestController : MonoBehaviour
     
     public event Action<Quest.QuestProgress, Quest.QuestObjective>
         ObjectiveCompleted;
-
+    public event Action<Quest.QuestProgress, Quest.QuestObjective> QuestFailed;
     [Header("Day Cycle")]
     [Tooltip("The day cycle controller script.")]
     public DayCycle dayCycle;
@@ -220,56 +220,48 @@ public class QuestController : MonoBehaviour
 
     public bool FailQuest(Quest.QuestProgress progress, bool reassignGhost = true)
     {
-        if (!progress.quest.unfailable)
+        if (progress == null ||
+            progress.quest == null ||
+            activeQuests == null ||
+            !activeQuests.Contains(progress) ||
+            progress.IsCompleted)
         {
-            if (progress == null ||
-                activeQuests == null ||
-                !activeQuests.Contains(progress) ||
-                progress.IsCompleted)
-            {
-                return false;
-            }
-
-
-            Debug.Log("Failed quest: " + progress.quest.questName);
-
-            endDayUI.failedQuests++;
-
-            GhostScript ghost = null;
-
-            if (progress.questGiver != null &&
-                progress.questGiver.transform.parent != null)
-            {
-                ghost = progress.questGiver.transform.parent
-                    .GetComponent<GhostScript>();
-            }
-
-            if (ghost != null)
-            {
-                if (ghost.score >= 0)
-                {
-                    ghost.score--;
-                }
-                ghost.DisableHighlight();
-            }
-
-            activeQuests.Remove(progress);
-            UpdateQuestLog();
-
-            if (reassignGhost && ghost != null)
-            {
-                ChairManager.Instance.AssignGhost(ghost.gameObject);
-            }
-
-            return true;
+            return false;
         }
-        else
+
+        if (progress.quest.unfailable)
         {
             Debug.Log("Quest is unfailable: " + progress.quest.questName);
             return false;
         }
-    }
 
+        Quest.QuestObjective failedObjective = progress.CurrentObjective;
+
+        Debug.Log("Failed quest: " + progress.quest.questName);
+        endDayUI.failedQuests++;
+
+        GhostScript ghost = progress.questGiver != null
+            ? progress.questGiver.GetComponentInParent<GhostScript>()
+            : null;
+
+        if (ghost != null)
+        {
+            if (ghost.score >= 0)
+                ghost.score--;
+
+            ghost.DisableHighlight();
+        }
+
+        activeQuests.Remove(progress);
+        UpdateQuestLog();
+
+        if (reassignGhost && ghost != null)
+            ChairManager.Instance.AssignGhost(ghost.gameObject);
+
+        QuestFailed?.Invoke(progress, failedObjective);
+
+        return true;
+    }
     /// <summary>
     /// Completes the current ReturnToNPC objective for an active quest
     /// assigned by the specified quest giver.

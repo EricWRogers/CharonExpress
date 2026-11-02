@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c0ad94a76f1f60488c3af19d8e75180, type: 3}
-  m_Name: taskHopefully
+  m_Name: NextScene
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAction
