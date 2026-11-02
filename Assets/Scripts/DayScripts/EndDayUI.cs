@@ -23,6 +23,8 @@ public class EndDayUI : MonoBehaviour
     private int lastDisplayedSecond = -1;
     public int timeDecraseAmountPerDay;
 
+    public string tutorialText = "Tutorial";
+
     private void Awake()
     {
         if (daySystem == null ||
@@ -92,7 +94,7 @@ public class EndDayUI : MonoBehaviour
     private void UpdateDayLabel()
     {
         if (dayLabel != null)
-            dayLabel.text = daySystem.tutorialMode? "Tutorial" : $"Day {daySystem.currentDay}";
+            dayLabel.text = daySystem.tutorialMode? $"{tutorialText}" : $"Day {daySystem.currentDay}";
     }
 
     private void UpdateCountdown(bool forceRefresh = false)

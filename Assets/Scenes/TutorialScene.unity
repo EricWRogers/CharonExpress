@@ -22612,6 +22612,7 @@ MonoBehaviour:
   failedQuests: 0
   completedQuests: 0
   timeDecraseAmountPerDay: 0
+  tutorialText: Tutorial
 --- !u!1 &2044734022 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8417762383873646486, guid: 7b8c05b38d4edae438a7da35252d89f7, type: 3}
