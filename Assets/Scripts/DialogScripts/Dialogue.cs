@@ -141,7 +141,7 @@ public class Dialogue : MonoBehaviour
 
     public void OnSkip(CallbackContext ctx)
     {
-        if (textActive == true && playerController.buttonBuffer)
+        if (textActive == true)
         {
             Debug.Log("should skip line");
             playerController.buttonBufferPress = true;
