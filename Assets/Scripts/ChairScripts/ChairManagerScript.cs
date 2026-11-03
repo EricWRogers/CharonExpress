@@ -87,16 +87,7 @@ public class ChairManager : MonoBehaviour
                 } 
                 else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false && activeGhosts < maxGhostCount)
                 {
-                    activeGhosts++;
-                    chairScript.ghostObject = Instantiate(chairScript.ghostPrefab, chairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-                    chairScript.ghostActive = true;
-                    GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
-                    ghostScript.chairScript = chairScript;
-                    ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
-                    ghostScript.ghostScriptableObject = ghostScriptableObjects[ghostScriptableObjects.Count - 1];
-                    ghostScriptableObjects.RemoveAt(ghostScriptableObjects.Count - 1);
-                    ghostScript.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = ghostScript.ghostScriptableObject.idleSprite;
-                    AssignGhost(chairScript.ghostObject);
+                    SpawnGhost(chairScript);
                 }
             }
         }
@@ -158,17 +149,22 @@ public class ChairManager : MonoBehaviour
             //If the chair is not reserved for escort, decrement cooldown. If cooldown below zero, instantiate a ghost and assign it a task
             if (i != escortChair && activeGhosts < maxGhostCount)
             {                         
-                activeGhosts++;
-                tempChairScript.ghostObject = Instantiate(tempChairScript.ghostPrefab, tempChairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-                tempChairScript.ghostActive = true;
-                GhostScript ghostScript = tempChairScript.ghostObject.GetComponent<GhostScript>();
-                ghostScript.chairScript = tempChairScript;
-                ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
-                ghostScript.ghostScriptableObject = ghostScriptableObjects[ghostScriptableObjects.Count - 1];
-                ghostScriptableObjects.RemoveAt(ghostScriptableObjects.Count - 1);
-                ghostScript.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = ghostScript.ghostScriptableObject.idleSprite;
-                AssignGhost(tempChairScript.ghostObject);                
+                SpawnGhost(tempChairScript);         
             }
         }
+    }
+
+    public void SpawnGhost(ChairScript chairScript)
+    {
+        activeGhosts++;
+        chairScript.ghostObject = Instantiate(chairScript.ghostPrefab, chairScript.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        chairScript.ghostActive = true;
+        GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
+        ghostScript.chairScript = chairScript;
+        ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
+        ghostScript.ghostScriptableObject = ghostScriptableObjects[ghostScriptableObjects.Count - 1];
+        ghostScriptableObjects.RemoveAt(ghostScriptableObjects.Count - 1);
+        ghostScript.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = ghostScript.ghostScriptableObject.idleSprite;
+        AssignGhost(chairScript.ghostObject);
     }
 }

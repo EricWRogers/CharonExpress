@@ -73,7 +73,7 @@ public class GhostScript : MonoBehaviour
             }
             Debug.Log("I KILLED IT");
             ChairManager.Instance.activeGhosts--;
-            Destroy(gameObject);
+            Death();
         }
 
         if (beingEscorted)
