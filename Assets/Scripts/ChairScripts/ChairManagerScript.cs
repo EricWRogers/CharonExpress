@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.LowLevelPhysics2D;
 
@@ -16,12 +18,13 @@ public class ChairManager : MonoBehaviour
     //escortChair marks which chair object will be left open for the "escort" task
     public int escortChair;
     public bool escortAssigned = false;
+    [SerializeField] public List<Ghost> ghostScriptableObjects;
 
     //Keeps track of how many ghosts have been through in total
     public int customerTotal = 0;
     public int deathTotal = 0;
     public int activeGhosts = 0;
-    public int maxGhostCount = 2;
+    public int maxGhostCount = 3;
     //customerTotal modulo by the length of chairs
 
     //Sample list of names that is assigned to the chair/ghost
@@ -90,6 +93,9 @@ public class ChairManager : MonoBehaviour
                     GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
                     ghostScript.chairScript = chairScript;
                     ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
+                    ghostScript.ghostScriptableObject = ghostScriptableObjects[ghostScriptableObjects.Count - 1];
+                    ghostScriptableObjects.RemoveAt(ghostScriptableObjects.Count - 1);
+                    ghostScript.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = ghostScript.ghostScriptableObject.idleSprite;
                     AssignGhost(chairScript.ghostObject);
                 }
             }
@@ -143,7 +149,7 @@ public class ChairManager : MonoBehaviour
         GameObject[] ghosts = GameObject.FindGameObjectsWithTag("Ghost");
         foreach (GameObject ghost in ghosts)
         {
-            Destroy(ghost);
+            ghost.GetComponent<GhostScript>().Death();
         }
         for (int i = 0; i < chairs.Length; i++)
         {
@@ -158,6 +164,9 @@ public class ChairManager : MonoBehaviour
                 GhostScript ghostScript = tempChairScript.ghostObject.GetComponent<GhostScript>();
                 ghostScript.chairScript = tempChairScript;
                 ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
+                ghostScript.ghostScriptableObject = ghostScriptableObjects[ghostScriptableObjects.Count - 1];
+                ghostScriptableObjects.RemoveAt(ghostScriptableObjects.Count - 1);
+                ghostScript.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = ghostScript.ghostScriptableObject.idleSprite;
                 AssignGhost(tempChairScript.ghostObject);                
             }
         }

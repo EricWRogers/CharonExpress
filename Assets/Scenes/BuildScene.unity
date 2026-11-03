@@ -8292,10 +8292,18 @@ MonoBehaviour:
   ghostPrefab: {fileID: 8954517744164338783, guid: aa20a957278df48efa9db18c0d769ab1, type: 3}
   escortChair: 0
   escortAssigned: 0
+  ghostScriptableObjects:
+  - {fileID: 11400000, guid: 47a34189b405e45819f0e8a43dde6b64, type: 2}
+  - {fileID: 11400000, guid: 79ca811f802ed4446bbb6bb5911c0b8e, type: 2}
+  - {fileID: 11400000, guid: c7ef7a56f8a684bb4b33722096c2bd53, type: 2}
+  - {fileID: 11400000, guid: ec73bbc21b7d14e43969192205750fd8, type: 2}
+  - {fileID: 11400000, guid: 72f1da088483c4c3b932a0c67c62d856, type: 2}
+  - {fileID: 11400000, guid: 5eab89c95121f47ffaa48b7683315cbc, type: 2}
+  - {fileID: 11400000, guid: 9cd76322d7db5491d943dfda3df9604e, type: 2}
   customerTotal: 0
   deathTotal: 0
   activeGhosts: 0
-  maxGhostCount: 2
+  maxGhostCount: 3
   tasks:
   - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
@@ -21973,7 +21981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -130}
+  m_AnchoredPosition: {x: 0, y: -380}
   m_SizeDelta: {x: 337.2, y: 90.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2019994447
