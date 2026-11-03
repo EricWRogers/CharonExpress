@@ -3,6 +3,7 @@ using System;
 using UnityEngine.Analytics;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine.Rendering;
+using System.Linq;
 
 public class GhostScript : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GhostScript : MonoBehaviour
     public MicrogameId gameID = MicrogameId.Escort;
     public Material normalMaterial;
     public Material highlightMaterial;
+    public Ghost ghostScriptableObject;
     Renderer rend;
 
     static public bool gamePaused;
@@ -186,4 +188,9 @@ public class GhostScript : MonoBehaviour
         }
     }
 
+    public void Death()
+    {
+        ChairManager.Instance.ghostScriptableObjects.Insert(0, ghostScriptableObject);
+        Destroy(gameObject);
+    }
 }
