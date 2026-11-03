@@ -18,5 +18,5 @@ MonoBehaviour:
   - a
   - m
   - e
-  - f
-  - h
+  goodResult: {fileID: 11400000, guid: 648df5df77b8a2f4086162d2bfc7ca52, type: 2}
+  badResult: {fileID: 11400000, guid: 70025554bd9f60549bbfdc844bb8726b, type: 2}

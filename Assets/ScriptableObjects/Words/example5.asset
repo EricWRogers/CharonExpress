@@ -18,6 +18,5 @@ MonoBehaviour:
   - y
   - t
   - h
-  - w
-  - g
-  - m
+  goodResult: {fileID: 11400000, guid: b5f1ca52b82976246832db4649750c56, type: 2}
+  badResult: {fileID: 11400000, guid: 6c189035b57749a46b821e575d268529, type: 2}

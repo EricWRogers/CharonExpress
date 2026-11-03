@@ -6,7 +6,7 @@ public class WordBank : MonoBehaviour
 {
     public List<WordObject> words;
 
-    private List<WordObject> copiedWords = new List<WordObject>();
+    public List<WordObject> copiedWords = new List<WordObject>();
     private void Awake()
     {
         
@@ -22,7 +22,7 @@ public class WordBank : MonoBehaviour
 
         for (int i = 0; i < strings.Count; i++)
         {
-            int index = Random.Range(0, temp.Count - 1);
+            int index = Random.Range(0, temp.Count);
             tempwords.Add(temp[index]);
             temp.RemoveAt(index);
         }
@@ -34,7 +34,7 @@ public class WordBank : MonoBehaviour
 
         for (int i = 0; i < strings.Count; i++)
         {
-            int index = Random.Range(0, temp.Count - 1);
+            int index = Random.Range(0, temp.Count);
             tempwords.Add(temp[index]);
             temp.RemoveAt(index);
         }
@@ -47,7 +47,7 @@ public class WordBank : MonoBehaviour
         Shuffle(words, copiedWords);
         if (copiedWords.Count != 0)
         {
-            newWord = copiedWords[copiedWords.Count - 1];
+            newWord = copiedWords[copiedWords.Count-1];
 
         }
         return newWord;
