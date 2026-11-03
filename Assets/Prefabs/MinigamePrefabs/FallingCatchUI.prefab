@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.57254905}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -91,12 +91,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingCatchGame
   gameUI: {fileID: 5548939266185031898}
-  playArea: {fileID: 0}
+  playArea: {fileID: 8153476089286738874}
   basket: {fileID: 4112100734824668417}
   spawner: {fileID: 2579086163826468047}
-  basketSpeed: 700
+  basketSpeed: 800
   winAmount: 5
-  gameID: FallingCatchGame
+  gameID: 3
+  x: 0
 --- !u!114 &2579086163826468047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,9 +113,9 @@ MonoBehaviour:
   playArea: {fileID: 8153476089286738874}
   goodPrefab: {fileID: 6544927775780678794, guid: ac58625b65a10fc4c91d0dafa9d1fc44, type: 3}
   badPrefab: {fileID: 6544927775780678794, guid: 39c2d9af4cc4edf4a9ca7232a9f271cd, type: 3}
-  spawnRate: 0.5
-  goodSpawnPercentage: 50.6
-  fallSpeed: 500
+  spawnRate: 1
+  sameTypeChance: 15
+  fallSpeed: 800
 --- !u!1 &7839084629818633653
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6794453670368943140
 CanvasRenderer:
@@ -227,8 +228,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 75}
-  m_SizeDelta: {x: 200, y: 150.00002}
+  m_AnchoredPosition: {x: 0, y: 72.2}
+  m_SizeDelta: {x: 175, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5884580276292057219
 CanvasRenderer:
@@ -312,7 +313,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 200, y: 150}
+  m_Size: {x: 175, y: 100}
   m_EdgeRadius: 0
 --- !u!50 &3708591914981418170
 Rigidbody2D:
