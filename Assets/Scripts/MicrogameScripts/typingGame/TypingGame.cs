@@ -68,6 +68,11 @@ public class TypingGame : MonoBehaviour
         currentWord = currentWordObject.word;
         letters = currentWordObject.letters;
         SetRemainingWord(currentWord);
+        letterIndex = 0;
+        letterText.text = letters[letterIndex];
+        canHitPointer = true;
+        hitLetter = false;
+        pointerImg.color = new Color32(0, 62, 245, 255);
     }
 
     private void SetRemainingWord(string newWord)
