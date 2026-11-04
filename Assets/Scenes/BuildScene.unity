@@ -8038,6 +8038,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1017439721}
     m_Modifications:
+    - target: {fileID: 2579086163826468047, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: fallSpeed
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579086163826468047, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
+      propertyPath: spawnRate
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3349705267291792607, guid: 63b54a5e2a22c0144b39f7f0b29d4526, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8304,7 +8312,10 @@ MonoBehaviour:
   deathTotal: 0
   activeGhosts: 0
   maxGhostCount: 3
-  tasks:
+  taskToAssign: {fileID: 0}
+  extraTasks:
+  - {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
+  - {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   - {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
 --- !u!4 &737890844
 Transform:

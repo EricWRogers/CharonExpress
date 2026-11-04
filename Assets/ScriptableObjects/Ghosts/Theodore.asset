@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ghost
   ghostName: Theodore
   idleSprite: {fileID: 21300000, guid: cb76131a49c3d79418d4a9fa5218c192, type: 3}
+  dialogGraph: {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
+  needExtraTask: 1

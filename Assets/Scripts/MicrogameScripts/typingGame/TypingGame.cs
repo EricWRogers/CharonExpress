@@ -189,6 +189,7 @@ public class TypingGame : MonoBehaviour
     void WinGame()
     {
         dialogue.SetDialogGraph(currentWordObject.goodResult);
+        dialogue.SetGhost(ghosty);
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
@@ -218,6 +219,7 @@ public class TypingGame : MonoBehaviour
     public void LoseGame()
     {
         dialogue.SetDialogGraph(currentWordObject.badResult);
+        dialogue.SetGhost(ghosty);
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;

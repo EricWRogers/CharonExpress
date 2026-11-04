@@ -28,8 +28,9 @@ public class ChairManager : MonoBehaviour
     //customerTotal modulo by the length of chairs
 
     //Sample list of names that is assigned to the chair/ghost
-    String[] names = {"Sawyer", "Zek", "Cooper", "John", "Joe"};
-    public DialogGraph[] tasks = {};
+    String[] names = { "Sawyer", "Zek", "Cooper", "John", "Joe" };
+    public DialogGraph taskToAssign;
+    public DialogGraph[] extraTasks = {};
 
     public void Awake()
     {
@@ -62,29 +63,30 @@ public class ChairManager : MonoBehaviour
             else
             {
                 chairs[i].GetComponent<ChairScript>().reserved = false;
-                chairs[i].GetComponent<ChairScript>().cooldownTimer = UnityEngine.Random.Range(1,5);
+                chairs[i].GetComponent<ChairScript>().cooldownTimer = UnityEngine.Random.Range(1, 5);
             }
         }
     }
 
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
     {
         //Iterate through each chair by index
-        for (int i = 0; i < chairs.Length; i++) {
+        for (int i = 0; i < chairs.Length; i++)
+        {
 
             //If the chair is not reserved for escort, decrement cooldown. If cooldown below zero, instantiate a ghost and assign it a task
             if (i != escortChair)
-            {     
+            {
                 ChairScript chairScript = chairs[i].GetComponent<ChairScript>();
                 if (chairScript.cooldownTimer > 0)
                 {
-                    chairScript.cooldownTimer-= Time.deltaTime;
-                } 
+                    chairScript.cooldownTimer -= Time.deltaTime;
+                }
                 else if (chairScript.cooldownTimer <= 0 && chairScript.ghostActive == false && activeGhosts < maxGhostCount)
                 {
                     SpawnGhost(chairScript);
@@ -97,8 +99,11 @@ public class ChairManager : MonoBehaviour
     public void AssignGhost(GameObject ghost)
     {
         customerTotal++;
-        Dialogue chairScript = ghost.GetComponent<Dialogue>();
-        DialogGraph taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
+        Dialogue ghostDialogue = ghost.GetComponent<Dialogue>();
+        if (ghost.GetComponent<GhostScript>().ghostScriptableObject.needExtraTask)
+        {
+            taskToAssign = extraTasks[UnityEngine.Random.Range(0, extraTasks.Length)];
+        }
         Debug.Log("To the task assigned was this" + taskToAssign.name);
         if (taskToAssign.name == "EscortGraph" && !escortAssigned)
         {
@@ -108,11 +113,12 @@ public class ChairManager : MonoBehaviour
         {
             while (taskToAssign.name == "EscortGraph")
             {
-                taskToAssign = tasks[UnityEngine.Random.Range(0, tasks.Length)];
+                AssignGhostAsspects(ghost.GetComponent<GhostScript>(), ghost);
             }
         }
-        chairScript.SetDialogGraph(taskToAssign);
+        ghostDialogue.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
+        ghost.GetComponent<GhostScript>().ghostScriptableObject.needExtraTask = true;
         GameManager.Instance.ghosts.Add(ghost);
     }
 
@@ -123,7 +129,7 @@ public class ChairManager : MonoBehaviour
         for (int i = 0; i < chairs.Length; i++)
         {
             ChairScript tempChairScript = chairs[i].GetComponent<ChairScript>();
-            if ( tempChairScript.ghostActive != true)
+            if (tempChairScript.ghostActive != true)
             {
                 escortChair = i;
                 tempChairScript.reserved = true;
@@ -135,7 +141,7 @@ public class ChairManager : MonoBehaviour
     public void NewDay(int day)
     {
         activeGhosts = 0;
-        if (day % 2 == 1) maxGhostCount += UnityEngine.Random.Range(1,2);
+        if (day % 2 == 1) maxGhostCount += UnityEngine.Random.Range(1, 2);
         //Day Timer is extended within the EndDayUI script on odd days
         GameObject[] ghosts = GameObject.FindGameObjectsWithTag("Ghost");
         foreach (GameObject ghost in ghosts)
@@ -148,8 +154,8 @@ public class ChairManager : MonoBehaviour
             tempChairScript.ghostActive = false;
             //If the chair is not reserved for escort, decrement cooldown. If cooldown below zero, instantiate a ghost and assign it a task
             if (i != escortChair && activeGhosts < maxGhostCount)
-            {                         
-                SpawnGhost(tempChairScript);         
+            {
+                SpawnGhost(tempChairScript);
             }
         }
     }
@@ -161,10 +167,19 @@ public class ChairManager : MonoBehaviour
         chairScript.ghostActive = true;
         GhostScript ghostScript = chairScript.ghostObject.GetComponent<GhostScript>();
         ghostScript.chairScript = chairScript;
-        ghostScript.customerTimer = UnityEngine.Random.Range(45,60);
-        ghostScript.ghostScriptableObject = ghostScriptableObjects[ghostScriptableObjects.Count - 1];
-        ghostScriptableObjects.RemoveAt(ghostScriptableObjects.Count - 1);
+        Debug.Log(chairScript.ghostObject);
+        AssignGhostAsspects(ghostScript, chairScript.ghostObject);
+        
+    }
+
+    public void AssignGhostAsspects(GhostScript ghostScript, GameObject ghostObject)
+    {
+        ghostScript.customerTimer = UnityEngine.Random.Range(45, 60);
+        ghostScript.ghostScriptableObject = ghostScriptableObjects[UnityEngine.Random.Range(0, ghostScriptableObjects.Count)];
+        ghostScriptableObjects.Remove(ghostScript.ghostScriptableObject);
         ghostScript.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = ghostScript.ghostScriptableObject.idleSprite;
-        AssignGhost(chairScript.ghostObject);
+        taskToAssign = ghostScript.ghostScriptableObject.dialogGraph;
+        ghostScript.ghostScriptableObject.needExtraTask = false;
+        AssignGhost(ghostObject);
     }
 }

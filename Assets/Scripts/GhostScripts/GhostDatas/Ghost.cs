@@ -12,4 +12,9 @@ public class Ghost : ScriptableObject
     [Tooltip("Idle sprite for the ghost")]
     public Sprite idleSprite;
 
+    [Header("Dialogue Graph")]
+    [Tooltip("this is the dialogue for the ghost")]
+    public DialogGraph dialogGraph;
+    public bool needExtraTask = false;
+
 }

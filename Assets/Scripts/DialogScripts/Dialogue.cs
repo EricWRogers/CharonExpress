@@ -98,8 +98,8 @@ public class Dialogue : MonoBehaviour
                 UpdateDialog(node);
             }
         }
-        TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
-        TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
+        TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
+        TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
         textActive = true;
 
         TextBoxManager.Instance.textComponent.text = string.Empty;
@@ -306,8 +306,8 @@ public class Dialogue : MonoBehaviour
         index = 0;
         activeSegment = newSegment;
         dialogText = newSegment.DialogText;
-        TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
-        TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
+        TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
+        TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
         foreach (Transform child in TextBoxManager.Instance.buttonParent)
         {
             Destroy(child.gameObject);
@@ -334,6 +334,10 @@ public class Dialogue : MonoBehaviour
     {
         ghost.assignedEscort(ChairManager.Instance.chairs[ChairManager.Instance.escortChair].gameObject.transform.position);
         escortMission = false;
+    }
+    public void SetGhost(GhostScript ghosty)
+    {
+        ghost = ghosty;
     }
 
 
