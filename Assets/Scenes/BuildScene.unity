@@ -22955,8 +22955,10 @@ MonoBehaviour:
   questGiver: {fileID: 0}
   conversation: 0
   escortMission: 0
+  buttonsound: {fileID: 0}
   ghost: {fileID: 0}
   playerController: {fileID: 2078152473}
+  playerObject: {fileID: 0}
   actions: []
 --- !u!114 &1980614289
 MonoBehaviour:
@@ -23207,6 +23209,14 @@ PrefabInstance:
       propertyPath: columns
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 138842893440838925, guid: 195592f1244ae07419716b2fff6347c6, type: 3}
+      propertyPath: playerObj
+      value: 
+      objectReference: {fileID: 2078152463}
+    - target: {fileID: 138842893440838925, guid: 195592f1244ae07419716b2fff6347c6, type: 3}
+      propertyPath: buttonSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6198f9f859b2a204489c504fe69ac5f9, type: 3}
     - target: {fileID: 138842893440838925, guid: 195592f1244ae07419716b2fff6347c6, type: 3}
       propertyPath: bookButtonPrefab
       value: 

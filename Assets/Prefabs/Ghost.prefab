@@ -462,6 +462,7 @@ MonoBehaviour:
   normalMaterial: {fileID: 2100000, guid: 2bc40c531f917462bb87d8641258df5e, type: 2}
   highlightMaterial: {fileID: 2100000, guid: d70f01f6acb5c49bb82c0fbf6792db99, type: 2}
   ghostScriptableObject: {fileID: 0}
+  spriteHolder: {fileID: 7518435555830112110}
   score: 5
   assignedQuest:
     quest: {fileID: 0}

@@ -24,6 +24,7 @@ public class GhostScript : MonoBehaviour
     public Material highlightMaterial;
     public Ghost ghostScriptableObject;
     Renderer rend;
+    public GameObject spriteHolder;
 
     static public bool gamePaused;
     public float score = 5;
@@ -79,7 +80,7 @@ public class GhostScript : MonoBehaviour
         if (beingEscorted)
         {
             Debug.Log(beingEscorted);
-            ghostObject.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.floatSprite;
+            spriteHolder.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.floatSprite;
             travelStep();
         }
     }
@@ -124,7 +125,7 @@ public class GhostScript : MonoBehaviour
             QuestController.Instance.CompleteMicrogame(gameID);
             customerTimer += maxCustomerTimer / 3;
             maxCustomerTimer = customerTimer;
-            ghostObject.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.idleSprite;
+            spriteHolder.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.idleSprite;
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
             {
