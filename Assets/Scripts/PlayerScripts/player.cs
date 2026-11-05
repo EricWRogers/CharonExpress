@@ -22,6 +22,7 @@ public class player : MonoBehaviour
     public  bool buttonBuffer = false;
     public float buttonBufferTimer = 0.1f;
     public float nextAllowedClickTime;
+    [SerializeField] public AudioClip[] talkingSounds;
     public Animator animator;
 
 
@@ -108,6 +109,11 @@ public class player : MonoBehaviour
         if(!buttonBuffer)
             StartCoroutine(Wait1Sec());
     }
+
+    public void TalkingSound() {
+        gameObject.GetComponent<AudioSource>().PlayOneShot(talkingSounds[UnityEngine.Random.Range(0, talkingSounds.Length-1)]);
+    }
+
     IEnumerator Wait1Sec()
     {
         float elapsedTime = 0f;
