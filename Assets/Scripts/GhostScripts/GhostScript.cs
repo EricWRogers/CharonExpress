@@ -40,7 +40,7 @@ public class GhostScript : MonoBehaviour
     {
         transform.localScale = new Vector3(0,0,0);
         player = GameObject.Find("Player");
-        ghostObject = transform.GetChild(1).gameObject;
+        ghostObject = gameObject;
         chairManager = ChairManager.Instance;
         InteractUI = GameObject.Find("InteractUI");
         meter = transform.GetChild(1).gameObject;
