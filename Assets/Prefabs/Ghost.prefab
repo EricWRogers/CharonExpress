@@ -425,8 +425,10 @@ MonoBehaviour:
   questGiver: {fileID: 3578365062610817730}
   conversation: 0
   escortMission: 0
+  buttonsound: {fileID: 8300000, guid: 6198f9f859b2a204489c504fe69ac5f9, type: 3}
   ghost: {fileID: 1701167699368655108}
   playerController: {fileID: 8602806083266435235, guid: d3318e63cc7a8664db56fd80666a4176, type: 3}
+  playerObject: {fileID: 0}
   actions:
   - action: {fileID: 11400000, guid: 44ddcaa0910907d418ede8f6b7039b7b, type: 2}
     onInvoke:
@@ -459,6 +461,7 @@ MonoBehaviour:
   gameID: 1
   normalMaterial: {fileID: 2100000, guid: 2bc40c531f917462bb87d8641258df5e, type: 2}
   highlightMaterial: {fileID: 2100000, guid: d70f01f6acb5c49bb82c0fbf6792db99, type: 2}
+  ghostScriptableObject: {fileID: 0}
   score: 5
   assignedQuest:
     quest: {fileID: 0}

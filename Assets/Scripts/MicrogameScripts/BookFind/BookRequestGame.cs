@@ -62,6 +62,7 @@ public class BookRequestGame : MonoBehaviour
     private bool gameRunning;
     private Quest.QuestProgress currentProgress;
     private List<Button> buttons = new List<Button>();
+    public AudioClip buttonSound;
 
     public void PrepareRequest(Quest.QuestProgress progress)
     {
@@ -230,6 +231,7 @@ public class BookRequestGame : MonoBehaviour
             button.GetComponentInChildren<TMP_Text>().text =
                 "<rotate=90>" + book.subject;
 
+            button.onClick.AddListener((() => { playerObj.GetComponent<AudioSource>().PlayOneShot(buttonSound); }));
             if (book == requestedBook)
                 button.onClick.AddListener(WinGame);
             if (book != requestedBook)

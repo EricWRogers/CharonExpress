@@ -30,8 +30,10 @@ public class Dialogue : MonoBehaviour
     public GameObject questGiver;
     public bool conversation = false;
     public bool escortMission = false;
+    public AudioClip buttonsound;
     public GhostScript ghost;
     public player playerController;
+    public GameObject playerObject;
 
     public PlayerThings inputActions;
 
@@ -40,6 +42,7 @@ public class Dialogue : MonoBehaviour
         inputActions = new PlayerThings();
 
         playerController = GameObject.Find("Player").GetComponent<player>();
+        playerObject = GameObject.Find("Player").gameObject;
 
         inputActions.UI.LineSkip.performed += OnSkip;
     }
@@ -191,6 +194,7 @@ public class Dialogue : MonoBehaviour
                     }
 
                     btn.GetComponentInChildren<Button>().onClick.AddListener((() => { AnswerClicked(index); }));
+                    btn.GetComponentInChildren<Button>().onClick.AddListener((() => { playerObject.GetComponent<AudioSource>().PlayOneShot(buttonsound); }));
 
                     answerIndex++;
                 }
