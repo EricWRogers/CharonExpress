@@ -22,6 +22,7 @@ public class player : MonoBehaviour
     public  bool buttonBuffer = false;
     public float buttonBufferTimer = 0.1f;
     public float nextAllowedClickTime;
+    public Animator animator;
 
 
     private void Awake()
@@ -68,11 +69,11 @@ public class player : MonoBehaviour
             Vector3 moveDir = new Vector3(x, 0, y);
             rb.linearVelocity = moveDir * (inputActions.Player.Sprint.IsPressed() ? speed * 1.5f : speed);
 
-            if (x != 0 && x < 0)
+            if (x != 0 && x > 0)
             {
                 sr.flipX = true;
             }
-            else if (x != 0 && x > 0)
+            else if (x != 0 && x < 0)
             {
                 sr.flipX = false;
             }
@@ -81,12 +82,16 @@ public class player : MonoBehaviour
         {
             WaitForButtonBuffer();
         }
+        if( x == 0){
+            animator.SetBool("canWalk", false);
+        }
     }
     public void OnMove(CallbackContext ctx)
     {
         Vector2 input = ctx.ReadValue<Vector2>();
 
         x = input.x;
+        animator.SetBool("canWalk", true);
     }
     public void OnInteract(CallbackContext ctx)
     {
