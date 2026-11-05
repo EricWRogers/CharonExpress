@@ -26,4 +26,13 @@ public static class TweenHelper
         
         return sq;
     }
+
+    public static Sequence CameraBob(Transform _transform)
+    {
+        Sequence sq = DOTween.Sequence();
+
+        sq.Append(_transform.DOLocalMoveY(1f, 0.1f));
+        sq.Append(_transform.DOLocalMoveY(-1f, 0.1f));
+        return sq;
+    }
 }
