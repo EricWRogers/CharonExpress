@@ -113,7 +113,7 @@ MonoBehaviour:
   playArea: {fileID: 8153476089286738874}
   goodPrefab: {fileID: 6544927775780678794, guid: ac58625b65a10fc4c91d0dafa9d1fc44, type: 3}
   badPrefab: {fileID: 6544927775780678794, guid: 39c2d9af4cc4edf4a9ca7232a9f271cd, type: 3}
-  spawnRate: 1
+  spawnRate: 0.35
   sameTypeChance: 15
   fallSpeed: 800
 --- !u!1 &7839084629818633653
