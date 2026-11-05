@@ -40,7 +40,7 @@ public class GhostScript : MonoBehaviour
     {
         transform.localScale = new Vector3(0,0,0);
         player = GameObject.Find("Player");
-        ghostObject = transform.GetChild(1).gameObject;
+        ghostObject = gameObject;
         chairManager = ChairManager.Instance;
         InteractUI = GameObject.Find("InteractUI");
         meter = transform.GetChild(1).gameObject;
@@ -79,6 +79,7 @@ public class GhostScript : MonoBehaviour
         if (beingEscorted)
         {
             Debug.Log(beingEscorted);
+            ghostObject.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.floatSprite;
             travelStep();
         }
     }
@@ -123,6 +124,7 @@ public class GhostScript : MonoBehaviour
             QuestController.Instance.CompleteMicrogame(gameID);
             customerTimer += maxCustomerTimer / 3;
             maxCustomerTimer = customerTimer;
+            ghostObject.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.idleSprite;
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
             {
