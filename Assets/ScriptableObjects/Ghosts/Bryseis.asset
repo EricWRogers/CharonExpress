@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ghost
   ghostName: Bryseis
   idleSprite: {fileID: 21300000, guid: c70fbcfd089254941a359733f8915162, type: 3}
+  floatSprite: {fileID: 21300000, guid: 252016e95d7bf0c479e6f367930edd14, type: 3}
   dialogGraph: {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   needExtraTask: 0

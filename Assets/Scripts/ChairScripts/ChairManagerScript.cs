@@ -113,7 +113,7 @@ public class ChairManager : MonoBehaviour
         {
             while (taskToAssign.name == "EscortGraph")
             {
-                AssignGhostAsspects(ghost.GetComponent<GhostScript>(), ghost);
+                AssignGhost(ghost);
             }
         }
         ghostDialogue.SetDialogGraph(taskToAssign);
