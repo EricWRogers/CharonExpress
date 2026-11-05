@@ -101,7 +101,8 @@ public class TutorialManager : MonoBehaviour
         tutorialGhost.chairScript = chair;
         tutorialGhost.customerTimer = Random.Range(45, 60);
 
-        manager.AssignGhost(ghostObject);
+        manager.AssignGhostAsspects(tutorialGhost, ghostObject);
+        tutorialGhost.ghostScriptableObject.needExtraTask = false;
 
         // Configure the quest giver and interaction.
         QuestGiver giver = ghostObject.GetComponentInChildren<QuestGiver>(true);
@@ -150,6 +151,8 @@ public class TutorialManager : MonoBehaviour
             progress.questGiver.GetComponentInParent<GhostScript>() != tutorialGhost ||
             steps == null || steps.Length == 0)
             return;
+
+        tutorialGhost.ghostScriptableObject.needExtraTask = false;
 
         // Quest accepted: keep the waiting dialogue.
         if (objective.type == Quest.objectiveType.FirstTalk)
