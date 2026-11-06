@@ -35,6 +35,8 @@ public class DayCycle : MonoBehaviour
     public GameObject catchUI;
     public GameObject bookUI;
     public GameObject typingUI;
+    public AudioClip trainWislte;
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -48,6 +50,7 @@ public class DayCycle : MonoBehaviour
             SecondsBetweenStations = 1f;
         }
 
+        audioSource.PlayOneShot(trainWislte);
         currentDay = Mathf.Max(1, firstDay);
         secondsRemaining = SecondsBetweenStations;
         state = TravelState.Traveling;
@@ -85,6 +88,7 @@ public class DayCycle : MonoBehaviour
         catchUI.SetActive(false);
         bookUI.SetActive(false);
         typingUI.SetActive(false);
+        audioSource.Stop();
         GameManager.Instance.SetGrade();
         StationReached?.Invoke();
     }
@@ -105,6 +109,8 @@ public class DayCycle : MonoBehaviour
         currentDay++;
         pointsEarnedToday = 0;
         secondsRemaining = SecondsBetweenStations;
+        audioSource.PlayOneShot(trainWislte, 1.5f);
+        audioSource.Play();
         state = TravelState.Traveling;
 
         TravelStarted?.Invoke();

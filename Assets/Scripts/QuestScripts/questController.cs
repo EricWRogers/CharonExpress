@@ -247,8 +247,11 @@ public class QuestController : MonoBehaviour
         if (ghost != null)
         {
             if (ghost.score >= 0)
-                ghost.score--;
+                ghost.score-=2;
 
+
+            if (ghost.score <= 0)
+                ghost.score = 1;
             ghost.DisableHighlight();
         }
 

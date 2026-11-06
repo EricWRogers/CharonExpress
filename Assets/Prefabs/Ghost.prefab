@@ -463,7 +463,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: d70f01f6acb5c49bb82c0fbf6792db99, type: 2}
   ghostScriptableObject: {fileID: 0}
   spriteHolder: {fileID: 7518435555830112110}
-  score: 5
+  score: 2
   assignedQuest:
     quest: {fileID: 0}
     questGiver: {fileID: 0}
@@ -473,7 +473,7 @@ MonoBehaviour:
   beingEscorted: 0
   playerInRange: 0
   direction: 1
-  movementSpeed: 2
+  movementSpeed: 1
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!54 &1737380608902926993
 Rigidbody:

@@ -27,7 +27,7 @@ public class GhostScript : MonoBehaviour
     public GameObject spriteHolder;
 
     static public bool gamePaused;
-    public float score = 5;
+    public float score = 2;
     public Quest.QuestProgress assignedQuest;
 
     //Variables for Escort Mission

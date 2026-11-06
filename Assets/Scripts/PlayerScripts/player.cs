@@ -23,6 +23,7 @@ public class player : MonoBehaviour
     public float buttonBufferTimer = 0.1f;
     public float nextAllowedClickTime;
     [SerializeField] public AudioClip[] talkingSounds;
+    public AudioClip bubbleSound;
     public Animator animator;
 
 
@@ -97,8 +98,7 @@ public class player : MonoBehaviour
     public void OnInteract(CallbackContext ctx)
     {
         Debug.Log("interact clicked");
-        
-        
+
         playerObj.GetComponent<Interact>().OnInteract();
         
         buttonBufferPress = true;
