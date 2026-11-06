@@ -16,6 +16,7 @@ public class EndDayUI : MonoBehaviour
     public GameObject stationSummaryPanel;
     public TMP_Text stationSummaryLabel;
     public Button continueButton;
+    public GameObject continueButtonObj;
     public GameManager gameManager;
     public int failedQuests = 0;
     public int completedQuests = 0;
@@ -150,10 +151,28 @@ public class EndDayUI : MonoBehaviour
                 $"Total points: {daySystem.totalPoints}";
                 */
             stationSummaryLabel.text =
-                $"End of Demo!\n\n" +
+                $"End of Day {daySystem.currentDay}\n\n" +
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
+        }
+        if (daySystem.currentDay == 3)
+        {
+            continueButtonObj.SetActive(false);
+            if (stationSummaryLabel != null)
+        {
+            /*
+            stationSummaryLabel.text =
+                $"Day {daySystem.currentDay} Complete!\n\n" +
+                $"Points earned today: {daySystem.pointsEarnedToday}\n" +
+                $"Total points: {daySystem.totalPoints}";
+                */
+            stationSummaryLabel.text =
+                $"End of Demo\n\n" +
+                $"Completed Quests {completedQuests}\n" +
+                $"Failed Quests {failedQuests}\n" +
+                $"Grade: {gameManager.letterGrade}\n";
+        }
         }
 
         UpdateCountdown(true);
