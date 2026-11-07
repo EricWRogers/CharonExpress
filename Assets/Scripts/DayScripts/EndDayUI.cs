@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class EndDayUI : MonoBehaviour
 {
@@ -17,7 +18,9 @@ public class EndDayUI : MonoBehaviour
     public TMP_Text stationSummaryLabel;
     public Button continueButton;
     public GameObject continueButtonObj;
+    public GameObject mainMenuButton;
     public GameManager gameManager;
+    public Dialogue dialogue;
     public int failedQuests = 0;
     public int completedQuests = 0;
 
@@ -155,6 +158,7 @@ public class EndDayUI : MonoBehaviour
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
+            EventSystem.current.SetSelectedGameObject(continueButtonObj);
         }
         if (daySystem.currentDay == 3)
         {
@@ -172,6 +176,7 @@ public class EndDayUI : MonoBehaviour
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
+                EventSystem.current.SetSelectedGameObject(mainMenuButton);
         }
         }
 
@@ -199,6 +204,7 @@ public class EndDayUI : MonoBehaviour
             stationSummaryPanel.SetActive(false);
         
         ChairManager.Instance.NewDay(daySystem.currentDay);
+        dialogue.EndDialogue();
         if (daySystem.currentDay % 2 == 0) daySystem.SecondsBetweenStations -= timeDecraseAmountPerDay;
         stationArrivalController.ContinueJourney();
     }

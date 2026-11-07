@@ -10,7 +10,7 @@ public class EndOfDemo : MonoBehaviour
     
     public void Start()
     {
-        EventSystem.current.SetSelectedGameObject(MainMenuButton);
+        //EventSystem.current.SetSelectedGameObject(MainMenuButton);
     }
 
     public void LoadScene()
