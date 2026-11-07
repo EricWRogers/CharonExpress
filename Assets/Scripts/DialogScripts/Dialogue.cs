@@ -30,19 +30,21 @@ public class Dialogue : MonoBehaviour
     public GameObject questGiver;
     public bool conversation = false;
     public bool escortMission = false;
+    public AudioClip buttonsound;
     public GhostScript ghost;
     public player playerController;
+    public GameObject playerObject;
 
     public PlayerThings inputActions;
-
-    public TutorialManager tutorialManager;
 
     private void Awake()
     {
         inputActions = new PlayerThings();
 
-        inputActions.UI.LineSkip.performed += OnSkip;
+        playerController = GameObject.Find("Player").GetComponent<player>();
+        playerObject = GameObject.Find("Player").gameObject;
 
+        inputActions.UI.LineSkip.performed += OnSkip;
     }
 
     private void OnEnable()
@@ -64,9 +66,6 @@ public class Dialogue : MonoBehaviour
             EndDialogueEvent = new UnityEvent();
         }
         typingUI = FindInactiveObject("TypingUI");
-
-        //find the tutorial manager
-        tutorialManager = FindInactiveObject("TutorialManager").GetComponent<TutorialManager>();
     }
 
     GameObject FindInactiveObject(string name)
@@ -93,7 +92,6 @@ public class Dialogue : MonoBehaviour
 
     public void startDialogue()
     {
-
         Debug.Log("Start Text");
         GhostScript.gamePaused = true;
         player.freeze = true;
@@ -104,8 +102,14 @@ public class Dialogue : MonoBehaviour
                 UpdateDialog(node);
             }
         }
-        TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
-        TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
+        if(activeSegment.speakerName == "Player"){
+            TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
+            TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
+        }
+        else{
+            TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
+            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
+        }
         textActive = true;
 
         TextBoxManager.Instance.textComponent.text = string.Empty;
@@ -113,6 +117,7 @@ public class Dialogue : MonoBehaviour
 
 
         StartCoroutine(TypeLine());
+        if (activeSegment.speakerName != "Player") playerController.TalkingSound();
     }
 
     IEnumerator TypeLine()
@@ -150,6 +155,7 @@ public class Dialogue : MonoBehaviour
         if (textActive == true)
         {
             Debug.Log("should skip line");
+            playerController.buttonBufferPress = true;
             LineSkip();
         }
     }
@@ -159,6 +165,7 @@ public class Dialogue : MonoBehaviour
         index++;
         TextBoxManager.Instance.textComponent.text = string.Empty;
         StartCoroutine(TypeLine());
+        if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
     }
 
     public void NextNode()
@@ -187,6 +194,7 @@ public class Dialogue : MonoBehaviour
                     }
 
                     btn.GetComponentInChildren<Button>().onClick.AddListener((() => { AnswerClicked(index); }));
+                    btn.GetComponentInChildren<Button>().onClick.AddListener((() => { playerObject.GetComponent<AudioSource>().PlayOneShot(buttonsound); }));
 
                     answerIndex++;
                 }
@@ -198,6 +206,7 @@ public class Dialogue : MonoBehaviour
                     UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
                     TextBoxManager.Instance.textComponent.text = string.Empty;
                     StartCoroutine(TypeLine());
+                    if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
                 }
                 else
                 {
@@ -234,6 +243,7 @@ public class Dialogue : MonoBehaviour
                 UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
                 TextBoxManager.Instance.textComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
+                if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
             }
             else
             {
@@ -257,6 +267,7 @@ public class Dialogue : MonoBehaviour
                 UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
                 TextBoxManager.Instance.textComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
+                if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
             }
             else
             {
@@ -272,6 +283,7 @@ public class Dialogue : MonoBehaviour
         if (port.IsConnected)
         {
             UpdateDialog(port.Connection.node as DialogSegment);
+            if (activeSegment.speakerName != "Player") playerController.TalkingSound();
             LineSkip();
         }
 
@@ -301,6 +313,7 @@ public class Dialogue : MonoBehaviour
             StartConversation(ghost);
         if (escortMission)
             StartEscort(ghost);
+        playerController.buttonBufferPress = true;
         
         EndDialogueEvent.Invoke();
     }
@@ -310,8 +323,14 @@ public class Dialogue : MonoBehaviour
         index = 0;
         activeSegment = newSegment;
         dialogText = newSegment.DialogText;
-        TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
-        TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
+        if(activeSegment.speakerName == "Player"){
+            TextBoxManager.Instance.nameText.text = activeSegment.speakerName;
+            TextBoxManager.Instance.portrait.sprite = activeSegment.portrait;
+        }
+        else{
+            TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
+            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
+        }
         foreach (Transform child in TextBoxManager.Instance.buttonParent)
         {
             Destroy(child.gameObject);
@@ -338,6 +357,10 @@ public class Dialogue : MonoBehaviour
     {
         ghost.assignedEscort(ChairManager.Instance.chairs[ChairManager.Instance.escortChair].gameObject.transform.position);
         escortMission = false;
+    }
+    public void SetGhost(GhostScript ghosty)
+    {
+        ghost = ghosty;
     }
 
 
@@ -381,6 +404,7 @@ public class Dialogue : MonoBehaviour
 
             TextBoxManager.Instance.textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
+            if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
         }
         else
         {
@@ -397,5 +421,21 @@ public class Dialogue : MonoBehaviour
 
     [SerializeField]
     private List<ActionBinding> actions = new List<ActionBinding>();
+
+    public void RegisterAction(DialogueAction action, UnityAction callback)
+    {
+        if (action == null || callback == null)
+            return;
+
+        ActionBinding binding = actions.Find(x => x != null && x.action == action);
+
+        if (binding == null)
+        {
+            binding = new ActionBinding { action = action };
+            actions.Add(binding);
+        }
+
+        binding.onInvoke.AddListener(callback);
+    }
 
 }

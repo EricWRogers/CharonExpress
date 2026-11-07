@@ -3,6 +3,7 @@ using System;
 using UnityEngine.Analytics;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine.Rendering;
+using System.Linq;
 
 public class GhostScript : MonoBehaviour
 {
@@ -21,10 +22,12 @@ public class GhostScript : MonoBehaviour
     public MicrogameId gameID = MicrogameId.Escort;
     public Material normalMaterial;
     public Material highlightMaterial;
+    public Ghost ghostScriptableObject;
     Renderer rend;
+    public GameObject spriteHolder;
 
     static public bool gamePaused;
-    public float score = 5;
+    public float score = 2;
     public Quest.QuestProgress assignedQuest;
 
     //Variables for Escort Mission
@@ -36,13 +39,16 @@ public class GhostScript : MonoBehaviour
 
     void Start()
     {
+        transform.localScale = new Vector3(0,0,0);
         player = GameObject.Find("Player");
-        ghostObject = transform.GetChild(1).gameObject;
+        ghostObject = gameObject;
         chairManager = ChairManager.Instance;
         InteractUI = GameObject.Find("InteractUI");
         meter = transform.GetChild(1).gameObject;
         maxCustomerTimer = customerTimer;
         rend = GetComponent<Renderer>();
+
+        HappyGhost();
     }
 
     void FixedUpdate()
@@ -68,12 +74,13 @@ public class GhostScript : MonoBehaviour
             }
             Debug.Log("I KILLED IT");
             ChairManager.Instance.activeGhosts--;
-            Destroy(gameObject);
+            Death();
         }
 
         if (beingEscorted)
         {
             Debug.Log(beingEscorted);
+            spriteHolder.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.floatSprite;
             travelStep();
         }
     }
@@ -118,6 +125,7 @@ public class GhostScript : MonoBehaviour
             QuestController.Instance.CompleteMicrogame(gameID);
             customerTimer += maxCustomerTimer / 3;
             maxCustomerTimer = customerTimer;
+            spriteHolder.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.idleSprite;
             foreach (MicroGameStart gameStart in
                 FindObjectsByType<MicroGameStart>(FindObjectsSortMode.None))
             {
@@ -145,11 +153,16 @@ public class GhostScript : MonoBehaviour
         transform.GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
+    public void HappyGhost()
+    {
+        TweenHelper.HappyGhost(transform);
+    }
+
     public void AssignQuest(Quest.QuestProgress progress)
     {
         assignedQuest = progress;
     }
-    public void Pattience()
+    public void Patience()
     {
         if (customerTimer <= maxCustomerTimer / 5)
         {
@@ -178,4 +191,9 @@ public class GhostScript : MonoBehaviour
         }
     }
 
+    public void Death()
+    {
+        ChairManager.Instance.ghostScriptableObjects.Insert(0, ghostScriptableObject);
+        Destroy(gameObject);
+    }
 }

@@ -1,4 +1,3 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,11 +16,15 @@ public class EndDayUI : MonoBehaviour
     public GameObject stationSummaryPanel;
     public TMP_Text stationSummaryLabel;
     public Button continueButton;
+    public GameObject continueButtonObj;
     public GameManager gameManager;
     public int failedQuests = 0;
     public int completedQuests = 0;
 
     private int lastDisplayedSecond = -1;
+    public int timeDecraseAmountPerDay;
+
+    public string tutorialText = "Tutorial";
 
     private void Awake()
     {
@@ -92,11 +95,22 @@ public class EndDayUI : MonoBehaviour
     private void UpdateDayLabel()
     {
         if (dayLabel != null)
-            dayLabel.text = $"Day {daySystem.currentDay}";
+            dayLabel.text = daySystem.tutorialMode? $"{tutorialText}" : $"Day {daySystem.currentDay}";
     }
 
     private void UpdateCountdown(bool forceRefresh = false)
     {
+        if (countdownLabel == null)
+            return;
+
+        if (daySystem.tutorialMode)
+        {
+            countdownLabel.enabled = false;
+            return;
+        }
+
+        countdownLabel.enabled = true;
+
         int totalSeconds = Mathf.CeilToInt(
             daySystem.secondsRemaining
         );
@@ -137,10 +151,28 @@ public class EndDayUI : MonoBehaviour
                 $"Total points: {daySystem.totalPoints}";
                 */
             stationSummaryLabel.text =
-                $"End of Demo!\n\n" +
+                $"End of Day {daySystem.currentDay}\n\n" +
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
+        }
+        if (daySystem.currentDay == 3)
+        {
+            continueButtonObj.SetActive(false);
+            if (stationSummaryLabel != null)
+        {
+            /*
+            stationSummaryLabel.text =
+                $"Day {daySystem.currentDay} Complete!\n\n" +
+                $"Points earned today: {daySystem.pointsEarnedToday}\n" +
+                $"Total points: {daySystem.totalPoints}";
+                */
+            stationSummaryLabel.text =
+                $"End of Demo\n\n" +
+                $"Completed Quests {completedQuests}\n" +
+                $"Failed Quests {failedQuests}\n" +
+                $"Grade: {gameManager.letterGrade}\n";
+        }
         }
 
         UpdateCountdown(true);
@@ -167,7 +199,7 @@ public class EndDayUI : MonoBehaviour
             stationSummaryPanel.SetActive(false);
         
         ChairManager.Instance.NewDay(daySystem.currentDay);
-        if (daySystem.currentDay % 2 == 0) daySystem.SecondsBetweenStations -= 10;
+        if (daySystem.currentDay % 2 == 0) daySystem.SecondsBetweenStations -= timeDecraseAmountPerDay;
         stationArrivalController.ContinueJourney();
     }
 }

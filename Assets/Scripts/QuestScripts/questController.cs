@@ -31,7 +31,7 @@ public class QuestController : MonoBehaviour
     
     public event Action<Quest.QuestProgress, Quest.QuestObjective>
         ObjectiveCompleted;
-
+    public event Action<Quest.QuestProgress, Quest.QuestObjective> QuestFailed;
     [Header("Day Cycle")]
     [Tooltip("The day cycle controller script.")]
     public DayCycle dayCycle;
@@ -214,13 +214,14 @@ public class QuestController : MonoBehaviour
     /// <param name="progress">The quest progress to fail.</param>
     /// <param name="reassignGhost">Whether to reassign the associated ghost after the quest fails.</param>
     /// <returns>True if the quest was successfully failed; otherwise, false.</returns>
+    /// <returns>False if the quest is unfailable.</returns>
+
     /// To use: QuestController.Instance.FailQuest(QuestController.Instance.GetNextMicrogameProgress(gameID), false);
 
-    public bool FailQuest(
-        Quest.QuestProgress progress,
-        bool reassignGhost = true)
+    public bool FailQuest(Quest.QuestProgress progress, bool reassignGhost = true)
     {
         if (progress == null ||
+            progress.quest == null ||
             activeQuests == null ||
             !activeQuests.Contains(progress) ||
             progress.IsCompleted)
@@ -228,26 +229,29 @@ public class QuestController : MonoBehaviour
             return false;
         }
 
+        if (progress.quest.unfailable)
+        {
+            Debug.Log("Quest is unfailable: " + progress.quest.questName);
+            return false;
+        }
+
+        Quest.QuestObjective failedObjective = progress.CurrentObjective;
 
         Debug.Log("Failed quest: " + progress.quest.questName);
-
         endDayUI.failedQuests++;
 
-        GhostScript ghost = null;
-
-        if (progress.questGiver != null &&
-            progress.questGiver.transform.parent != null)
-        {
-            ghost = progress.questGiver.transform.parent
-                .GetComponent<GhostScript>();
-        }
+        GhostScript ghost = progress.questGiver != null
+            ? progress.questGiver.GetComponentInParent<GhostScript>()
+            : null;
 
         if (ghost != null)
         {
             if (ghost.score >= 0)
-            {
-                ghost.score--;
-            }
+                ghost.score-=2;
+
+
+            if (ghost.score <= 0)
+                ghost.score = 1;
             ghost.DisableHighlight();
         }
 
@@ -255,13 +259,12 @@ public class QuestController : MonoBehaviour
         UpdateQuestLog();
 
         if (reassignGhost && ghost != null)
-        {
             ChairManager.Instance.AssignGhost(ghost.gameObject);
-        }
+
+        QuestFailed?.Invoke(progress, failedObjective);
 
         return true;
     }
-
     /// <summary>
     /// Completes the current ReturnToNPC objective for an active quest
     /// assigned by the specified quest giver.
@@ -329,6 +332,7 @@ public class QuestController : MonoBehaviour
         Debug.Log("Completed quest: " + completedQuest.questName, this);
         GhostScript tempGhostScript = questGiver.transform.parent.GetComponent<GhostScript>();
         tempGhostScript.DisableHighlight();
+        tempGhostScript.HappyGhost();
         tempGhostScript.customerTimer += tempGhostScript.maxCustomerTimer / 2; 
         tempGhostScript.maxCustomerTimer = tempGhostScript.customerTimer;
 

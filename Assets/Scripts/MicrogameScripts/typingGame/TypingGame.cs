@@ -19,7 +19,6 @@ public class TypingGame : MonoBehaviour
     public string currentWord = "testing a sentence in the typing game";
     public WordObject currentWordObject = null;
     public List<string> letters = null;
-    public List<string> copiedLetters;
     public GhostScript ghost;
 
     [Header("quick time event stuff")]
@@ -34,8 +33,12 @@ public class TypingGame : MonoBehaviour
     public int letterIndex = 0;
     public int wordIndex = 0;
     public int loseIndex = 0;
+    public bool hitLetter = false;
+    public bool canHitPointer = true;
+    public Image pointerImg;
     public GhostScript ghosty;
     public PlayerThings inputActions;
+    public player player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -56,8 +59,7 @@ public class TypingGame : MonoBehaviour
     {
         targetPosition = pointB.position;
         SetCurrentWord();
-        letterText.text = copiedLetters[letterIndex];
-        letterIndex++;
+        letterText.text = letters[letterIndex];
     }
     private void SetCurrentWord()
     {
@@ -65,10 +67,12 @@ public class TypingGame : MonoBehaviour
         currentWordObject = wordBank.GetWord();
         currentWord = currentWordObject.word;
         letters = currentWordObject.letters;
-        Debug.Log(copiedLetters);
-        copiedLetters = new List<string>();
-        Shuffle(letters, copiedLetters);
         SetRemainingWord(currentWord);
+        letterIndex = 0;
+        letterText.text = letters[letterIndex];
+        canHitPointer = true;
+        hitLetter = false;
+        pointerImg.color = new Color32(0, 62, 245, 255);
     }
 
     private void SetRemainingWord(string newWord)
@@ -86,10 +90,15 @@ public class TypingGame : MonoBehaviour
         {
             LoseGame();
         }
+        
     }
 
     void pointerMovement()
     {
+        if (letterIndex > letters.Count()-1)
+        {
+            letterIndex = 0;
+        }
         // Move the pointer towards the target position
         pointerTransform.position = Vector3.MoveTowards(pointerTransform.position, targetPosition, moveSpeed * Time.deltaTime);
 
@@ -98,28 +107,25 @@ public class TypingGame : MonoBehaviour
         {
             targetPosition = pointB.position;
             direction = 1f;
-            if (letterIndex < copiedLetters.Count())
+            if (letterIndex < letters.Count() && hitLetter)
             {
-                letterText.text = copiedLetters[letterIndex];
-                letterIndex++;
-                if (letterIndex >= copiedLetters.Count())
-                {
-                    letterIndex = 0;
-                }
+                letterText.text = letters[letterIndex];
+                canHitPointer = true;
+                hitLetter = false;
+                pointerImg.color = new Color32(0, 62, 245, 255);
+                      
             }
         }
         else if (Vector3.Distance(pointerTransform.position, pointB.position) < 0.1f)
         {
             targetPosition = pointA.position;
             direction = -1f;
-            if (letterIndex < copiedLetters.Count())
+            if (letterIndex < letters.Count() && hitLetter)
             {
-                letterText.text = copiedLetters[letterIndex];
-                letterIndex++;
-                if (letterIndex >= copiedLetters.Count())
-                {
-                    letterIndex = 0;
-                }
+                letterText.text = letters[letterIndex];
+                canHitPointer = true;
+                hitLetter = false;
+                pointerImg.color = new Color32(0, 62, 245, 255);
             }
         }
     }
@@ -130,8 +136,12 @@ public class TypingGame : MonoBehaviour
         if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
         {
             Debug.Log("Success!");
-            Debug.Log(copiedLetters[letterIndex - 1]);
-            EnterLetter(copiedLetters[letterIndex - 1]);
+            Debug.Log(letters[letterIndex]);
+            EnterLetter(letters[letterIndex]);
+            hitLetter = true;
+            canHitPointer = false;
+            letterIndex++;
+            pointerImg.color = new Color32(24, 41, 87, 255);
         }
         else
         {
@@ -184,6 +194,7 @@ public class TypingGame : MonoBehaviour
     void WinGame()
     {
         dialogue.SetDialogGraph(currentWordObject.goodResult);
+        dialogue.SetGhost(ghosty);
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
@@ -210,22 +221,10 @@ public class TypingGame : MonoBehaviour
         GhostScript.gamePaused = true;
     }
 
-    private void Shuffle(List<string> strings, List<string> tempwords)
-    {
-        Debug.Log(tempwords);
-        List<string> temp = new List<string>();
-        temp.AddRange(strings);
-
-        for (int i = 0; i < strings.Count; i++)
-        {
-            int index = Random.Range(0, temp.Count - 1);
-            tempwords.Add(temp[index]);
-            temp.RemoveAt(index);
-        }
-    }
     public void LoseGame()
     {
         dialogue.SetDialogGraph(currentWordObject.badResult);
+        dialogue.SetGhost(ghosty);
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
@@ -234,6 +233,11 @@ public class TypingGame : MonoBehaviour
     }
     void OnClick(CallbackContext ctx)
     {
-        CheckSuccess();
+        player.buttonBufferPress = true;
+
+        if (canHitPointer)
+        {
+            CheckSuccess();
+        }
     }
 }

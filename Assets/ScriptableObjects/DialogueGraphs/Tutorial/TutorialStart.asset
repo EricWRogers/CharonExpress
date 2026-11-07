@@ -1,5 +1,137 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5937519002514960066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a43c83f183bbc4d90f0b13c01fa475, type: 3}
+  m_Name: Dialog Segment
+  m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
+  graph: {fileID: 11400000}
+  position: {x: -376, y: -168}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: -5937519002514960066}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: Answers 1
+        node: {fileID: -5188301098663033781}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: -5937519002514960066}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 5022287119846075539}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  speakerName: Charon
+  DialogText:
+  - Then get off my train.
+  - I'm just kidding. You know you can't lie to me, right?
+  - Anyway, it's time for you to get started.
+  textSpeed: 1
+--- !u!114 &-5188301098663033781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e0238fa6510864da309586e22c7590, type: 3}
+  m_Name: Dialog Answer Segments
+  m_EditorClassIdentifier: Assembly-CSharp::DialogAnswerSegments
+  graph: {fileID: 11400000}
+  position: {x: -648, y: -408}
+  ports:
+    keys:
+    - Answers
+    - input
+    - output
+    - Answers 0
+    - Answers 1
+    values:
+    - _fieldName: Answers
+      _node: {fileID: -5188301098663033781}
+      _typeQualifiedName: System.Collections.Generic.List`1[[System.String, mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: -5188301098663033781}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: -5188301098663033781}
+      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Answers 0
+      _node: {fileID: -5188301098663033781}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 1929683620193846267}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Answers 1
+      _node: {fileID: -5188301098663033781}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: -5937519002514960066}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  speakerName: Charon
+  DialogText:
+  - So, you're the new guy, right?
+  textSpeed: 1
+  Answers:
+  - Yes
+  - No
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16,7 +148,8 @@ MonoBehaviour:
   - {fileID: 1929683620193846267}
   - {fileID: 5022287119846075539}
   - {fileID: 2841985348639926235}
-  - {fileID: 4270345001262915852}
+  - {fileID: -5188301098663033781}
+  - {fileID: -5937519002514960066}
 --- !u!114 &1929683620193846267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30,7 +163,7 @@ MonoBehaviour:
   m_Name: Dialog Segment
   m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
   graph: {fileID: 11400000}
-  position: {x: -360, y: -200}
+  position: {x: -360, y: -408}
   ports:
     keys:
     - input
@@ -40,7 +173,10 @@ MonoBehaviour:
       _node: {fileID: 1929683620193846267}
       _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Answers 0
+        node: {fileID: -5188301098663033781}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -58,9 +194,9 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
-  speakerName: Kathegetes
+  speakerName: Charon
   DialogText:
-  - Charon said that you're the poor soul taking over for me here
+  - Great, I'll put you to work right away.
   textSpeed: 1
 --- !u!114 &2841985348639926235
 MonoBehaviour:
@@ -75,7 +211,7 @@ MonoBehaviour:
   m_Name: Quest Giver Segment
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiverSegment
   graph: {fileID: 11400000}
-  position: {x: 168, y: -152}
+  position: {x: 168, y: -312}
   ports:
     keys:
     - input
@@ -97,67 +233,20 @@ MonoBehaviour:
       _node: {fileID: 2841985348639926235}
       _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 4270345001262915852}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
-  speakerName: Kathegetes
-  DialogText:
-  - do the quest now
-  textSpeed: 1
-  quest: {fileID: 11400000, guid: 383acb9b506f5db44a5cb15eb6af21d3, type: 2}
-  conversation: 0
-  escort: 0
---- !u!114 &4270345001262915852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3a43c83f183bbc4d90f0b13c01fa475, type: 3}
-  m_Name: Dialog Segment
-  m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
-  graph: {fileID: 11400000}
-  position: {x: 399.5, y: 37}
-  ports:
-    keys:
-    - input
-    - output
-    values:
-    - _fieldName: input
-      _node: {fileID: 4270345001262915852}
-      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: output
-        node: {fileID: 2841985348639926235}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: output
-      _node: {fileID: 4270345001262915852}
-      _typeQualifiedName: Connection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
-  speakerName: Kathegetes
+  speakerName: Charon
   DialogText:
-  - thanks
+  - One thing they're going to ask for is coffee, so get me some of that and I'll
+    decide if you're good enough.
   textSpeed: 1
+  quest: {fileID: 11400000, guid: 383acb9b506f5db44a5cb15eb6af21d3, type: 2}
+  conversation: 0
+  escort: 0
 --- !u!114 &5022287119846075539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +260,7 @@ MonoBehaviour:
   m_Name: Dialog Segment
   m_EditorClassIdentifier: Assembly-CSharp::DialogSegment
   graph: {fileID: 11400000}
-  position: {x: -64.5, y: -154}
+  position: {x: -88, y: -264}
   ports:
     keys:
     - input
@@ -184,6 +273,9 @@ MonoBehaviour:
       connections:
       - fieldName: output
         node: {fileID: 1929683620193846267}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: -5937519002514960066}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -202,7 +294,10 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   portrait: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
-  speakerName: Kathegetes
+  speakerName: Charon
   DialogText:
-  - If you do well enough, you'll be able to move on too, it only took me 2,172 years.
+  - Your job is to help passengers on my train
+  - It's important to note that if you take too long, they'll get mad and leave,
+    damning them to an eternity wandering this place
+  - That means that I don't get paid, so don't let it happen.
   textSpeed: 1

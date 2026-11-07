@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.VisualScripting;
+using System.Collections;
 
 public class BookRequestGame : MonoBehaviour
 {
@@ -59,6 +61,8 @@ public class BookRequestGame : MonoBehaviour
     private Book requestedBook;
     private bool gameRunning;
     private Quest.QuestProgress currentProgress;
+    private List<Button> buttons = new List<Button>();
+    public AudioClip buttonSound;
 
     public void PrepareRequest(Quest.QuestProgress progress)
     {
@@ -138,6 +142,12 @@ public class BookRequestGame : MonoBehaviour
         GhostScript.gamePaused = true;
 
         CreateBooks();
+
+        foreach (Button button in buttons)
+        {
+            StartCoroutine(Wait1sec(button));
+        }
+
     }
     public void CreateBooks()
     {
@@ -221,10 +231,12 @@ public class BookRequestGame : MonoBehaviour
             button.GetComponentInChildren<TMP_Text>().text =
                 "<rotate=90>" + book.subject;
 
+            button.onClick.AddListener((() => { playerObj.GetComponent<AudioSource>().PlayOneShot(buttonSound); }));
             if (book == requestedBook)
                 button.onClick.AddListener(WinGame);
             if (book != requestedBook)
                 button.onClick.AddListener(LoseGame);
+            buttons.Add(button);
         }
     }
     public void ClearBooks()
@@ -298,5 +310,12 @@ public class BookRequestGame : MonoBehaviour
         return requestText
             .Replace("{color}", progress.requestedBookColor)
             .Replace("{subject}", progress.requestedBookSubject);
+    }
+
+    IEnumerator Wait1sec(Button button)
+    {
+        yield return new WaitForSeconds(0.05f);
+
+        button.interactable = true;
     }
 }

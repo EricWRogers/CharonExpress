@@ -17,8 +17,7 @@ MonoBehaviour:
   - G
   - r
   - e
+  - e
   - k
-  - j
-  - z
-  - u
-  - l
+  goodResult: {fileID: 11400000, guid: ad651ee42f1b9c34581b32a10f657035, type: 2}
+  badResult: {fileID: 11400000, guid: 7e24aad7b79a3a941bf6264401da9e14, type: 2}

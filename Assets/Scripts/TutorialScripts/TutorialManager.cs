@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
@@ -7,9 +8,9 @@ public class TutorialManager : MonoBehaviour
     private class TutorialStep
     {
         public MicrogameId task;
+        public DialogGraph dialogueWhileInProgress;
         public DialogGraph dialogueAfterCompletion;
-
-        public bool startEscortAfterDialogue;
+        public DialogGraph dialogueAfterFailure;
     }
 
     [Header("Tutorial Steps")]
@@ -18,176 +19,187 @@ public class TutorialManager : MonoBehaviour
     private QuestController questController;
     private GhostScript tutorialGhost;
     private Dialogue tutorialDialogue;
-
-    private bool tutorialGhostConfigured;
     private int nextStepIndex;
 
-    private void Start()
+    [Header("Repeat Quest Dialogue")]
+        [SerializeField] private DialogGraph[] repeatQuestDialogues;
+        [SerializeField] private int[] dialogueThresholds;
+        private int completedTutorialQuests;
+
+
+    private IEnumerator Start()
     {
         questController = QuestController.Instance;
 
-        if (questController == null)
+        questController.QuestCompleted += OnTutorialQuestCompleted;
+        if (questController != null)
         {
-            Debug.LogError("QuestController was not found.", this);
-            enabled = false;
-            return;
+            questController.ObjectiveCompleted += OnObjectiveCompleted;
+            questController.QuestFailed += OnQuestFailed;
         }
+        else
+            Debug.LogError("QuestController was not found.", this);
 
-        questController.ObjectiveCompleted += OnObjectiveCompleted;
+        // Wait for ChairManager to initialize.
+        yield return null;
 
-        // The ghost might not have spawned yet.
-        TrySetupTutorialGhost();
-    }
-
-    private void Update()
-    {
-        // Keep checking until the spawned ghost is configured.
-        if (!tutorialGhostConfigured)
-            TrySetupTutorialGhost();
-    }
-
-    private void TrySetupTutorialGhost()
-    {
         ChairManager chairManager = ChairManager.Instance;
 
-        if (chairManager == null || chairManager.chairs == null)
-            return;
-
-        foreach (GameObject chairObject in chairManager.chairs)
+        if (chairManager == null || chairManager.chairs == null ||
+            chairManager.activeGhosts >= chairManager.maxGhostCount)
         {
-            if (chairObject == null)
-                continue;
-
-            ChairScript chair =
-                chairObject.GetComponent<ChairScript>();
-
-            if (chair == null || chair.ghostObject == null)
-                continue;
-
-            GhostScript ghost =
-                chair.ghostObject.GetComponent<GhostScript>();
-
-            if (ghost == null)
-                continue;
-
-            SetupTutorialGhost(ghost);
-            return;
-        }
-    }
-
-    private void SetupTutorialGhost(GhostScript ghost)
-    {
-        if (ghost == null)
-            return;
-
-        // Find Dialogue on the spawned ghost or one of its children.
-        Dialogue dialogue =
-            ghost.GetComponentInChildren<Dialogue>(true);
-
-        if (dialogue == null)
-        {
-            Debug.LogError(
-                "The spawned tutorial ghost has no Dialogue component.",
-                ghost.gameObject);
-
-            // Avoid repeatedly checking the same ghost.
-            tutorialGhostConfigured = true;
-            return;
+            Debug.LogError("Unable to spawn tutorial ghost.", this);
+            yield break;
         }
 
-        tutorialGhost = ghost;
-        tutorialDialogue = dialogue;
+        // Find an available chair.
+        ChairScript chair = null;
 
-        // Connect the dialogue to its own spawned ghost.
-        tutorialDialogue.ghost = tutorialGhost;
-
-        // Find the quest giver on the ghost prefab if one is present.
-        if (tutorialDialogue.questGiver == null)
+        foreach (GameObject obj in chairManager.chairs)
         {
-            QuestGiver questGiver =
-                tutorialGhost.GetComponentInChildren<QuestGiver>(true);
+            if (obj == null) continue;
 
-            if (questGiver != null)
-                tutorialDialogue.questGiver = questGiver.gameObject;
+            ChairScript candidate = obj.GetComponent<ChairScript>();
+
+            if (candidate != null && !candidate.reserved &&
+                !candidate.ghostActive && candidate.ghostObject == null &&
+                candidate.ghostPrefab != null)
+            {
+                chair = candidate;
+                break;
+            }
         }
 
-        tutorialGhostConfigured = true;
-    }
+        if (chair == null)
+        {
+            Debug.LogError("No available chair for tutorial ghost.", this);
+            yield break;
+        }
 
-    private void OnDestroy()
-    {
-        if (questController != null)
-            questController.ObjectiveCompleted -= OnObjectiveCompleted;
+        // Spawn and configure the ghost.
+        GameObject ghostObject = Instantiate(
+            chair.ghostPrefab,
+            chair.transform.position + Vector3.up,
+            Quaternion.identity);
+
+        tutorialGhost = ghostObject.GetComponent<GhostScript>();
+        tutorialDialogue = ghostObject.GetComponent<Dialogue>();
+
+        if (tutorialGhost == null || tutorialDialogue == null)
+        {
+            Debug.LogError("Ghost prefab requires GhostScript and Dialogue.", ghostObject);
+            Destroy(ghostObject);
+            tutorialGhost = null;
+            tutorialDialogue = null;
+            yield break;
+        }
+
+        chair.ghostObject = ghostObject;
+        chair.ghostActive = true;
+        chairManager.activeGhosts++;
+
+        tutorialGhost.chairScript = chair;
+        tutorialGhost.customerTimer = Random.Range(45, 60);
+
+        chairManager.AssignGhostAsspects(tutorialGhost, ghostObject);
+        tutorialGhost.ghostScriptableObject.needExtraTask = false;
+
+        // Configure the quest giver and interaction.
+        QuestGiver giver = ghostObject.GetComponentInChildren<QuestGiver>(true);
+        DialogInteraction interaction = giver != null
+            ? giver.text
+            : null;
+
+        if (giver != null)
+            tutorialDialogue.questGiver = giver.gameObject;
+
+        if (interaction == null)
+            interaction = ghostObject.GetComponentInChildren<DialogInteraction>(true);
+
+        if (interaction == null)
+        {
+            Debug.LogError("Tutorial ghost has no DialogInteraction.", ghostObject);
+            yield break;
+        }
+
+        interaction.text = tutorialDialogue;
+
+        // Let the ghost's components initialize before starting dialogue.
+        yield return null;
+
+        while (TextBoxManager.Instance != null &&
+               TextBoxManager.Instance.NoTalk &&
+               !tutorialDialogue.textActive)
+        {
+            yield return null;
+        }
+
+        if (TextBoxManager.Instance != null &&
+            !tutorialDialogue.textActive)
+        {
+            interaction.StartDiologue();
+        }
     }
 
     private void OnObjectiveCompleted(
         Quest.QuestProgress progress,
         Quest.QuestObjective objective)
     {
-        if (objective == null ||
-            objective.type != Quest.objectiveType.Microgame)
+        if (progress == null || objective == null ||
+            tutorialDialogue == null ||
+            progress.questGiver == null ||
+            progress.questGiver.GetComponentInParent<GhostScript>() != tutorialGhost ||
+            steps == null || steps.Length == 0)
+            return;
+
+        tutorialGhost.ghostScriptableObject.needExtraTask = false;
+
+        // Quest accepted: keep the waiting dialogue.
+        if (objective.type == Quest.objectiveType.FirstTalk)
         {
+            TutorialStep waitingStep =
+                steps[Mathf.Min(nextStepIndex, steps.Length - 1)];
+
+            if (waitingStep != null && waitingStep.dialogueWhileInProgress != null)
+                tutorialDialogue.SetDialogGraph(waitingStep.dialogueWhileInProgress);
+
             return;
         }
 
-        if (tutorialDialogue == null)
+        if (objective.type != Quest.objectiveType.Microgame)
+            return;
+
+        // Complete the original tutorial steps normally.
+        if (nextStepIndex < steps.Length)
         {
-            Debug.LogWarning(
-                "The tutorial dialogue has not been initialized yet.",
-                this);
+            TutorialStep step = steps[nextStepIndex];
+
+            if (step == null || objective.gameID != step.task)
+                return;
+
+            if (step.dialogueAfterCompletion != null)
+                tutorialDialogue.SetDialogGraph(step.dialogueAfterCompletion);
+
+            nextStepIndex++;
             return;
         }
 
-        if (steps == null || nextStepIndex >= steps.Length)
+        // Repeated quests: use the last step's success dialogue as the default.
+        TutorialStep repeatStep = steps[steps.Length - 1];
+
+        if (repeatStep == null || objective.gameID != repeatStep.task)
             return;
 
-        TutorialStep step = steps[nextStepIndex];
+        DialogGraph successDialogue = GetRepeatSuccessDialogue(
+            repeatStep.dialogueAfterCompletion);
 
-        if (step == null)
-        {
-            Debug.LogError(
-                $"Tutorial step {nextStepIndex} is not configured.",
-                this);
-            return;
-        }
-
-        if (objective.gameID != step.task)
-        {
-            Debug.LogWarning(
-                $"Expected tutorial task {step.task}, " +
-                $"but received {objective.gameID}.",
-                this);
-            return;
-        }
-
-        if (step.dialogueAfterCompletion == null)
-        {
-            Debug.LogError(
-                $"No dialogue assigned after {step.task}.",
-                this);
-            return;
-        }
-
-        tutorialDialogue.SetDialogGraph(step.dialogueAfterCompletion);
-
-        // Only start an escort for steps configured to do so.
-        tutorialDialogue.escortMission = step.startEscortAfterDialogue;
-
-        nextStepIndex++;
+        if (successDialogue != null)
+            tutorialDialogue.SetDialogGraph(successDialogue);
     }
-
     public bool ShouldPlayReturnDialogue(QuestGiver questGiver)
     {
-        if (!tutorialGhostConfigured ||
-            tutorialGhost == null ||
-            tutorialDialogue == null ||
-            questGiver == null)
-        {
-            return false;
-        }
-
-        // Only apply this behavior to the tutorial ghost.
-        if (questGiver.GetComponentInParent<GhostScript>() != tutorialGhost)
+        if (tutorialGhost == null || questGiver == null ||
+            questGiver.GetComponentInParent<GhostScript>() != tutorialGhost)
             return false;
 
         QuestController controller = QuestController.Instance;
@@ -197,12 +209,9 @@ public class TutorialManager : MonoBehaviour
 
         foreach (Quest.QuestProgress progress in controller.activeQuests)
         {
-            if (progress == null ||
-                progress.IsCompleted ||
+            if (progress == null || progress.IsCompleted ||
                 progress.questGiver != questGiver)
-            {
                 continue;
-            }
 
             Quest.QuestObjective objective = progress.CurrentObjective;
 
@@ -211,5 +220,60 @@ public class TutorialManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void OnQuestFailed(
+        Quest.QuestProgress progress,
+        Quest.QuestObjective objective)
+    {
+        if (progress == null || objective == null ||
+            tutorialDialogue == null ||
+            progress.questGiver == null ||
+            progress.questGiver.GetComponentInParent<GhostScript>() != tutorialGhost ||
+            objective.type != Quest.objectiveType.Microgame ||
+            steps == null || steps.Length == 0)
+            return;
+
+        int index = Mathf.Min(nextStepIndex, steps.Length - 1);
+        TutorialStep step = steps[index];
+
+        if (step == null || objective.gameID != step.task)
+            return;
+
+        // Failures always use the default dialogue.
+        if (step.dialogueAfterFailure != null)
+            tutorialDialogue.SetDialogGraph(step.dialogueAfterFailure);
+
+        // Advance only while processing the original tutorial steps.
+        if (nextStepIndex < steps.Length)
+            nextStepIndex++;
+    }
+    private void OnTutorialQuestCompleted(Quest quest, QuestGiver giver)
+    {
+        if (giver == null ||
+            giver.GetComponentInParent<GhostScript>() != tutorialGhost)
+            return;
+
+        completedTutorialQuests++;
+    }
+
+    private DialogGraph GetRepeatSuccessDialogue(DialogGraph defaultDialogue)
+    {
+        DialogGraph result = defaultDialogue;
+
+        int count = Mathf.Min(
+            dialogueThresholds.Length,
+            repeatQuestDialogues.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            if (completedTutorialQuests >= dialogueThresholds[i] &&
+                repeatQuestDialogues[i] != null)
+            {
+                result = repeatQuestDialogues[i];
+            }
+        }
+
+        return result;
     }
 }

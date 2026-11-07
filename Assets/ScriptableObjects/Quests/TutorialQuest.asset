@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: Tutorial
   description: 
+  unfailable: 0
   objectives:
   - gameID: 0
     description: Talk to him
@@ -26,16 +27,4 @@ MonoBehaviour:
   - gameID: 0
     description: go back to him
     type: 2
-    completeQuestAfterThis: 0
-  - gameID: 4
-    description: do book game
-    type: 1
-    completeQuestAfterThis: 0
-  - gameID: 0
-    description: go back to him
-    type: 2
-    completeQuestAfterThis: 0
-  - gameID: 1
-    description: escort him
-    type: 1
     completeQuestAfterThis: 0
