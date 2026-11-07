@@ -701,6 +701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CE_LeftSeats
       objectReference: {fileID: 0}
+    - target: {fileID: 8462610231830104774, guid: d40271473a7627541a2fb3372c486d4c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2170,6 +2174,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1430054902}
     m_Modifications:
+    - target: {fileID: 1107716829094045550, guid: 828f6d4d0a6a7674aa2f0bb4079f187b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     - target: {fileID: 7217689737397557825, guid: 828f6d4d0a6a7674aa2f0bb4079f187b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -827.52423
@@ -7830,6 +7838,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1430054902}
     m_Modifications:
+    - target: {fileID: 1273104683853029099, guid: 7b8c05b38d4edae438a7da35252d89f7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
+    - target: {fileID: 3925083523042211554, guid: 7b8c05b38d4edae438a7da35252d89f7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     - target: {fileID: 5603155092689434719, guid: 7b8c05b38d4edae438a7da35252d89f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -746.8242
@@ -7870,6 +7886,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5634037079059548880, guid: 7b8c05b38d4edae438a7da35252d89f7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     - target: {fileID: 8417762383873646486, guid: 7b8c05b38d4edae438a7da35252d89f7, type: 3}
       propertyPath: m_Name
       value: Caboose
@@ -8036,6 +8056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CE_FourthWall_Engine
       objectReference: {fileID: 0}
+    - target: {fileID: 3464258442626544962, guid: f3ee3ef1dcf771240b056fd8f391194f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     - target: {fileID: 7716626984992850411, guid: f3ee3ef1dcf771240b056fd8f391194f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -8483,6 +8507,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1130436480}
     m_Modifications:
+    - target: {fileID: 280333861133287274, guid: 0ce3bcfd32ade224ea110717e2785782, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     - target: {fileID: 2328189475317712014, guid: 0ce3bcfd32ade224ea110717e2785782, type: 3}
       propertyPath: m_Name
       value: CE_FourthWall_Default
@@ -16418,6 +16446,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7625806849528605470, guid: 42051ea998dc53f43b32b3466573253c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -17110,7 +17142,7 @@ Transform:
   m_GameObject: {fileID: 1525742269}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4440002, y: 2.654, z: -9.95}
+  m_LocalPosition: {x: 10.849988, y: 6.8, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22034,6 +22066,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1396804330}
     m_Modifications:
+    - target: {fileID: 280333861133287274, guid: 0ce3bcfd32ade224ea110717e2785782, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     - target: {fileID: 2328189475317712014, guid: 0ce3bcfd32ade224ea110717e2785782, type: 3}
       propertyPath: m_Name
       value: CE_FourthWall_Default
@@ -24110,6 +24146,7 @@ MonoBehaviour:
   continueButtonObj: {fileID: 2019994445}
   mainMenuButton: {fileID: 320460951}
   gameManager: {fileID: 1980614284}
+  dialogue: {fileID: 0}
   failedQuests: 0
   completedQuests: 0
   timeDecraseAmountPerDay: 0
@@ -24612,6 +24649,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7625806849528605470, guid: 42051ea998dc53f43b32b3466573253c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec3b9bf3c65ed0f46991e86d94866c7e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

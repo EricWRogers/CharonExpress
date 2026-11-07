@@ -160,7 +160,7 @@ public class EndDayUI : MonoBehaviour
                 $"Grade: {gameManager.letterGrade}\n";
             EventSystem.current.SetSelectedGameObject(continueButtonObj);
         }
-        if (daySystem.currentDay == 3)
+        if (daySystem.currentDay == 2)
         {
             continueButtonObj.SetActive(false);
             if (stationSummaryLabel != null)

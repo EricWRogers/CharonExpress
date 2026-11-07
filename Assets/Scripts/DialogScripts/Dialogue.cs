@@ -350,7 +350,7 @@ public class Dialogue : MonoBehaviour
             typingUI.SetActive(true);
             typingUI.GetComponent<TypingGame>().StartGame(ghost);
             conversation = false;
-            GhostScript.gamePaused = true;
+            //GhostScript.gamePaused = true;
         }
     }
     public void StartEscort(GhostScript ghost)

@@ -139,7 +139,7 @@ public class BookRequestGame : MonoBehaviour
         gameUI.SetActive(true);
 
         player.freeze = true;
-        GhostScript.gamePaused = true;
+        //GhostScript.gamePaused = true;
 
         CreateBooks();
 
