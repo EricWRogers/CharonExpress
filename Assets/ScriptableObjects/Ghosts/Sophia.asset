@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ghost
   ghostName: Sophia
   idleSprite: {fileID: 21300000, guid: 1fce08a7658fa9546a5fc175b86633d9, type: 3}
+  floatSprite: {fileID: 21300000, guid: 79fe7b43518ae854c8a0df14d8ad7764, type: 3}
   dialogGraph: {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
   needExtraTask: 1

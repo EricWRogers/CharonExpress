@@ -104,7 +104,6 @@ public class ChairManager : MonoBehaviour
         {
             taskToAssign = extraTasks[UnityEngine.Random.Range(0, extraTasks.Length)];
         }
-        Debug.Log("To the task assigned was this" + taskToAssign.name);
         if (taskToAssign.name == "EscortGraph" && !escortAssigned)
         {
             escortAssigned = true;
@@ -113,7 +112,7 @@ public class ChairManager : MonoBehaviour
         {
             while (taskToAssign.name == "EscortGraph")
             {
-                AssignGhostAsspects(ghost.GetComponent<GhostScript>(), ghost);
+                AssignGhost(ghost);
             }
         }
         ghostDialogue.SetDialogGraph(taskToAssign);

@@ -39,6 +39,9 @@ public class TypingGame : MonoBehaviour
     public GhostScript ghosty;
     public PlayerThings inputActions;
     public player player;
+    public AudioClip goodSound;
+    public AudioClip badSound;
+    public AudioSource audioSource;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -72,6 +75,7 @@ public class TypingGame : MonoBehaviour
         letterText.text = letters[letterIndex];
         canHitPointer = true;
         hitLetter = false;
+        loseIndex = 0;
         pointerImg.color = new Color32(0, 62, 245, 255);
     }
 
@@ -136,6 +140,7 @@ public class TypingGame : MonoBehaviour
         if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
         {
             Debug.Log("Success!");
+            audioSource.PlayOneShot(goodSound);
             Debug.Log(letters[letterIndex]);
             EnterLetter(letters[letterIndex]);
             hitLetter = true;
@@ -146,6 +151,7 @@ public class TypingGame : MonoBehaviour
         else
         {
             Debug.Log("Wrong");
+            audioSource.PlayOneShot(badSound);
             loseIndex++;
         }
     }
@@ -218,7 +224,7 @@ public class TypingGame : MonoBehaviour
         SetCurrentWord();
         player.freeze = true;
         ghosty = ghost;
-        GhostScript.gamePaused = true;
+        //GhostScript.gamePaused = true;
     }
 
     public void LoseGame()

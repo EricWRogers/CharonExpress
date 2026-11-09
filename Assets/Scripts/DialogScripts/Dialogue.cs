@@ -30,14 +30,19 @@ public class Dialogue : MonoBehaviour
     public GameObject questGiver;
     public bool conversation = false;
     public bool escortMission = false;
+    public AudioClip buttonsound;
     public GhostScript ghost;
     public player playerController;
+    public GameObject playerObject;
 
     public PlayerThings inputActions;
 
     private void Awake()
     {
         inputActions = new PlayerThings();
+
+        playerController = GameObject.Find("Player").GetComponent<player>();
+        playerObject = GameObject.Find("Player").gameObject;
 
         inputActions.UI.LineSkip.performed += OnSkip;
     }
@@ -87,7 +92,6 @@ public class Dialogue : MonoBehaviour
 
     public void startDialogue()
     {
-
         Debug.Log("Start Text");
         GhostScript.gamePaused = true;
         player.freeze = true;
@@ -113,6 +117,7 @@ public class Dialogue : MonoBehaviour
 
 
         StartCoroutine(TypeLine());
+        if (activeSegment.speakerName != "Player") playerController.TalkingSound();
     }
 
     IEnumerator TypeLine()
@@ -160,6 +165,7 @@ public class Dialogue : MonoBehaviour
         index++;
         TextBoxManager.Instance.textComponent.text = string.Empty;
         StartCoroutine(TypeLine());
+        if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
     }
 
     public void NextNode()
@@ -188,6 +194,7 @@ public class Dialogue : MonoBehaviour
                     }
 
                     btn.GetComponentInChildren<Button>().onClick.AddListener((() => { AnswerClicked(index); }));
+                    btn.GetComponentInChildren<Button>().onClick.AddListener((() => { playerObject.GetComponent<AudioSource>().PlayOneShot(buttonsound); }));
 
                     answerIndex++;
                 }
@@ -199,6 +206,7 @@ public class Dialogue : MonoBehaviour
                     UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
                     TextBoxManager.Instance.textComponent.text = string.Empty;
                     StartCoroutine(TypeLine());
+                    if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
                 }
                 else
                 {
@@ -235,6 +243,7 @@ public class Dialogue : MonoBehaviour
                 UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
                 TextBoxManager.Instance.textComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
+                if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
             }
             else
             {
@@ -258,6 +267,7 @@ public class Dialogue : MonoBehaviour
                 UpdateDialog(activeSegment.GetPort("output").Connection.node as DialogSegment);
                 TextBoxManager.Instance.textComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
+                if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
             }
             else
             {
@@ -273,6 +283,7 @@ public class Dialogue : MonoBehaviour
         if (port.IsConnected)
         {
             UpdateDialog(port.Connection.node as DialogSegment);
+            if (activeSegment.speakerName != "Player") playerController.TalkingSound();
             LineSkip();
         }
 
@@ -339,7 +350,7 @@ public class Dialogue : MonoBehaviour
             typingUI.SetActive(true);
             typingUI.GetComponent<TypingGame>().StartGame(ghost);
             conversation = false;
-            GhostScript.gamePaused = true;
+            //GhostScript.gamePaused = true;
         }
     }
     public void StartEscort(GhostScript ghost)
@@ -393,6 +404,7 @@ public class Dialogue : MonoBehaviour
 
             TextBoxManager.Instance.textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
+            if (activeSegment.speakerName != "Player") playerController.TalkingSound();;
         }
         else
         {

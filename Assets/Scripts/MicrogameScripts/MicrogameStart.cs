@@ -20,6 +20,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
     [Header("Timer Stuff")]
     public GameObject TimerUI;
+    public GameObject player;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        player.GetComponent<AudioSource>().PlayOneShot(player.GetComponent<player>().bubbleSound);
         if (!IsValidQuestTask())
         {
             Debug.Log("This task is not currently required by a quest." + gameID);

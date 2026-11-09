@@ -43,10 +43,10 @@ public class TutorialManager : MonoBehaviour
         // Wait for ChairManager to initialize.
         yield return null;
 
-        ChairManager manager = ChairManager.Instance;
+        ChairManager chairManager = ChairManager.Instance;
 
-        if (manager == null || manager.chairs == null ||
-            manager.activeGhosts >= manager.maxGhostCount)
+        if (chairManager == null || chairManager.chairs == null ||
+            chairManager.activeGhosts >= chairManager.maxGhostCount)
         {
             Debug.LogError("Unable to spawn tutorial ghost.", this);
             yield break;
@@ -55,7 +55,7 @@ public class TutorialManager : MonoBehaviour
         // Find an available chair.
         ChairScript chair = null;
 
-        foreach (GameObject obj in manager.chairs)
+        foreach (GameObject obj in chairManager.chairs)
         {
             if (obj == null) continue;
 
@@ -96,12 +96,13 @@ public class TutorialManager : MonoBehaviour
 
         chair.ghostObject = ghostObject;
         chair.ghostActive = true;
-        manager.activeGhosts++;
+        chairManager.activeGhosts++;
 
         tutorialGhost.chairScript = chair;
         tutorialGhost.customerTimer = Random.Range(45, 60);
 
-        manager.AssignGhost(ghostObject);
+        chairManager.AssignGhostAsspects(tutorialGhost, ghostObject);
+        tutorialGhost.ghostScriptableObject.needExtraTask = false;
 
         // Configure the quest giver and interaction.
         QuestGiver giver = ghostObject.GetComponentInChildren<QuestGiver>(true);
@@ -150,6 +151,8 @@ public class TutorialManager : MonoBehaviour
             progress.questGiver.GetComponentInParent<GhostScript>() != tutorialGhost ||
             steps == null || steps.Length == 0)
             return;
+
+        tutorialGhost.ghostScriptableObject.needExtraTask = false;
 
         // Quest accepted: keep the waiting dialogue.
         if (objective.type == Quest.objectiveType.FirstTalk)
