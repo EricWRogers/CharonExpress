@@ -49,6 +49,7 @@ public class Interact : MonoBehaviour
 
         interactable.OnNotTouchingPlayer();
         interactable.Interacting();
+        GameObject.Find("Player").GetComponent<Rigidbody>().linearVelocity = new Vector3(0,0,0);
     }
 
     private void OnTriggerStay(Collider collision)
