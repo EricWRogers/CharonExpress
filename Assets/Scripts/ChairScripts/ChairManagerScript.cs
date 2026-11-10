@@ -66,6 +66,8 @@ public class ChairManager : MonoBehaviour
                 chairs[i].GetComponent<ChairScript>().cooldownTimer = UnityEngine.Random.Range(1, 5);
             }
         }
+
+        if (GameObject.Find("TutorialManager") == null) NewDay(0);
     }
 
     void Update()
@@ -74,7 +76,7 @@ public class ChairManager : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
+    {/*
         //Iterate through each chair by index
         for (int i = 0; i < chairs.Length; i++)
         {
@@ -93,6 +95,7 @@ public class ChairManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     //Assign a task to the ghost passed in
