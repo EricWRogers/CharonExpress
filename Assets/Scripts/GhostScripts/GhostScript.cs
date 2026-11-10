@@ -84,6 +84,9 @@ public class GhostScript : MonoBehaviour
             if (direction == -1) spriteHolder.GetComponent<SpriteRenderer>().flipX = true;
             else spriteHolder.GetComponent<SpriteRenderer>().flipX = false;
             travelStep();
+        } else
+        {
+            spriteHolder.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 
