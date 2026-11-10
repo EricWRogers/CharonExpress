@@ -12,6 +12,7 @@ public class Ghost : ScriptableObject
     [Tooltip("Idle sprite for the ghost")]
     public Sprite idleSprite;
     public Sprite floatSprite;
+    public Sprite profileSprite;
 
     [Header("Dialogue Graph")]
     [Tooltip("this is the dialogue for the ghost")]

@@ -15,5 +15,6 @@ MonoBehaviour:
   ghostName: Herbert
   idleSprite: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
   floatSprite: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
+  profileSprite: {fileID: 21300000, guid: 04e467e5d0047ae40b9dfe27e1c3a671, type: 3}
   dialogGraph: {fileID: 11400000, guid: 24790d2889fd42546ba7969638085e80, type: 2}
   needExtraTask: 1
