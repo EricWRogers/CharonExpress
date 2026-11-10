@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
@@ -88,6 +89,9 @@ public class TypingGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Interact.interactionsLocked)
+            return;
+
         pointerMovement();
 
         if (loseIndex >= 3)
@@ -204,6 +208,9 @@ public class TypingGame : MonoBehaviour
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
+
+        Interact.SetInteractionLock(false);
+
         ghosty.customerTimer += 10;
         ghosty.maxCustomerTimer = ghosty.customerTimer;
 
@@ -221,6 +228,8 @@ public class TypingGame : MonoBehaviour
     }
     public void StartGame(GhostScript ghost)
     {
+        Interact.SetInteractionLock(true);
+
         SetCurrentWord();
         player.freeze = true;
         ghosty = ghost;
@@ -234,11 +243,17 @@ public class TypingGame : MonoBehaviour
         typingPanel.SetActive(false);
         player.freeze = false;
         GhostScript.gamePaused = false;
+
+        Interact.SetInteractionLock(false);
+
         QuestController.Instance.FailQuest(QuestController.Instance.GetNextMicrogameProgress(gameID), false);
         text.StartDiologue();
     }
     void OnClick(CallbackContext ctx)
     {
+        if (!Interact.interactionsLocked)
+            return;
+
         player.buttonBufferPress = true;
 
         if (canHitPointer)

@@ -93,6 +93,7 @@ public class Dialogue : MonoBehaviour
     public void startDialogue()
     {
         Debug.Log("Start Text");
+        Interact.SetInteractionLock(true);
         GhostScript.gamePaused = true;
         player.freeze = true;
         foreach (DialogSegment node in lines.nodes)
@@ -311,6 +312,8 @@ public class Dialogue : MonoBehaviour
         GhostScript.gamePaused = false;
         if(conversation)
             StartConversation(ghost);
+        else
+            Interact.SetInteractionLock(false);
         if (escortMission)
             StartEscort(ghost);
         playerController.buttonBufferPress = true;

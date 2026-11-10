@@ -26,7 +26,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
     /// Handles player interaction by first checking for a return-to-NPC objective.
     /// If no matching objective is completed, starts the NPC's dialogue
     /// </summary>
-    public void Interact()
+    public void Interacting()
     {
         QuestController controller = QuestController.Instance;
 

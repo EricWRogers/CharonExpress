@@ -131,7 +131,6 @@ public class GhostScript : MonoBehaviour
             {
                 if (gameStart.gameID == gameID)
                 {
-                    gameStart.ResetInteraction();
                     break;
                 }
             }
