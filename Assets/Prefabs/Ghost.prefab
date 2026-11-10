@@ -127,6 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiver
   chair: {fileID: 0}
   text: {fileID: 4924896364944198213}
+  dialogue: {fileID: 833596100761407672}
+  alreadyHaveQuest: {fileID: 11400000, guid: d6bd5a7dffd43cb4ab4eb9d5650695ab, type: 2}
   questToGive: {fileID: 0}
 --- !u!1 &4166639766176933113
 GameObject:

@@ -108,7 +108,7 @@ public class Dialogue : MonoBehaviour
         }
         else{
             TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
-            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
+            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.profileSprite;
         }
         textActive = true;
 
@@ -329,7 +329,7 @@ public class Dialogue : MonoBehaviour
         }
         else{
             TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
-            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
+            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.profileSprite;
         }
         foreach (Transform child in TextBoxManager.Instance.buttonParent)
         {
