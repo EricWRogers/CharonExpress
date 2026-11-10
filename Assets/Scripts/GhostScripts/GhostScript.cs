@@ -81,6 +81,8 @@ public class GhostScript : MonoBehaviour
         {
             Debug.Log(beingEscorted);
             spriteHolder.GetComponent<SpriteRenderer>().sprite = ghostScriptableObject.floatSprite;
+            if (direction == -1) spriteHolder.GetComponent<SpriteRenderer>().flipX = true;
+            else spriteHolder.GetComponent<SpriteRenderer>().flipX = false;
             travelStep();
         }
     }
