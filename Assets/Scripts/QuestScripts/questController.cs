@@ -258,7 +258,7 @@ public class QuestController : MonoBehaviour
         activeQuests.Remove(progress);
         UpdateQuestLog();
 
-        if (reassignGhost && ghost != null)
+        if (ghost != null)
             ChairManager.Instance.AssignGhost(ghost.gameObject);
 
         QuestFailed?.Invoke(progress, failedObjective);
