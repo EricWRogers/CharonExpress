@@ -66,6 +66,8 @@ public class ChairManager : MonoBehaviour
                 chairs[i].GetComponent<ChairScript>().cooldownTimer = UnityEngine.Random.Range(1, 5);
             }
         }
+
+        if (GameObject.Find("TutorialManager") == null) NewDay(0);
     }
 
     void Update()
@@ -74,7 +76,7 @@ public class ChairManager : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
+    {/*
         //Iterate through each chair by index
         for (int i = 0; i < chairs.Length; i++)
         {
@@ -93,6 +95,7 @@ public class ChairManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     //Assign a task to the ghost passed in
@@ -104,13 +107,13 @@ public class ChairManager : MonoBehaviour
         {
             taskToAssign = extraTasks[UnityEngine.Random.Range(0, extraTasks.Length)];
         }
-        if (taskToAssign.name == "EscortGraph" && !escortAssigned)
+        if (taskToAssign != null&&taskToAssign.name == "EscortGraph" && !escortAssigned)
         {
             escortAssigned = true;
         }
-        else if (taskToAssign.name == "EscortGraph" && escortAssigned)
+        else if (taskToAssign != null&&taskToAssign.name == "EscortGraph" && escortAssigned)
         {
-            while (taskToAssign.name == "EscortGraph")
+            while (taskToAssign != null&&taskToAssign.name == "EscortGraph")
             {
                 AssignGhost(ghost);
             }
@@ -118,7 +121,7 @@ public class ChairManager : MonoBehaviour
         ghostDialogue.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
         ghost.GetComponent<GhostScript>().ghostScriptableObject.needExtraTask = true;
-        GameManager.Instance.ghosts.Add(ghost);
+        
     }
 
     //Called when an escort task is completed. Determines a new, empty chair to be reserved.
@@ -180,5 +183,6 @@ public class ChairManager : MonoBehaviour
         taskToAssign = ghostScript.ghostScriptableObject.dialogGraph;
         ghostScript.ghostScriptableObject.needExtraTask = false;
         AssignGhost(ghostObject);
+        GameManager.Instance.ghosts.Add(ghostObject);
     }
 }

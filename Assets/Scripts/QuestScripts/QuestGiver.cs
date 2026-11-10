@@ -11,6 +11,8 @@ public class QuestGiver : MonoBehaviour, IInteractable
 
     [Tooltip("The dialogue interaction component used to start conversations with this NPC.")]
     public DialogInteraction text;
+    public Dialogue dialogue;
+    public DialogGraph alreadyHaveQuest;
 
     [Header("Quest")]
     [Tooltip("The quest asset that can be assigned by this NPC.")]
@@ -83,6 +85,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
         }
 
         controller.StartQuest(quest, this);
+        dialogue.SetDialogGraph(alreadyHaveQuest);
     }
     public void OnTouchingPlayer() { }
     public void OnNotTouchingPlayer() { }

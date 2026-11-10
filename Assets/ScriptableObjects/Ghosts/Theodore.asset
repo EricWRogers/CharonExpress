@@ -15,5 +15,6 @@ MonoBehaviour:
   ghostName: Theodore
   idleSprite: {fileID: 21300000, guid: cb76131a49c3d79418d4a9fa5218c192, type: 3}
   floatSprite: {fileID: 21300000, guid: 626a1880f5ac4734892b1b7c1c6b8ae7, type: 3}
+  profileSprite: {fileID: 21300000, guid: 81208575513094045aac40e14dbadb97, type: 3}
   dialogGraph: {fileID: 11400000, guid: 3a7da8af8d05aea47a30c88b9316d05c, type: 2}
   needExtraTask: 1
