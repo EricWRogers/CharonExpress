@@ -67,6 +67,9 @@ public class GameManager : MonoBehaviour
                 }
             }
             avgScore = ghostsScore / ghosts.Count;
+            Debug.Log(avgScore);
+            Debug.Log(ghostsScore);
+            Debug.Log(index);
             if (avgScore <= 2)
             {
                 letterGrade = "F";

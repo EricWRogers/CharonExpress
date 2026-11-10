@@ -107,13 +107,13 @@ public class ChairManager : MonoBehaviour
         {
             taskToAssign = extraTasks[UnityEngine.Random.Range(0, extraTasks.Length)];
         }
-        if (taskToAssign.name == "EscortGraph" && !escortAssigned)
+        if (taskToAssign != null&&taskToAssign.name == "EscortGraph" && !escortAssigned)
         {
             escortAssigned = true;
         }
-        else if (taskToAssign.name == "EscortGraph" && escortAssigned)
+        else if (taskToAssign != null&&taskToAssign.name == "EscortGraph" && escortAssigned)
         {
-            while (taskToAssign.name == "EscortGraph")
+            while (taskToAssign != null&&taskToAssign.name == "EscortGraph")
             {
                 AssignGhost(ghost);
             }
@@ -121,7 +121,7 @@ public class ChairManager : MonoBehaviour
         ghostDialogue.SetDialogGraph(taskToAssign);
         Debug.Log("Assigned the task" + taskToAssign + " count: " + customerTotal);
         ghost.GetComponent<GhostScript>().ghostScriptableObject.needExtraTask = true;
-        GameManager.Instance.ghosts.Add(ghost);
+        
     }
 
     //Called when an escort task is completed. Determines a new, empty chair to be reserved.
@@ -183,5 +183,6 @@ public class ChairManager : MonoBehaviour
         taskToAssign = ghostScript.ghostScriptableObject.dialogGraph;
         ghostScript.ghostScriptableObject.needExtraTask = false;
         AssignGhost(ghostObject);
+        GameManager.Instance.ghosts.Add(ghostObject);
     }
 }
