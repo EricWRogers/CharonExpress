@@ -36,6 +36,7 @@ public class Interact : MonoBehaviour
             currentInteractable.Interact();
             currentInteractable = null;
             interactionUI.SetActive(false);
+            GameObject.Find("Player").GetComponent<Rigidbody>().linearVelocity = new Vector3(0,0,0);
         }
     }
 
