@@ -1,6 +1,8 @@
 using System.Net.NetworkInformation;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class TweenHelper
 {
@@ -33,6 +35,24 @@ public static class TweenHelper
 
         sq.Append(_transform.DOLocalMoveY(1f, 0.1f));
         sq.Append(_transform.DOLocalMoveY(-1f, 0.1f));
+        return sq;
+    }
+
+    public static Sequence FailTextTween(TMP_Text _text)
+    {
+        Sequence sq = DOTween.Sequence();
+        sq.Append(_text.DOColor(Color.red, 1f));
+        sq.Append(_text.DOColor(Color.red, 0.5f));
+        sq.Append(_text.DOColor(new Color(1f, 0f, 0f, 0f), 1f));
+        return sq;
+    }
+
+    public static Sequence CompleteTextTween(TMP_Text _text)
+    {
+        Sequence sq = DOTween.Sequence();
+        sq.Append(_text.DOColor(new Color(0.42f, 0.81f, 0.23f, 1f), 1f));
+        sq.Append(_text.DOColor(new Color(0.42f, 0.81f, 0.23f, 1f), 0.5f));
+        sq.Append(_text.DOColor(new Color(0.42f, 0.81f, 0.23f, 0f), 1f));
         return sq;
     }
 }

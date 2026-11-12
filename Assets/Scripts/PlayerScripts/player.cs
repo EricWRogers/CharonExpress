@@ -24,6 +24,8 @@ public class player : MonoBehaviour
     public float nextAllowedClickTime;
     [SerializeField] public AudioClip[] talkingSounds;
     public AudioClip bubbleSound;
+    public AudioClip failQuestSound;
+    public AudioClip completeQuestSound;
     public Animator animator;
 
 
@@ -117,6 +119,18 @@ public class player : MonoBehaviour
     public void TalkingSound() {
         gameObject.GetComponent<AudioSource>().PlayOneShot(talkingSounds[UnityEngine.Random.Range(0, talkingSounds.Length-1)]);
     }
+
+    public void PlayFailSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(failQuestSound);
+    }
+
+    public void PlaySucceedSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(completeQuestSound);
+    }
+
+    public 
 
     IEnumerator Wait1Sec()
     {
