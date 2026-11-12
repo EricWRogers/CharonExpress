@@ -44,6 +44,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 4053645425
+    locked: 0
+  - name: decorations
+    uniqueID: 2079781547
+    locked: 0
+  - name: frame
+    uniqueID: 3702935499
+    locked: 0
+  - name: frontwall
+    uniqueID: 1525088725
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
