@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using System;
 using UnityEngine.Analytics;
@@ -30,6 +31,8 @@ public class GhostScript : MonoBehaviour
     public float score = 2;
     public Quest.QuestProgress assignedQuest;
 
+    private TutorialManager tutorialManager;
+
     //Variables for Escort Mission
     public bool beingEscorted = false;
     public bool playerInRange = false;
@@ -48,19 +51,23 @@ public class GhostScript : MonoBehaviour
         maxCustomerTimer = customerTimer;
         rend = GetComponent<Renderer>();
 
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
+
         HappyGhost();
     }
 
     void FixedUpdate()
     {
+        bool tutorialActive = tutorialManager != null && tutorialManager.isTutorialActive;
+
         //Decrement the ghost's lifespan. If lifespan is elapsed, kill the ghost and set a new cooldown timer for it
-        if (customerTimer > 0 && !gamePaused)
+        if (customerTimer > 0 && !gamePaused && !tutorialActive)
         {
             customerTimer -= Time.deltaTime;
             ratio = customerTimer / maxCustomerTimer;
             meter.transform.localScale = new Vector3(ratio, 0.2f, 1.0f);
         }
-        else if (customerTimer <= 0 && chairScript.ghostActive)
+        else if (customerTimer <= 0 && chairScript.ghostActive && !tutorialActive)
         {
             chairScript.cooldownTimer = UnityEngine.Random.Range(5, 10);
             chairScript.ghostActive = false;

@@ -101,7 +101,7 @@ public class QuestLogController : MonoBehaviour
         builder.Append("<b><color=#")
             .Append(ColorUtility.ToHtmlStringRGBA(textColor))
             .Append(">")
-            .Append(quest.questName)
+            .Append(ReplacePlaceholders(quest.questName, progress))
             .Append(":</color></b>\n");
 
         if (quest.objectives == null)
@@ -118,13 +118,15 @@ public class QuestLogController : MonoBehaviour
             if (i > progress.currentObjectiveIndex)
                 continue;
 
+            string description = ReplacePlaceholders(objective.description, progress);
+
             if (i < progress.currentObjectiveIndex)
             {
                 // Completed objective.
                 builder.Append("<color=#")
                     .Append(ColorUtility.ToHtmlStringRGBA(completedTextColor))
                     .Append(">[Done] ")
-                    .Append(objective.description)
+                    .Append(description)
                     .Append("</color>\n");
             }
             else
@@ -133,11 +135,46 @@ public class QuestLogController : MonoBehaviour
                 builder.Append("<b><color=#")
                     .Append(ColorUtility.ToHtmlStringRGBA(currentTextColor))
                     .Append(">→ ")
-                    .Append(objective.description)
+                    .Append(description)
                     .Append("</color></b>\n");
             }
         }
 
         return builder.ToString();
+    }
+
+    private static string GetQuestGiverName(Quest.QuestProgress progress)
+    {
+        QuestGiver giver = progress.questGiver;
+
+        if (giver == null)
+            return "the quest giver";
+
+        GhostScript ghost = giver.GetComponentInParent<GhostScript>();
+
+        if (ghost != null)
+        {
+            if (ghost.ghostScriptableObject != null &&
+                !string.IsNullOrWhiteSpace(ghost.ghostScriptableObject.ghostName))
+            {
+                return ghost.ghostScriptableObject.ghostName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(ghost.ghostName))
+                return ghost.ghostName;
+        }
+
+        return giver.name;
+    }
+
+    private static string ReplacePlaceholders(string text, Quest.QuestProgress progress)
+    {
+        if (string.IsNullOrEmpty(text) || progress == null)
+            return text;
+
+        return text
+            .Replace("NPCName", GetQuestGiverName(progress))
+            .Replace("color", progress.requestedBookColor ?? "")
+            .Replace("subject", progress.requestedBookSubject ?? "");
     }
 }

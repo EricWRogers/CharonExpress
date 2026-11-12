@@ -567,7 +567,7 @@ MonoBehaviour:
       Size: {x: 0.8, y: 2}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 2, z: 0}
+  TargetOffset: {x: 0, y: 1, z: 0}
   Damping: {x: 1, y: 1, z: 1}
   Lookahead:
     Enabled: 0
@@ -626,7 +626,7 @@ Transform:
   m_GameObject: {fileID: 88323387}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4440002, y: 2.654, z: -9.95}
+  m_LocalPosition: {x: -1.4440005, y: 1.654, z: -9.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10873,6 +10873,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 912c5a478dc80fe428a3be5c57446b7d, type: 2}
   - {fileID: 11400000, guid: cea6abd5e00c88148b7539b5df7577d2, type: 2}
   dialogueThresholds: 0300000004000000
+  isTutorialActive: 1
 --- !u!1 &1264933088
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,8 +16,9 @@ MonoBehaviour:
   description: 'Escort NPC to the designated chair.
 
 '
+  unfailable: 0
   objectives:
   - gameID: 1
-    description: Escort NPC to their chair
+    description: Escort NPCName to their chair
     type: 1
     completeQuestAfterThis: 0
