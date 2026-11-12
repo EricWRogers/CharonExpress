@@ -18,6 +18,7 @@ public class EndDayUI : MonoBehaviour
     public TMP_Text stationSummaryLabel;
     public Button continueButton;
     public GameObject continueButtonObj;
+    public TMP_Text continueButtontext;
     public GameObject mainMenuButton;
     public GameManager gameManager;
     public Dialogue dialogue;
@@ -147,6 +148,7 @@ public class EndDayUI : MonoBehaviour
 
         if (stationSummaryLabel != null)
         {
+            continueButtontext.text = "Continue";
             /*
             stationSummaryLabel.text =
                 $"Day {daySystem.currentDay} Complete!\n\n" +
@@ -154,15 +156,16 @@ public class EndDayUI : MonoBehaviour
                 $"Total points: {daySystem.totalPoints}";
                 */
             stationSummaryLabel.text =
-                $"End of Day {daySystem.currentDay}\n\n" +
+                $"End of Day {daySystem.currentDay}/7\n\n" +
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
             EventSystem.current.SetSelectedGameObject(continueButtonObj);
         }
-        if (daySystem.currentDay == 2)
+        if (daySystem.currentDay == 7)
         {
-            continueButtonObj.SetActive(false);
+            continueButtontext.text = "Endless Mode";
+
             if (stationSummaryLabel != null)
         {
             /*
@@ -176,7 +179,7 @@ public class EndDayUI : MonoBehaviour
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
-                EventSystem.current.SetSelectedGameObject(mainMenuButton);
+                EventSystem.current.SetSelectedGameObject(continueButtonObj);
         }
         }
 
