@@ -531,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3968594900734632725, guid: ca7e2b9d089bf814ebf2c05fdf003ea0, type: 3}
       propertyPath: m_RenderMode
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4872585619379985522, guid: ca7e2b9d089bf814ebf2c05fdf003ea0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23905,6 +23905,7 @@ MonoBehaviour:
   stationSummaryLabel: {fileID: 354856140}
   continueButton: {fileID: 2019994447}
   continueButtonObj: {fileID: 2019994445}
+  continueButtontext: {fileID: 0}
   mainMenuButton: {fileID: 320460951}
   gameManager: {fileID: 1980614284}
   dialogue: {fileID: 1980614288}
