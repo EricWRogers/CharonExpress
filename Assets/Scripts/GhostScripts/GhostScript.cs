@@ -81,6 +81,7 @@ public class GhostScript : MonoBehaviour
             }
             Debug.Log("I KILLED IT");
             ChairManager.Instance.activeGhosts--;
+            ChairManager.Instance.escortAssigned = false;
             Death();
         }
 

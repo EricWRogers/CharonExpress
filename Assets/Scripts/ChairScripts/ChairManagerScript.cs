@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.LowLevelPhysics2D;
+using UnityEngine.UIElements;
 
 public class ChairManager : MonoBehaviour
 {
@@ -107,6 +108,7 @@ public class ChairManager : MonoBehaviour
         {
             taskToAssign = extraTasks[UnityEngine.Random.Range(0, extraTasks.Length)];
         }
+        Debug.Log("The task assigned was this: " + taskToAssign.name);
         if (taskToAssign != null&&taskToAssign.name == "EscortGraph" && !escortAssigned)
         {
             escortAssigned = true;
@@ -150,6 +152,7 @@ public class ChairManager : MonoBehaviour
         {
             ghost.GetComponent<GhostScript>().Death();
         }
+        escortAssigned = false;
         for (int i = 0; i < chairs.Length; i++)
         {
             ChairScript tempChairScript = chairs[i].GetComponent<ChairScript>();
