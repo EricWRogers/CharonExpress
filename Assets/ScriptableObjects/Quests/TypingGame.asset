@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Quest
   questName: Typing
   description: 
+  unfailable: 0
   objectives:
   - gameID: 2
-    description: type word
+    description: Talk to NPCName
     type: 1
     completeQuestAfterThis: 0

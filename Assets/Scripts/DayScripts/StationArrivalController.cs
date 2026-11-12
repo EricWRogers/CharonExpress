@@ -146,6 +146,7 @@ public class StationArrivalController : MonoBehaviour
                 offscreenPoint.position,
                 dockPoint.position
             );
+            Time.timeScale = 0.0f;
         }
         else
         {
@@ -170,8 +171,8 @@ public class StationArrivalController : MonoBehaviour
 
     public void ContinueJourney()
     {
-        if (!readyForContinue || activeSequence != null)
-            return;
+        //if (!readyForContinue || activeSequence != null)
+            //return;
 
         readyForContinue = false;
         activeSequence = StartCoroutine(DepartureSequence());
@@ -182,6 +183,7 @@ public class StationArrivalController : MonoBehaviour
         // Switch from the station camera to the transition camera.
         SetCameraPriority(stationCamera, idlePriority);
         yield return ShowTransitionCamera();
+        Time.timeScale = 1.0f;
 
         if (transitionBeforeStationMovement)
         {
@@ -190,6 +192,7 @@ public class StationArrivalController : MonoBehaviour
                 dockPoint.position,
                 departurePoint.position
             );
+  
 
             SetCameraPriority(transitionCamera, idlePriority);
             yield return WaitForCamera(playerCamera);

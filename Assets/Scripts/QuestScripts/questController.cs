@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages active quests, objective completion, quest failures,
@@ -257,8 +260,10 @@ public class QuestController : MonoBehaviour
 
         activeQuests.Remove(progress);
         UpdateQuestLog();
+        GameObject.Find("Player").GetComponent<player>().PlayFailSound();
+        TweenHelper.FailTextTween(GameObject.Find("FailQuestText").GetComponent<TMP_Text>());
 
-        if (reassignGhost && ghost != null)
+        if (ghost != null)
             ChairManager.Instance.AssignGhost(ghost.gameObject);
 
         QuestFailed?.Invoke(progress, failedObjective);
@@ -347,6 +352,8 @@ public class QuestController : MonoBehaviour
                 onAnyQuestCompleted.Invoke();
 
         QuestCompleted?.Invoke(completedQuest, questGiver);
+        TweenHelper.CompleteTextTween(GameObject.Find("CompleteQuestText").GetComponent<TMP_Text>());
+        GameObject.Find("Player").GetComponent<player>().PlaySucceedSound();
         UpdateQuestLog();
         ChairManager.Instance.AssignGhost(questGiver.transform.parent.gameObject);
     }

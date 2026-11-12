@@ -58,8 +58,16 @@ public class DayCycle : MonoBehaviour
 
     private void Update()
     {
+        if (state != TravelState.Traveling)
+        {
+            TextBoxManager.Instance.DiologueBox.SetActive(false);
+            TextBoxManager.Instance.skip.SetActive(false);
+            TextBoxManager.Instance.nameTextObj.SetActive(false);
+            TextBoxManager.Instance.DialogPanel.SetActive(false);
+        }
         if (tutorialMode || state != TravelState.Traveling)
             return;
+
 
         if (!GhostScript.gamePaused) secondsRemaining = Mathf.Max(
             0f,
@@ -81,7 +89,7 @@ public class DayCycle : MonoBehaviour
         if (pauseGameAtStation && Time.timeScale > 0f)
         {
             previousTimeScale = Time.timeScale;
-            Time.timeScale = 0f;
+            Time.timeScale = 1.0f;
             isPaused = true;
         }
 
@@ -91,6 +99,7 @@ public class DayCycle : MonoBehaviour
         audioSource.Stop();
         GameManager.Instance.SetGrade();
         StationReached?.Invoke();
+
     }
 
     public void AddPoints(int amount)

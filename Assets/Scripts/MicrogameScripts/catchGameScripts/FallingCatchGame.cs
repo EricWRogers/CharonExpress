@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
@@ -57,6 +58,8 @@ public class FallingCatchGame : MonoBehaviour
 
     public void StartGame()
     {
+        Interact.SetInteractionLock(true);
+
         playing = true;
         goodCaught = 0;
         //badCaught = 0;
@@ -129,6 +132,9 @@ public class FallingCatchGame : MonoBehaviour
     {
         playing = false;
         spawner.StopSpawning();
+
+        Interact.SetInteractionLock(false);
+
         /*
         int total = goodCaught + badCaught;
 

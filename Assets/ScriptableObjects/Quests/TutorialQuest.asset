@@ -17,14 +17,14 @@ MonoBehaviour:
   unfailable: 0
   objectives:
   - gameID: 0
-    description: Talk to him
+    description: Talk to Charon
     type: 0
     completeQuestAfterThis: 0
   - gameID: 3
-    description: do coffee game
+    description: Go get coffee
     type: 1
     completeQuestAfterThis: 0
   - gameID: 0
-    description: go back to him
+    description: Go back to Charon
     type: 2
     completeQuestAfterThis: 0

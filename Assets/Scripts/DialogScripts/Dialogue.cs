@@ -93,6 +93,7 @@ public class Dialogue : MonoBehaviour
     public void startDialogue()
     {
         Debug.Log("Start Text");
+        Interact.SetInteractionLock(true);
         GhostScript.gamePaused = true;
         player.freeze = true;
         foreach (DialogSegment node in lines.nodes)
@@ -108,7 +109,7 @@ public class Dialogue : MonoBehaviour
         }
         else{
             TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
-            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
+            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.profileSprite;
         }
         textActive = true;
 
@@ -311,6 +312,8 @@ public class Dialogue : MonoBehaviour
         GhostScript.gamePaused = false;
         if(conversation)
             StartConversation(ghost);
+        else
+            Interact.SetInteractionLock(false);
         if (escortMission)
             StartEscort(ghost);
         playerController.buttonBufferPress = true;
@@ -329,7 +332,7 @@ public class Dialogue : MonoBehaviour
         }
         else{
             TextBoxManager.Instance.nameText.text = ghost.ghostScriptableObject.ghostName;
-            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.idleSprite;
+            TextBoxManager.Instance.portrait.sprite = ghost.ghostScriptableObject.profileSprite;
         }
         foreach (Transform child in TextBoxManager.Instance.buttonParent)
         {
