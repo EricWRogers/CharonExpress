@@ -175,7 +175,7 @@ public class EndDayUI : MonoBehaviour
                 $"Total points: {daySystem.totalPoints}";
                 */
             stationSummaryLabel.text =
-                $"End of Demo\n\n" +
+                $"End of Day 7/7\n\n" +
                 $"Completed Quests {completedQuests}\n" +
                 $"Failed Quests {failedQuests}\n" +
                 $"Grade: {gameManager.letterGrade}\n";
