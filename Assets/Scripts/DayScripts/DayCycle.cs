@@ -89,7 +89,7 @@ public class DayCycle : MonoBehaviour
         if (pauseGameAtStation && Time.timeScale > 0f)
         {
             previousTimeScale = Time.timeScale;
-            Time.timeScale = 0f;
+            Time.timeScale = 1.0f;
             isPaused = true;
         }
 
