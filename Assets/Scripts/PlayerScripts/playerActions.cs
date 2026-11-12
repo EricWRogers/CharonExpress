@@ -202,6 +202,17 @@ public partial class @PlayerThings: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""5ff10a47-f479-4fc2-b1ea-b2b1ef2a9bd6"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""eb4779c8-f55c-4cfe-a143-24ebba7d8708"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",

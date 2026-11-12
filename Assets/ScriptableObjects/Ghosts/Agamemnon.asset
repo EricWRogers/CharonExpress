@@ -15,5 +15,6 @@ MonoBehaviour:
   ghostName: Agamemnon
   idleSprite: {fileID: 21300000, guid: 156ad3e056260334db15b7ac22cf6128, type: 3}
   floatSprite: {fileID: 21300000, guid: 60224a451f5fb944fb8370fea10c0a23, type: 3}
+  profileSprite: {fileID: 21300000, guid: 82cd31285d4ee1e44ab6dc3b3697d024, type: 3}
   dialogGraph: {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
   needExtraTask: 1

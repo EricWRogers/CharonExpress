@@ -170,8 +170,8 @@ public class StationArrivalController : MonoBehaviour
 
     public void ContinueJourney()
     {
-        if (!readyForContinue || activeSequence != null)
-            return;
+        //if (!readyForContinue || activeSequence != null)
+            //return;
 
         readyForContinue = false;
         activeSequence = StartCoroutine(DepartureSequence());

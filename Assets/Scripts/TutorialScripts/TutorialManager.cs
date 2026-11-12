@@ -26,6 +26,8 @@ public class TutorialManager : MonoBehaviour
         [SerializeField] private int[] dialogueThresholds;
         private int completedTutorialQuests;
 
+    public bool isTutorialActive = true;
+
 
     private IEnumerator Start()
     {

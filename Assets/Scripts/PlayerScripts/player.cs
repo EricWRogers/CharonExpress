@@ -80,6 +80,10 @@ public class player : MonoBehaviour
                 sr.flipX = false;
             }
         }
+        else
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
         if (buttonBufferPress)
         {
             WaitForButtonBuffer();

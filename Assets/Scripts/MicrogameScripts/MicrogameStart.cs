@@ -1,12 +1,17 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MicroGameStart : MonoBehaviour, IInteractable
+public class MicroGameStart : MonoBehaviour, IInteractable, IInteractableAvailability
 {
     [Header("Quest ID")]
     [Tooltip("Must match the Microgame game ID in the Quest asset.")]
     public MicrogameId gameID;
+
+    public bool requiresQuest = true;
+
+    public bool CanInteract => !requiresQuest || IsValidQuestTask();
 
     [Header("Minigame")]
     [Tooltip("The UI's for each game.")]
@@ -46,10 +51,11 @@ public class MicroGameStart : MonoBehaviour, IInteractable
         return null;
     }
 
-    public void Interact()
+    public void Interacting()
     {
         player.GetComponent<AudioSource>().PlayOneShot(player.GetComponent<player>().bubbleSound);
-        if (!IsValidQuestTask())
+
+        if (!CanInteract)
         {
             Debug.Log("This task is not currently required by a quest." + gameID);
             return;
@@ -63,14 +69,18 @@ public class MicroGameStart : MonoBehaviour, IInteractable
 
     private bool IsValidQuestTask()
     {
-        return QuestController.Instance.CanCompleteObjective(
-            Quest.objectiveType.Microgame,
-            gameID
-        );
+        return QuestController.Instance != null &&
+               QuestController.Instance.CanCompleteObjective(
+                   Quest.objectiveType.Microgame,
+                   gameID
+               );
     }
 
     private void StartMinigame()
     {
+        Interact.SetInteractionLock(true);
+        interacted = true;
+
         Debug.Log("Starting minigame: " + gameID);
 
         switch (gameID)
@@ -88,6 +98,9 @@ public class MicroGameStart : MonoBehaviour, IInteractable
                 break;
 
             default:
+                Interact.SetInteractionLock(false);
+                interacted = false;
+
                 Debug.LogWarning(
                     "No minigame found for ID: " + gameID
                 );

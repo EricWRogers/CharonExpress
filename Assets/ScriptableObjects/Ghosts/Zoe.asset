@@ -15,5 +15,6 @@ MonoBehaviour:
   ghostName: Zoe
   idleSprite: {fileID: 21300000, guid: 33118287ffa64474aa7d9bc7b49ec8c6, type: 3}
   floatSprite: {fileID: 21300000, guid: 5b5fa4e0ef8525844bd6b9c5a3d6a79b, type: 3}
+  profileSprite: {fileID: 21300000, guid: 4cd1a0a80ab6287479bd134351352304, type: 3}
   dialogGraph: {fileID: 11400000, guid: c4cdd8aa393017b478b64b696a1ab8a4, type: 2}
   needExtraTask: 1

@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -119,6 +120,7 @@ public class BookRequestGame : MonoBehaviour
         if (currentProgress == null)
         {
             Debug.LogWarning("No active book quest is ready to play.");
+            Interact.SetInteractionLock(false);
             return;
         }
 
@@ -130,6 +132,7 @@ public class BookRequestGame : MonoBehaviour
         {
             Debug.LogError("Could not find the requested book.");
             currentProgress = null;
+            Interact.SetInteractionLock(false);
             return;
         }
 
@@ -256,6 +259,8 @@ public class BookRequestGame : MonoBehaviour
 
         gameRunning = false;
 
+        Interact.SetInteractionLock(false);
+
         ClearBooks();
         gameUI.SetActive(false);
 
@@ -292,6 +297,8 @@ public class BookRequestGame : MonoBehaviour
             return;
 
         gameRunning = false;
+
+        Interact.SetInteractionLock(false);
 
         ClearBooks();
         gameUI.SetActive(false);

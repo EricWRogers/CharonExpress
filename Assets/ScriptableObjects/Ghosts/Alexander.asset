@@ -15,5 +15,6 @@ MonoBehaviour:
   ghostName: Alexander
   idleSprite: {fileID: 21300000, guid: 26a8c127fb5db344388f484292372af4, type: 3}
   floatSprite: {fileID: 21300000, guid: 0d9dab576ff6a114290f6b69f3b3599f, type: 3}
+  profileSprite: {fileID: 21300000, guid: f8697005670cb964da36521f518f4a61, type: 3}
   dialogGraph: {fileID: 11400000, guid: 5bdcbdfb3395640669900d6738b5f5d2, type: 2}
   needExtraTask: 1
