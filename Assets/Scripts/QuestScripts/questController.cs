@@ -35,6 +35,10 @@ public class QuestController : MonoBehaviour
     public event Action<Quest.QuestProgress, Quest.QuestObjective>
         ObjectiveCompleted;
     public event Action<Quest.QuestProgress, Quest.QuestObjective> QuestFailed;
+
+    // Notifies the quest arrow manager when quest objectives change.
+    public event Action QuestStateChanged;
+
     [Header("Day Cycle")]
     [Tooltip("The day cycle controller script.")]
     public DayCycle dayCycle;
@@ -115,6 +119,7 @@ public class QuestController : MonoBehaviour
         Quest.QuestProgress progress = new Quest.QuestProgress(quest, questGiver);
         activeQuests.Add(progress);
 
+        QuestStateChanged?.Invoke();
 
         GhostScript ghost = questGiver.GetComponentInParent<GhostScript>();
 
@@ -260,6 +265,7 @@ public class QuestController : MonoBehaviour
 
         activeQuests.Remove(progress);
         UpdateQuestLog();
+        QuestStateChanged?.Invoke();
         GameObject.Find("Player").GetComponent<player>().PlayFailSound();
         TweenHelper.FailTextTween(GameObject.Find("FailQuestText").GetComponent<TMP_Text>());
 
@@ -314,6 +320,8 @@ public class QuestController : MonoBehaviour
         progress.currentObjectiveIndex++;
         ObjectiveCompleted?.Invoke(progress, completedObjective);
 
+        QuestStateChanged?.Invoke();
+
         // An objective can end the quest early, or the quest ends when its final objective is done.
         if (completedObjective.completeQuestAfterThis || progress.IsCompleted)
             CompleteQuest(progress);
@@ -328,6 +336,8 @@ public class QuestController : MonoBehaviour
 
         if (!activeQuests.Remove(progress))
             return;
+
+        QuestStateChanged?.Invoke();
 
         endDayUI.completedQuests++;
 
@@ -440,6 +450,8 @@ public class QuestController : MonoBehaviour
     public void ClearAllQuests()
     {
         activeQuests.Clear();
+
+        QuestStateChanged?.Invoke();
 
         UpdateQuestLog();
 
