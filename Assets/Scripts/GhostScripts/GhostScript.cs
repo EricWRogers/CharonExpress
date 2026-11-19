@@ -5,6 +5,7 @@ using UnityEngine.Analytics;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine.Rendering;
 using System.Linq;
+using DG.Tweening;
 
 public class GhostScript : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class GhostScript : MonoBehaviour
     public int direction = 1;  //1 represents target is to the right, -1 represents target is to the left
     public int movementSpeed = 10;
     public Vector3 targetPosition;
+    Sequence currentSequence;
 
     void Start()
     {
@@ -112,6 +114,7 @@ public class GhostScript : MonoBehaviour
             direction = 1;
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
+        currentSequence = TweenHelper.EscortBobTween(transform);
     }
 
     //Called every FixedUpdate during escort mission
@@ -131,7 +134,7 @@ public class GhostScript : MonoBehaviour
             chairScript.ghostActive = false;
             chairScript = ChairManager.Instance.chairs[ChairManager.Instance.escortChair].GetComponent<ChairScript>();
             chairScript.ghostActive = true;
-
+            currentSequence.Kill();
             transform.position = chairScript.gameObject.transform.position + new Vector3(0, 1, 0);
             ChairManager.Instance.FindNewEscortChair();
             Debug.Log(beingEscorted);
