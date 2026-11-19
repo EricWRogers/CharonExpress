@@ -96,7 +96,14 @@ public class player : MonoBehaviour
     }
     public void OnMove(CallbackContext ctx)
     {
-        Vector2 input = ctx.ReadValue<Vector2>();
+        Vector2 input;
+        if (DayCycle.isPaused)
+        {
+            input = new Vector2(0f, 0f);
+            x = input.x;
+            return;
+        }
+        input = ctx.ReadValue<Vector2>();
 
         x = input.x;
         animator.SetBool("canWalk", true);
