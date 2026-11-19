@@ -44,6 +44,11 @@ public class TypingGame : MonoBehaviour
     public AudioClip badSound;
     public AudioSource audioSource;
 
+    public float maxIncorrectGuesses = 3;
+    public float barHeight;
+    public float barWidth;
+    public RectTransform incorrectBar;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -64,6 +69,7 @@ public class TypingGame : MonoBehaviour
         targetPosition = pointB.position;
         SetCurrentWord();
         letterText.text = letters[letterIndex];
+        SetIncorrectGuesses(loseIndex);
     }
     private void SetCurrentWord()
     {
@@ -77,6 +83,7 @@ public class TypingGame : MonoBehaviour
         canHitPointer = true;
         hitLetter = false;
         loseIndex = 0;
+        SetIncorrectGuesses(loseIndex);
         pointerImg.color = new Color32(0, 62, 245, 255);
     }
 
@@ -157,6 +164,7 @@ public class TypingGame : MonoBehaviour
             Debug.Log("Wrong");
             audioSource.PlayOneShot(badSound);
             loseIndex++;
+            SetIncorrectGuesses(loseIndex);
         }
     }
 
@@ -174,6 +182,7 @@ public class TypingGame : MonoBehaviour
         else
         {
             loseIndex++;
+            SetIncorrectGuesses(loseIndex);
         }
     }
 
@@ -233,7 +242,14 @@ public class TypingGame : MonoBehaviour
         SetCurrentWord();
         player.freeze = true;
         ghosty = ghost;
+        SetIncorrectGuesses(loseIndex);
         //GhostScript.gamePaused = true;
+    }
+
+    public void SetIncorrectGuesses(int incorrectGuesses){
+        float newWidth = (incorrectGuesses/maxIncorrectGuesses) * barWidth;
+
+        incorrectBar.sizeDelta = new Vector2(newWidth,barHeight);
     }
 
     public void LoseGame()
