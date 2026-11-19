@@ -1,6 +1,4 @@
-
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MicroGameStart : MonoBehaviour, IInteractable, IInteractableAvailability
@@ -101,9 +99,7 @@ public class MicroGameStart : MonoBehaviour, IInteractable, IInteractableAvailab
                 Interact.SetInteractionLock(false);
                 interacted = false;
 
-                Debug.LogWarning(
-                    "No minigame found for ID: " + gameID
-                );
+                Debug.LogWarning("No minigame found for ID: " + gameID);
                 break;
         }
     }
