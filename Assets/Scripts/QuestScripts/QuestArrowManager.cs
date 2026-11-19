@@ -19,7 +19,8 @@ public class QuestArrowManager : MonoBehaviour
     [SerializeField] private Camera m_mainCamera;
 
     [Tooltip("Vertical screen offset for arrows pointing to Escort chairs.")]
-    [SerializeField] private float m_chairTargetScreenOffset = 200f;
+    [SerializeField] private float m_chairArrowYOffset = 200f;
+    [SerializeField] private float m_chairArrowXOffset = 5f;
 
     private QuestController m_questController;
     private bool m_isInitialized;
@@ -165,7 +166,7 @@ public class QuestArrowManager : MonoBehaviour
             arrow = Instantiate(m_arrowPrefab, m_arrowParent);
 
             if (destination == escortSeat)
-                arrow.Initialize(m_mainCamera, destination, m_chairTargetScreenOffset);
+                arrow.Initialize(m_mainCamera, destination, m_chairArrowYOffset, m_chairArrowXOffset);
             else
                 arrow.Initialize(m_mainCamera, destination);
 

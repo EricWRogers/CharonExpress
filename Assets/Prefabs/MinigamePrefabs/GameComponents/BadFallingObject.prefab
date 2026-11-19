@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8675840158646903180}
   - component: {fileID: 1770514958422787229}
   - component: {fileID: 8263950368796364818}
-  - component: {fileID: 5011358797967228163}
+  - component: {fileID: 4692619540160366776}
   m_Layer: 5
   m_Name: BadFallingObject
   m_TagString: Untagged
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8675840158646903180
 CanvasRenderer:
@@ -60,14 +60,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9811321, g: 0.15394258, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: c2571187113a5104c9693bbf7f6643ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231cd95b51b82d940ab33b2bb5f8128d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingObject
---- !u!70 &5011358797967228163
-CapsuleCollider2D:
+--- !u!58 &4692619540160366776
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,10 +119,9 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 75.400635, y: 75.400635}
-  m_Direction: 1
+  m_Offset: {x: -12.93, y: 8.4}
+  m_Radius: 20.65

@@ -11,7 +11,6 @@ public class QuestArrow : MonoBehaviour
     [Tooltip("Additional distance above the target, in screen pixels.")]
     [SerializeField] private float m_targetScreenOffset = 90f;
 
-
     [Header("Camera Entry Settings")]
     [Tooltip("How far inside the camera view the target must be before the arrow moves above it.")]
     [Range(0f, 0.45f)]
@@ -20,7 +19,6 @@ public class QuestArrow : MonoBehaviour
     [Tooltip("How close to the screen edge the target can get before the arrow returns to the edge.")]
     [Range(0f, 0.45f)]
     [SerializeField] private float m_cameraExitThreshold = 0f;
-
 
     [Header("Movement Settings")]
     [Tooltip("How quickly the arrow moves into position.")]
@@ -34,7 +32,6 @@ public class QuestArrow : MonoBehaviour
     [Tooltip("How quickly the arrow rotates into position.")]
     [Min(0f)]
     [SerializeField] private float m_rotationSmoothSpeed = 8f;
-
 
     [Header("Distance Scale Settings")]
     [Tooltip("Distance at which the arrow reaches its maximum size, in world units.")]
@@ -57,7 +54,6 @@ public class QuestArrow : MonoBehaviour
     [Min(0f)]
     [SerializeField] private float m_scaleSmoothSpeed = 8f;
 
-
     [Header("Animation Settings")]
     [Tooltip("Amount the off-screen arrow pulses.")]
     [Range(0f, 0.1f)]
@@ -77,6 +73,7 @@ public class QuestArrow : MonoBehaviour
     private Vector3 m_baseScale;
     private float m_baseRotation;
     private float m_currentTargetScreenOffset;
+    private float m_currentTargetScreenXOffset;
 
     private Vector2 m_currentPosition;
     private Vector2 m_transitionStartPosition;
@@ -122,6 +119,7 @@ public class QuestArrow : MonoBehaviour
 
             targetScreenPosition = m_camera.WorldToScreenPoint(topPosition);
             targetScreenPosition.y += m_currentTargetScreenOffset;
+            targetScreenPosition.x += m_currentTargetScreenXOffset;
 
             targetRotation = m_baseRotation;
         }
@@ -213,16 +211,22 @@ public class QuestArrow : MonoBehaviour
     }
 
     /// <summary>
-    /// Initializes the arrow with a custom vertical screen offset.
+    /// Initializes the arrow with custom screen offsets.
     /// </summary>
     /// <param name="_camera">Camera used to position the arrow.</param>
     /// <param name="_target">Transform the arrow should follow.</param>
     /// <param name="_targetScreenOffset">Additional vertical screen offset.</param>
-    public void Initialize(Camera _camera, Transform _target, float _targetScreenOffset)
+    /// <param name="_targetScreenXOffset">Additional horizontal screen offset.</param>
+    public void Initialize(
+        Camera _camera,
+        Transform _target,
+        float _targetScreenOffset,
+        float _targetScreenXOffset = 0f)
     {
         m_camera = _camera;
         m_target = _target;
         m_currentTargetScreenOffset = _targetScreenOffset;
+        m_currentTargetScreenXOffset = _targetScreenXOffset;
 
         m_targetRenderer = _target != null
             ? _target.GetComponentInChildren<Renderer>()
