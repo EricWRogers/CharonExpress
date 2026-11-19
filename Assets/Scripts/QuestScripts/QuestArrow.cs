@@ -67,7 +67,6 @@ public class QuestArrow : MonoBehaviour
     [Min(0f)]
     [SerializeField] private float m_pulseSpeed = 2.5f;
 
-
     private RectTransform m_rectTransform;
     private Canvas m_canvas;
 
@@ -77,6 +76,7 @@ public class QuestArrow : MonoBehaviour
 
     private Vector3 m_baseScale;
     private float m_baseRotation;
+    private float m_currentTargetScreenOffset;
 
     private Vector2 m_currentPosition;
     private Vector2 m_transitionStartPosition;
@@ -89,7 +89,6 @@ public class QuestArrow : MonoBehaviour
     private bool m_isPositionTransitioning;
     private bool m_isInitialized;
 
-
     private void Awake()
     {
         m_rectTransform = GetComponent<RectTransform>();
@@ -101,16 +100,13 @@ public class QuestArrow : MonoBehaviour
         m_baseRotation = m_rectTransform.localEulerAngles.z;
     }
 
-
     private void LateUpdate()
     {
         if (m_camera == null || m_target == null)
             return;
 
         Vector3 targetWorldPosition = GetTargetWorldPosition();
-
-        Vector3 viewportPosition =
-            m_camera.WorldToViewportPoint(targetWorldPosition);
+        Vector3 viewportPosition = m_camera.WorldToViewportPoint(targetWorldPosition);
 
         UpdateArrowState(viewportPosition);
 
@@ -119,22 +115,19 @@ public class QuestArrow : MonoBehaviour
 
         if (m_isAboveTarget)
         {
-            Vector3 targetTopPosition = m_targetRenderer != null
+            Vector3 topPosition = m_targetRenderer != null
                 ? m_targetRenderer.bounds.center +
                   Vector3.up * m_targetRenderer.bounds.extents.y
                 : targetWorldPosition;
 
-            targetScreenPosition =
-                m_camera.WorldToScreenPoint(targetTopPosition);
-
-            targetScreenPosition.y += m_targetScreenOffset;
+            targetScreenPosition = m_camera.WorldToScreenPoint(topPosition);
+            targetScreenPosition.y += m_currentTargetScreenOffset;
 
             targetRotation = m_baseRotation;
         }
         else
         {
             GetEdgePosition(
-                viewportPosition,
                 targetWorldPosition,
                 out targetScreenPosition,
                 out targetRotation);
@@ -147,38 +140,28 @@ public class QuestArrow : MonoBehaviour
         if (!m_isAboveTarget)
         {
             targetScale *= 1f +
-                Mathf.Sin(Time.unscaledTime * m_pulseSpeed) *
-                m_pulseAmount;
+                Mathf.Sin(Time.time * m_pulseSpeed) * m_pulseAmount;
         }
+
+        if (!TryGetLocalPosition(targetScreenPosition, out Vector2 targetLocalPosition))
+            return;
 
         Vector3 targetScaleVector = m_baseScale * targetScale;
-
-        if (!TryGetLocalPosition(
-                targetScreenPosition,
-                out Vector2 targetLocalPosition))
-        {
-            return;
-        }
 
         if (!m_isInitialized)
         {
             m_currentPosition = targetLocalPosition;
             m_currentRotation = targetRotation;
             m_currentScale = targetScaleVector;
-
             m_isInitialized = true;
         }
         else
         {
             if (m_isPositionTransitioning)
             {
-                m_transitionProgress +=
-                    Time.deltaTime / m_positionTransitionDuration;
+                m_transitionProgress += Time.deltaTime / m_positionTransitionDuration;
 
-                float progress = Mathf.SmoothStep(
-                    0f,
-                    1f,
-                    Mathf.Clamp01(m_transitionProgress));
+                float progress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(m_transitionProgress));
 
                 m_currentPosition = Vector2.Lerp(
                     m_transitionStartPosition,
@@ -215,23 +198,31 @@ public class QuestArrow : MonoBehaviour
         }
 
         m_rectTransform.anchoredPosition = m_currentPosition;
-
-        m_rectTransform.localRotation =
-            Quaternion.Euler(0f, 0f, m_currentRotation);
-
+        m_rectTransform.localRotation = Quaternion.Euler(0f, 0f, m_currentRotation);
         m_rectTransform.localScale = m_currentScale;
     }
 
+    /// <summary>
+    /// Initializes the arrow with the camera and destination it should follow.
+    /// </summary>
+    /// <param name="_camera">Camera used to position the arrow.</param>
+    /// <param name="_target">Transform the arrow should follow.</param>
+    public void Initialize(Camera _camera, Transform _target)
+    {
+        Initialize(_camera, _target, m_targetScreenOffset);
+    }
 
     /// <summary>
-    /// Initializes the arrow with the camera and target it should follow.
+    /// Initializes the arrow with a custom vertical screen offset.
     /// </summary>
-    /// <param name="_camera">Camera used to calculate arrow positioning.</param>
-    /// <param name="_target">Transform of the quest destination.</param>
-    public void Initialize(Camera _camera, Transform _target)
+    /// <param name="_camera">Camera used to position the arrow.</param>
+    /// <param name="_target">Transform the arrow should follow.</param>
+    /// <param name="_targetScreenOffset">Additional vertical screen offset.</param>
+    public void Initialize(Camera _camera, Transform _target, float _targetScreenOffset)
     {
         m_camera = _camera;
         m_target = _target;
+        m_currentTargetScreenOffset = _targetScreenOffset;
 
         m_targetRenderer = _target != null
             ? _target.GetComponentInChildren<Renderer>()
@@ -242,14 +233,12 @@ public class QuestArrow : MonoBehaviour
         m_isInitialized = false;
     }
 
-
     private Vector3 GetTargetWorldPosition()
     {
         return m_targetRenderer != null
             ? m_targetRenderer.bounds.center
             : m_target.position;
     }
-
 
     private void UpdateArrowState(Vector3 _viewportPosition)
     {
@@ -259,9 +248,7 @@ public class QuestArrow : MonoBehaviour
 
         bool wasAboveTarget = m_isAboveTarget;
 
-        m_isAboveTarget = IsInsideCameraView(
-            _viewportPosition,
-            threshold);
+        m_isAboveTarget = IsInsideCameraView(_viewportPosition, threshold);
 
         if (m_isInitialized && wasAboveTarget != m_isAboveTarget)
         {
@@ -271,46 +258,38 @@ public class QuestArrow : MonoBehaviour
         }
     }
 
-
-    private bool IsInsideCameraView(
-        Vector3 _position,
-        float _threshold)
+    private bool IsInsideCameraView(Vector3 _position, float _threshold)
     {
         return _position.z > 0f &&
                _position.x >= _threshold &&
-               _position.x <= 1f - _threshold &&
-               _position.y >= _threshold &&
-               _position.y <= 1f - _threshold;
+               _position.x <= 1f - _threshold;
     }
 
-
     private void GetEdgePosition(
-        Vector3 _viewportPosition,
         Vector3 _targetWorldPosition,
         out Vector2 _screenPosition,
         out float _rotation)
     {
         Rect cameraRect = m_camera.pixelRect;
 
-        Vector3 targetPosition =
-            m_camera.WorldToScreenPoint(_targetWorldPosition);
-
-        bool targetIsLeft = _viewportPosition.x < 0.5f;
+        bool targetIsLeft = Vector3.Dot(
+            _targetWorldPosition - m_camera.transform.position,
+            m_camera.transform.right) < 0f;
 
         float edgeX = targetIsLeft
             ? cameraRect.xMin + m_edgePadding
             : cameraRect.xMax - m_edgePadding;
 
+        float targetY = m_camera.WorldToScreenPoint(_targetWorldPosition).y;
+
         float edgeY = Mathf.Clamp(
-            targetPosition.y,
+            targetY,
             cameraRect.yMin + m_edgePadding,
             cameraRect.yMax - m_edgePadding);
 
         _screenPosition = new Vector2(edgeX, edgeY);
-
         _rotation = m_baseRotation + (targetIsLeft ? -90f : 90f);
     }
-
 
     private Vector2 ClampToCameraRect(Vector2 _position)
     {
@@ -332,17 +311,14 @@ public class QuestArrow : MonoBehaviour
             Mathf.Clamp(_position.y, minY, maxY));
     }
 
-
     private float GetDistanceScale()
     {
-        float distance = Vector2.Distance(
-            m_camera.transform.position,
-            m_target.position);
+        float distance = Mathf.Abs(Vector3.Dot(
+            GetTargetWorldPosition() - m_camera.transform.position,
+            m_camera.transform.right));
 
         float nearDistance = Mathf.Max(0f, m_nearScaleDistance);
-        float farDistance = Mathf.Max(
-            nearDistance + 0.01f,
-            m_farScaleDistance);
+        float farDistance = Mathf.Max(nearDistance + 0.01f, m_farScaleDistance);
 
         return Mathf.Lerp(
             m_maxScale,
@@ -350,13 +326,11 @@ public class QuestArrow : MonoBehaviour
             Mathf.InverseLerp(nearDistance, farDistance, distance));
     }
 
-
     private bool TryGetLocalPosition(
         Vector2 _screenPosition,
         out Vector2 _localPosition)
     {
-        RectTransform parentRect =
-            m_rectTransform.parent as RectTransform;
+        RectTransform parentRect = m_rectTransform.parent as RectTransform;
 
         if (parentRect == null)
         {
@@ -377,7 +351,6 @@ public class QuestArrow : MonoBehaviour
             eventCamera,
             out _localPosition);
     }
-
 
     private float GetSmoothFactor(float _speed)
     {
