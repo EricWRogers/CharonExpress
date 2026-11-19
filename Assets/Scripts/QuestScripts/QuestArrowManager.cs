@@ -18,18 +18,18 @@ public class QuestArrowManager : MonoBehaviour
     [Tooltip("Camera used to calculate quest arrow positioning.")]
     [SerializeField] private Camera m_mainCamera;
 
+    [Tooltip("Vertical screen offset for arrows pointing to Escort chairs.")]
+    [SerializeField] private float m_chairTargetScreenOffset = 200f;
 
     private QuestController m_questController;
-    private bool m_isSubscribed;
+    private bool m_isInitialized;
 
+    private readonly Dictionary<MicrogameId, Transform> m_stations = new();
     private readonly Dictionary<Transform, QuestArrow> m_activeArrows = new();
-
 
     private void Start()
     {
-        if (m_arrowPrefab == null ||
-            m_arrowParent == null ||
-            m_mainCamera == null)
+        if (m_arrowPrefab == null || m_arrowParent == null || m_mainCamera == null)
         {
             Debug.LogError("QuestArrowManager is missing references.", this);
             enabled = false;
@@ -45,44 +45,44 @@ public class QuestArrowManager : MonoBehaviour
             return;
         }
 
-        SubscribeToQuestChanges();
-        RefreshArrows();
-    }
+        CacheMicrogameStations();
 
-
-    private void OnEnable()
-    {
-        SubscribeToQuestChanges();
-        RefreshArrows();
-    }
-
-
-    private void OnDisable()
-    {
-        UnsubscribeFromQuestChanges();
-        ClearArrows();
-    }
-
-
-    private void SubscribeToQuestChanges()
-    {
-        if (m_questController == null || m_isSubscribed)
-            return;
-
+        m_isInitialized = true;
         m_questController.QuestStateChanged += RefreshArrows;
-        m_isSubscribed = true;
+        RefreshArrows();
     }
 
-
-    private void UnsubscribeFromQuestChanges()
+    private void CacheMicrogameStations()
     {
-        if (m_questController == null || !m_isSubscribed)
-            return;
+        m_stations.Clear();
 
-        m_questController.QuestStateChanged -= RefreshArrows;
-        m_isSubscribed = false;
+        foreach (MicroGameStart station in FindObjectsByType<MicroGameStart>(
+                     FindObjectsSortMode.None))
+        {
+            if (station != null && !m_stations.ContainsKey(station.gameID))
+                m_stations.Add(station.gameID, station.transform);
+        }
     }
 
+    private Transform GetEscortSeat()
+    {
+        ChairManager chairManager = ChairManager.Instance;
+
+        if (chairManager == null || chairManager.escortChair < 0)
+            return null;
+
+        int index = 0;
+
+        foreach (var chair in chairManager.chairs)
+        {
+            if (index == chairManager.escortChair)
+                return chair != null ? chair.transform : null;
+
+            index++;
+        }
+
+        return null;
+    }
 
     private void ClearArrows()
     {
@@ -95,22 +95,13 @@ public class QuestArrowManager : MonoBehaviour
         m_activeArrows.Clear();
     }
 
-
     private void RefreshArrows()
     {
         if (m_questController == null)
             return;
 
-        Dictionary<MicrogameId, Transform> stations = new();
-
-        foreach (MicroGameStart station in FindObjectsByType<MicroGameStart>(
-                     FindObjectsSortMode.None))
-        {
-            if (station != null && !stations.ContainsKey(station.gameID))
-                stations.Add(station.gameID, station.transform);
-        }
-
         HashSet<Transform> destinations = new();
+        Transform escortSeat = GetEscortSeat();
 
         foreach (Quest.QuestProgress progress in m_questController.activeQuests)
         {
@@ -127,7 +118,10 @@ public class QuestArrowManager : MonoBehaviour
             switch (objective.type)
             {
                 case Quest.objectiveType.Microgame:
-                    stations.TryGetValue(objective.gameID, out destination);
+                    if (objective.gameID == MicrogameId.Escort)
+                        destination = escortSeat;
+                    else
+                        m_stations.TryGetValue(objective.gameID, out destination);
                     break;
 
                 case Quest.objectiveType.ReturnToNPC:
@@ -140,32 +134,40 @@ public class QuestArrowManager : MonoBehaviour
                 destinations.Add(destination);
         }
 
-        List<Transform> toRemove = new();
+        List<Transform> destinationsToRemove = null;
 
-        foreach (var pair in m_activeArrows)
+        foreach (KeyValuePair<Transform, QuestArrow> pair in m_activeArrows)
         {
-            if (!destinations.Contains(pair.Key))
-            {
-                if (pair.Value != null)
-                    Destroy(pair.Value.gameObject);
+            if (destinations.Contains(pair.Key))
+                continue;
 
-                toRemove.Add(pair.Key);
-            }
+            if (pair.Value != null)
+                Destroy(pair.Value.gameObject);
+
+            if (destinationsToRemove == null)
+                destinationsToRemove = new List<Transform>();
+
+            destinationsToRemove.Add(pair.Key);
         }
 
-        foreach (Transform destination in toRemove)
-            m_activeArrows.Remove(destination);
+        if (destinationsToRemove != null)
+        {
+            foreach (Transform destination in destinationsToRemove)
+                m_activeArrows.Remove(destination);
+        }
 
         foreach (Transform destination in destinations)
         {
             if (m_activeArrows.TryGetValue(destination, out QuestArrow arrow) &&
                 arrow != null)
-            {
                 continue;
-            }
 
             arrow = Instantiate(m_arrowPrefab, m_arrowParent);
-            arrow.Initialize(m_mainCamera, destination);
+
+            if (destination == escortSeat)
+                arrow.Initialize(m_mainCamera, destination, m_chairTargetScreenOffset);
+            else
+                arrow.Initialize(m_mainCamera, destination);
 
             m_activeArrows[destination] = arrow;
         }
