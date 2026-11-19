@@ -28,7 +28,7 @@ public class DayCycle : MonoBehaviour
     [HideInInspector] public TravelState state;
 
     private float previousTimeScale = 1f;
-    private bool isPaused;
+    public static bool isPaused;
 
     public event Action StationReached;
     public event Action TravelStarted;

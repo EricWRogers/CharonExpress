@@ -39,7 +39,7 @@ public class Interact : MonoBehaviour
 
     public void OnInteract()
     {
-        if (interactionsLocked || currentInteractable == null)
+        if (interactionsLocked || currentInteractable == null || DayCycle.isPaused)
             return;
 
         IInteractable interactable = currentInteractable;
