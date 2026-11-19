@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class player : MonoBehaviour
 {
     public float speed;
+    public float slowedCoefficient = 1.0f;
     public float groundDist;
     public float x = 0;
     public float y = 0;
@@ -71,7 +72,7 @@ public class player : MonoBehaviour
             }
 
             Vector3 moveDir = new Vector3(x, 0, y);
-            rb.linearVelocity = moveDir * (inputActions.Player.Sprint.IsPressed() ? speed * 1.5f : speed);
+            rb.linearVelocity = moveDir * (inputActions.Player.Sprint.IsPressed() ? speed * 1.5f : speed) * slowedCoefficient;
 
             if (x != 0 && x > 0)
             {

@@ -68,4 +68,13 @@ public static class TweenHelper
         sq.SetLink(_transform.gameObject);
         return sq;
     }
+
+    public static Sequence PuddleCleanTween(Transform _transform)
+    {
+        Sequence sq = DOTween.Sequence();
+        sq.Append(_transform.DOScale(1.1f, 0.3f));
+        sq.Append(_transform.DOScale(0f, 0.5f));
+        
+        return sq;
+    }
 }
